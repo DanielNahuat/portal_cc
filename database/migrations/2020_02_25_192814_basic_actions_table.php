@@ -13,7 +13,12 @@ class BasicActionsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('basic_actions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('mat', 3)->default('BAC');
+            $table->string('name', 100)->nullable;
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class BasicActionsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('basic_actions');
     }
 }

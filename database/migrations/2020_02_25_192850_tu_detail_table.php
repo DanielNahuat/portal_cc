@@ -18,6 +18,7 @@ class TuDetailTable extends Migration
             $table->string('mat', 3)->default('TUD');
             $table->string('id_type_user');
             $table->string('id_menu');
+            $table->string('basic_actions')->default("[1,66,71]");
             $table->integer('status')->default(1);
             $table->timestamps();
         });
