@@ -1,4 +1,4 @@
-
+getData(1);
 $(document).ready(function(){
      
     
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             })
-                if($(this).attr('class') == 'btn btn-outline-success off-type')
+                if($(this).attr('class') == 'btn btn-sm btn-outline-success off-type')
                 {
                     title= "¿Deseas activar este Usuario?";
                     text="El Usuario se activara";
@@ -168,28 +168,37 @@ $(document).ready(function(){
     
 });
 const types ={
-    button: function(data){
-           var buttons='<div class="btn-group perfilCard">';
-            if(data.status== 1){
-               buttons += '<a class="btn btn btn-info btn-detail" data-toggle="tooltip" title="Otorgar permisos de Perfil" href="/assignmenttype/' + data.id + '"> <i class="fa fa-list"></i></a>';
-               buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+data.id+'"> <i class="fa fa-edit"></i></li></button>';
-               buttons += '	<button type="button" class="btn btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+data.id+'" ><i class="fa fa-window-close"></i></button>';
+    button: function(dato){
+           var buttons='<div class="btn-group">';
+            if(dato.status== 1){
+               buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += '	<button type="button" class="btn btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
           
-           }else if(data.status == 2){
-               buttons+='<button type="button" class="btn btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+data.id+'" ><i class="fa fa-check-square-o"></i></button>'
-               buttons += '<button class="btn btn-danger btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+data.id+'"><i class="fa fa-trash-o"></i> </button>';
+           }else if(dato.status == 2){
+               buttons+='<button type="button" class="btn btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
+               buttons += '<button class="btn btn-danger btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
            }
-           buttons+='</div></div></div></div>';
+           buttons+='</div>';
            return buttons;
+    },
+    status:function(dato){
+        var status='';
+        if(dato.status== 1){
+            status +="<span class='badge badge-success'>Activated</span>";
+        }else if(dato.status == 2){
+            status +="<span class='badge badge-secondary'>Deactivated</span>";
+        }
+       return status;
     },
 }
 const success = {
 
     new_update: function (data,state){
         console.log(data);
+        var dato = data;
         var typename =$('#name').val();
         
-        if(data =='error en agregar datos.'){
+        if(dato =='error en agregar datos.'){
             swal({
                 title: "Datos Existentes",
                 text: "El perfil: "+typename+" ya existe",
@@ -198,16 +207,19 @@ const success = {
               });
         }
         else{
-            var profile = '<div id="usertype_id'+data.id+'" class="card col-lg-3 col-md-6 col-sm-12 text-blue img-thumbnail text-center cardstypes mx-auto"><div class="card-body text-center"><div class="card-header"><h4 class="card-title" style="color:#17A2B8;">'+data.name+'<br>';
-            profile += '<span class="badge badge-success card-text">Activo</span></h4>';
-            profile += types.button(data);
+            var profile = `<tr id="usertype_id${dato.id}">
+                                <td>${dato.id}</td>
+                                <td>${dato.name}</td>
+                                <td class="hidden-xs">${types.status(dato)}</td>
+                                <td>${types.button(dato)}</td>
+                            </tr>`;
         
             if (state == "add"){ 
-             
-              $("#products-list").append(profile);
-                   
+              $("#usertype-list").append(profile);
+              $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");    
             }else{
-              $("#usertype_id"+data.id).replaceWith(profile);
+              $("#usertype_id"+dato.id).replaceWith(profile);
+              $("#usertype_id"+dato.id).css("background-color", "#ffdf7e");  
             }
 
             $('#myModal').modal('hide')
@@ -217,23 +229,19 @@ const success = {
 
     deactivated:function(data) {
         console.log(data);
-        if(data.status != 0){
+        var dato = data;
+        if(dato.status != 0){
+            var profile = `<tr id="usertype_id${dato.id}">
+                                <td>${dato.id}</td>
+                                <td>${dato.name}</td>
+                                <td class="hidden-xs">${types.status(dato)}</td>
+                                <td>${types.button(dato)}</td>
+                            </tr>`;
+          
+            $("#usertype_id"+dato.id).replaceWith(profile);
 
-            if(data.status == 1){
-                var profile = '<div id="usertype_id'+data.id+'" class="card col-lg-3 col-md-6 col-sm-12 text-blue img-thumbnail text-center cardstypes mx-auto"><div class="card-body text-center"><div class="card-header"><h4 class="card-title" style="color:#17A2B8;">'+data.name+'<br>';
-                profile += '<span class="badge badge-success card-text">Activo</span></h4>';
-                profile += types.button(data);
-                
-            }else if(data.status == 2){
-                var profile = '<div id="usertype_id'+data.id+'" class="card col-lg-3 col-md-6 col-sm-12 text-blue img-thumbnail text-center cardstypes mx-auto"><div class="card-body text-center"><div class="card-header"><h4 class="card-title" style="color:#17A2B8;">'+data.name+'<br>';
-                profile += '<span class="badge badge-secondary card-text">Inactivo</span></h4>';
-                profile += types.button(data);
-            }
-        
-            $("#usertype_id"+data.id).replaceWith(profile);
-
-        }else if(data.status == 0){
-            $("#usertype_id"+data.id).remove();
+        }else if(dato.status == 0){
+            $("#usertype_id"+dato.id).remove();
         }
        
     },
@@ -250,12 +258,17 @@ const success = {
 
     msj: function(data){
         console.log(data);
-      
-        swal({
-            title: "Error!",
-            text: data.responseJSON.errors.name[0],
-            type: "error",
-          });
+        $.notifyClose();
+        $.each(data.responseJSON.errors,function (k,message) {
+            $.notify({
+                // options
+                title: "Error!",
+                message:message,
+            },{
+                // settings
+                type: 'danger'
+            });
+        });
 
     },
 }

@@ -16,21 +16,21 @@ class TypeUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $user = Auth::user();
+    {           
+                $search = trim($request->dato);
 
-         
-        $id_menu=5;
-        $menu = menu($user,$id_menu);
-        if($menu['validate']){
-            $usertypes = TypeUserModel::where('id','>',4)->whereNotIn('status',[0])->get();  
-
-            return view('types.index',["usertypes"=>$usertypes ,"menu"=>$menu,]);
-
-        }else {
-                                
-            return redirect('/');
-        }               
+                if(strlen($request->type) > 0 &&  strlen($search) > 0){
+                    $data2 = TypeUserModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
+                } else{
+                    $data2 = TypeUserModel::whereNotIn('status',[0])->paginate(5);
+                } 
+                $data=$data2;
+                if ($request->ajax()) {
+                    return view('types.table', compact('data'));
+                }
+  
+        return view('types.index',compact('data'));
+            
     }
 
     public function validateType($request,$usertype_id){
@@ -107,14 +107,12 @@ class TypeUserController extends Controller
         if($type->status == 2)
         {
             $type->status = 1;
-            $type->save();
         }
         else
         {
-            $type->status = 2;
-            $type->save();
-           
+            $type->status = 2;  
         }
+        $type->save();
 
         return response()->json($type);
     } 

@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Type User
+Route::get('/types', 'TypeUserController@index');
+Route::get('/types/{UserType_id?}', 'TypeUserController@show');
+Route::post('/types', 'TypeUserController@store');
+Route::post('/types/{UserType_id}', 'TypeUserController@update');
+Route::delete('/types/{UserType_id}', 'TypeUserController@destroy');
+Route::delete('/types/delete/{id}', 'TypeUserController@delete');
+
+//Assigment Type
+Route::get('/assignmenttype/{id}', 'AssignamentTypeController@index');
+Route::put('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@update');
+Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@destroy');
