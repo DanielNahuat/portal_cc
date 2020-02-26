@@ -40,13 +40,13 @@
 
 </style>
 </head>
-<body class="theme-orange">
+<body class="theme-green">
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="{{asset('images/logo.png')}}" width="100" height="100" alt="Lucid"></div>
-        <p>Espere un momento...</p>        
+        <p>Wait a Moment...</p>        
     </div>
 </div>
 <!-- Overlay For Sidebars -->

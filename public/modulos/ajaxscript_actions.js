@@ -179,3 +179,54 @@ $(".allownumericwithdecimal").on("keypress keyup blur",function (event) {
         event.preventDefault();
     }
 });
+
+$(window).on('hashchange', function() {
+    if (window.location.hash) {
+        var page = window.location.hash.replace('#', '');
+        if (page == Number.NaN || page <= 0) {
+            return false;
+        }else{
+            getData(page);
+        }
+    }
+});
+
+
+    $(document).on('click', '.pagination a',function(event)
+    {
+        event.preventDefault();
+
+        $('li').removeClass('active');
+        $(this).parent('li').addClass('active');
+
+        var myurl = $(this).attr('href');
+        var page=$(this).attr('href').split('page=')[1];
+
+        getData(page);
+    });
+
+
+    $(document).on('click', '.search-query',function(event)
+    {
+        event.preventDefault();
+        getData(1);
+    });
+  
+    function getData(page){
+        var search = $('#search').val()
+        var type =$('#typesearch').val();
+
+        $.ajax(
+        {
+            url: '?page=' + page,
+            data:{dato:search,type:type},
+            type: "get",
+            datatype: "html"
+        }).done(function(data){
+            $('.pagination').remove();
+            $("#tag_container").empty().html(data);
+            location.hash = page;
+        }).fail(function(jqXHR, ajaxOptions, thrownError){
+              alert('No response from server');
+        });
+    }

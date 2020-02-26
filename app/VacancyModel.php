@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AssignamentTypeModel extends Model
+class VacancyModel extends Model
 {
-    protected $table = 'tu_detail';
+    protected $table = 'vacancies';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id_type_user','id_menu ','basic_actions',
+        'name','status',
     ];
 }
