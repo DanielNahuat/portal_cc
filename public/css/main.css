@@ -230,3 +230,7 @@ hr.hrblue {
 	z-index:-2; */
 	background:url(../images/foodlogin.jpg) no-repeat top left fixed !important;
 }
+
+#search {
+	height:35px;
+}
