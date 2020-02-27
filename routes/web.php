@@ -35,3 +35,10 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
 //Display Index Page Vacancies
 Route::get('/vacancies', 'VacancyController@index');
+Route::get('/vacancies/{vacancy_id?}', 'VacancyController@show');
+Route::post('/vacancies', 'VacancyController@store');
+Route::post('/vacancies/{vacancy_id?}', 'VacancyController@update');
+Route::delete('/vacancies/{vacancy_id?}', 'VacancyController@destroy');
+Route::delete('/vacancies/delete/{id}', 'VacancyController@delete');
+
+
