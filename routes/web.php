@@ -42,3 +42,7 @@ Route::delete('/vacancies/{vacancy_id?}', 'VacancyController@destroy');
 Route::delete('/vacancies/delete/{id}', 'VacancyController@delete');
 
 
+
+
+//Training
+Route::get('/training', 'TrainingController@index');
