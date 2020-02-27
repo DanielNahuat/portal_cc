@@ -38,3 +38,6 @@ Route::get('/vacancies', 'VacancyController@index');
 
 //Training
 Route::get('/training', 'TrainingController@index');
+
+//Clients
+Route::get('/clients', 'ClientsController@index');
