@@ -20,9 +20,9 @@ class TypeUserController extends Controller
                 $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
-                    $data2 = TypeUserModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
+                    $data2 = TypeUserModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(10);
                 } else{
-                    $data2 = TypeUserModel::whereNotIn('status',[0])->paginate(5);
+                    $data2 = TypeUserModel::whereNotIn('status',[0])->paginate(10);
                 } 
                 $data=$data2;
                 if ($request->ajax()) {
@@ -33,23 +33,45 @@ class TypeUserController extends Controller
             
     }
 
-    public function validateType($request,$usertype_id){
-        if($usertype_id==""){
-        $this->validate(request(), [
-            'name' => 'required|unique:type_user|max:30',
-        ]); 
-        }else{
+    public function validateType($request,$usertype_id =""){
+        
             $this->validate(request(), [
                 'name' => 'required|max:30',
-            ]);   
+            ]); 
         }
+    
+
+    public function ValidateExtraType($request,$usertype_id =""){
+        $ExtraTypeValidation=[]; 
+        $n ="";
+        $data = [];
+
+        $userValidation = TypeUserModel::where('id','!=',$usertype_id)->where('name', $request->name)
+        ->whereIn('status', [1,2])
+        ->count();
+
+        if($name > 0){      
+            $n = 'Otro Proveedor ya cuenta con ese Nombre';
+            
+        }
+        if($n==''){
+            $data=[];
+
+          }else{
+              $data=[
+                  'No' =>2,
+                  'name'=>$n,
+              ];
+
+              array_push($ExtraTypeValidation,$data);
+          }
+        return $ExtraTypeValidation;
     }
  
    
     public function store(Request $request)
-    {     $usertype_id="";
-        
-            TypeUserController::validateType($request,$usertype_id);
+    {   
+            TypeUserController::validateType($request,$usertype_id ="");
             $user = TypeUserModel::Create($request->input());
             $menu = BasicMenuModel::where('status','1')->get();
 
@@ -81,24 +103,17 @@ class TypeUserController extends Controller
     public function update(Request $request, $usertype_id)
     {
 
-        $userValidation = TypeUserModel::where('name', $request->name)
-        ->whereIn('status', [1,2])
-        ->first(); 
+       
     
-
-        if($userValidation == null){
+   
             TypeUserController::validateType($request,$usertype_id);
             $usertype = TypeUserModel::find($usertype_id);
             $usertype->name = $request->name;
             $usertype->status=1;
             $usertype->save();
-            return response()->json($usertype);
-        }
-        else{
-            $user='Otro Perfil ya cuenta con ese Nombre.';
-            return response()->json($user);
-        }
-       
+     
+        
+        return response()->json($user);
     }
 
     public function destroy($usertype_id)

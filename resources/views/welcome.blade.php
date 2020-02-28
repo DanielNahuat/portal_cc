@@ -127,8 +127,7 @@
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.print.min.js')}}"></script>
 <script src="{{asset('vendor/select2/select2.min.js')}}"></script>
-
-
+<script src="{{asset('js/bootstrap-notify.js')}}"></script>
 <script src="{{asset('bundles/mainscripts.bundle.js')}}"></script>
 @yield('script')
 </body>

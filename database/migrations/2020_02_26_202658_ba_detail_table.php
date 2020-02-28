@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BasicActionsTable extends Migration
+class BaDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class BasicActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('basic_actions', function (Blueprint $table) {
+        Schema::create('ba_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_menu');
-            $table->string('mat', 3)->default('BAC');
-            $table->string('name', 100)->nullable;
+            $table->string('mat', 3)->default('BAD');
+            $table->string('id_tu_detail');
+            $table->string('id_basic_actions');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class BasicActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basic_actions');
+        Schema::dropIfExists('ba_detail');
     }
 }

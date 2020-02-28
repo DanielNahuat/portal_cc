@@ -169,16 +169,16 @@ $(document).ready(function(){
 });
 const types ={
     button: function(dato){
-           var buttons='<div class="btn-group">';
+           var buttons='';
             if(dato.status== 1){
-               buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
-               buttons += '	<button type="button" class="btn btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+               buttons +='<a class="btn btn-sm btn-outline-primary" title="Assignament Type" id="btn-edit" href="/assignmenttype/'+dato.id+'"  ><i class="fa fa-info-circle"></i></a>'
+               buttons += ' <button class="btn btn-sm btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += '	<button type="button" class="btn btn-sm btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
           
            }else if(dato.status == 2){
-               buttons+='<button type="button" class="btn btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
-               buttons += '<button class="btn btn-danger btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
+               buttons+='<button type="button" class="btn btn-sm btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
+               buttons += '<button class="btn btn-danger btn-sm btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
            }
-           buttons+='</div>';
            return buttons;
     },
     status:function(dato){
@@ -239,7 +239,13 @@ const success = {
                             </tr>`;
           
             $("#usertype_id"+dato.id).replaceWith(profile);
-
+            if(dato.status == 1){
+                color ="#c3e6cb";
+            }else if(dato.status == 2){
+                color ="#ed969e";
+            }
+            $("#usertype_id"+dato.id).css("background-color", color);  
+            
         }else if(dato.status == 0){
             $("#usertype_id"+dato.id).remove();
         }
@@ -250,8 +256,6 @@ const success = {
         console.log(data);
         $('#usertype_id').val(data.id);
         $('#name').val(data.name);
-        $('#typeUserImageUpdate').val(data.typeUserImage);
-        $('#image').attr('src','/images/typeUsers/'+data.typeUserImage);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },

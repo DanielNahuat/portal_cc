@@ -29,5 +29,6 @@ Route::delete('/types/delete/{id}', 'TypeUserController@delete');
 
 //Assigment Type
 Route::get('/assignmenttype/{id}', 'AssignamentTypeController@index');
+Route::get('/assignmenttype/{id}/{detailfood_id?}', 'AssignamentTypeController@show');
 Route::put('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@update');
 Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@destroy');
