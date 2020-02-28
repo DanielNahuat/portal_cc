@@ -32,10 +32,11 @@ Route::group(['middleware'=>['auth']], function(){
 
 
 
-    //Assigment Type
-    Route::get('/assignmenttype/{id}', 'AssignamentTypeController@index');
-    Route::put('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@update');
-    Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@destroy');
+  //Assigment Type
+Route::get('/assignmenttype/{id}', 'AssignamentTypeController@index');
+Route::get('/assignmenttype/{id}/{detailfood_id?}', 'AssignamentTypeController@show');
+Route::put('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@update');
+Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@destroy');
 
 
     //Display Index Page Vacancies
@@ -60,8 +61,4 @@ Route::group(['middleware'=>['auth']], function(){
 
 
 
-//Assigment Type
-Route::get('/assignmenttype/{id}', 'AssignamentTypeController@index');
-Route::get('/assignmenttype/{id}/{detailfood_id?}', 'AssignamentTypeController@show');
-Route::put('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@update');
-Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController@destroy');
+
