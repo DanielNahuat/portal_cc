@@ -192,6 +192,7 @@ const success = {
             var vacancy = `<tr id="vacancy_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.description}</td>
                                 <td class="hidden-xs">${vacancies.status(dato)}</td>
                                 <td>${vacancies.button(dato)}</td>
                             </tr>`;
@@ -213,6 +214,7 @@ const success = {
         console.log(data);
         $('#vacancy_id').val(data.id);
         $('#name').val(data.name);
+        $('#description').val(data.description);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },
@@ -224,6 +226,7 @@ const success = {
             var vacancy = `<tr id="vacancy_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.description}</td>
                                 <td class="hidden-xs">${vacancies.status(dato)}</td>
                                 <td>${vacancies.button(dato)}</td>
                             </tr>`;

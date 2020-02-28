@@ -14,6 +14,12 @@
 									<input type="text" class="form-control has-error" id="name" name="name" placeholder="Ingrese nueva Vacante" value="" maxlength ="15">
 								</div>
 							</div>
+							<div class="form-group error">
+								<div class="btn-group col-sm-12">
+									<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									<textarea class="form-control has-error" id="description"  name="description" rows="3"></textarea>
+								</div>
+							</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

@@ -3,6 +3,7 @@
         <tr>
             <th width="100px">ID</th>
             <th>Name</th>
+            <th>Description</th>
             <th class="hidden-xs" >Status</th>
             <th>Options</th>
         </tr>
@@ -12,6 +13,7 @@
         <tr id="vacancy_id{{$vacancy->id}}">
             <td>{{ $vacancy->id }}</td>
             <td>{{ $vacancy->name }}</td>
+            <td>{{ $vacancy->description }}</td>
             @switch($vacancy->status)
                 @case(1)
                     <td class="hidden-xs">
