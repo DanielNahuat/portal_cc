@@ -150,7 +150,7 @@ const vacancies ={
     button: function(dato){
            var buttons='<div class="btn-group">';
             if(dato.status== 1){
-
+                buttons += '<a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Ver Candidatos" href="/candidates/'+dato.id+'"><i class="fa fa-users"></i></a>';
                buttons += '<button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"  ><i class="fa fa-edit"></i></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-vacancy" title="Deactivated" data-type="confirm" value="'+dato.id+'"><i class="fa fa-window-close"></i></button>';
           

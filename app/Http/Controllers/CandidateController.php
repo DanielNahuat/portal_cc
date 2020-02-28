@@ -20,10 +20,10 @@ class CandidateController extends Controller
                 } 
                 $data=$data2;
                 if ($request->ajax()) {
-                    return view('types.table', compact('data'));
+                    return view('candidates.table', compact('data'));
                 }
   
-        return view('types.index',compact('data'));
+        return view('candidates.index',compact('data'));
             
     }
 }
