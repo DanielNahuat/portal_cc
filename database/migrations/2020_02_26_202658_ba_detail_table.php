@@ -18,6 +18,7 @@ class BaDetailTable extends Migration
             $table->string('mat', 3)->default('BAD');
             $table->string('id_tu_detail');
             $table->string('id_basic_actions');
+            $table->string('id_menu');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

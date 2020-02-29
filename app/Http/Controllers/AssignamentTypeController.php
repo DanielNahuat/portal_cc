@@ -35,7 +35,8 @@ class AssignamentTypeController extends Controller
         $bad= BaDetailModel::where('id_tu_detail',$optionsmenu->id)->get();
 
         $data= [
-            'id'=>$optionsmenu->id_menu,
+            'id'=>$optionsmenu->id,
+            'id_menu'=>$optionsmenu->id_menu,
             'ActionCat' =>$ba,
             'ActionDetail'=>$bad,
         ];
@@ -61,11 +62,12 @@ class AssignamentTypeController extends Controller
             $usertype->status=1;
             $usertype->save();
 
-            BaDetailModel::where('id_tu_detail', $id)->truncate();
+            
             foreach($data as $action){
-                BaDetailModel::firstOrCreate([
+                BaDetailModel::Create([
                     'id_tu_detail'=>$detailtype_id,
                     'id_basic_actions'=>$action,
+                    'id_menu'=>$request->id_menu,
                 ]);
             }
         }
@@ -78,14 +80,14 @@ class AssignamentTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,$detailfood_id)
+    public function destroy($id,$detailtype_id)
     {
-         $usertype =AssignamentTypeModel::find($detailfood_id);
-         $usertype->status=0;
-         $usertype->save();
+         $detailtype =AssignamentTypeModel::find($detailtype_id);
+         $detailtype->status=0;
+         $detailtype->save();
 
-         BaDetailModel::where('id_tu_detail', $id)->truncate();
+         BaDetailModel::where('id_tu_detail',$detailtype_id)->where('id_menu',$detailtype->id_menu)->delete();
 
-        return response()->json($usertype);
+        return response()->json($detailtype);
     }
 }
