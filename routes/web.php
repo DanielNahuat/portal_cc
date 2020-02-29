@@ -61,8 +61,8 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     //Settings
     Route::get('/settings', 'SettingsController@index');
     Route::post('/settings', 'SettingsController@store');
-    Route::post('/settings/{user_id}', 'SettingsController@update');
-    Route::delete('/settings/{user_id}', 'SettingsController@destroy');
+    Route::post('/settings/{settings_id}', 'SettingsController@update');
+    Route::delete('/settings/{settings_id}', 'SettingsController@destroy');
     Route::delete('/settings/delete/{id}', 'SettingsController@delete');
 
     //Clients

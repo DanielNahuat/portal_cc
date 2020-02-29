@@ -45,5 +45,5 @@
 @endsection
 @section('script')
 <script src="{{asset('modulos/ajaxscript_actions.js')}}"></script>
-<script src="{{asset('modulos/settings/AjaxTypes.js')}}"></script>
+<script src="{{asset('modulos/settings/AjaxSettings.js')}}"></script>
 @endsection

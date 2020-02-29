@@ -90,16 +90,24 @@ class SettingsController extends Controller
     public function destroy($settings_id)
     {
         $setting = SettingsModel::find($settings_id);
-        if($setting->status == 1)
+        if($setting->status == 2)
         {
-            $setting->status = 0;
+            $setting->status = 1;
         }
         else
         {
-            $setting->status = 1;  
+            $setting->status = 2;  
         }
         $setting->save();
-
+        // $setting2 = SettingsModel::find($settings_id);
+        return response()->json($setting);
+    } 
+    public function delete($settings_id)
+    {
+        $setting = TypeUserModel::find($settings_id);
+            $setting->status = 0;
+            $setting->save();
+      
         return response()->json($setting);
     } 
 }
