@@ -10,7 +10,7 @@
                                 </div>
                                 <div class="col-lg-6 col-xl-6 col-xs-12 col-md-6 col-sm-12">
                                     <ul class="header-dropdown">
-                                        <li><a href="javascript:void(0);" class="btn btn-primary" disabled id="btn_add" >New Setting <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="javascript:void(0);" class="btn btn-success" disabled id="btn_add" >New Setting <i class="fa fa-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>

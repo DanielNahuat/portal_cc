@@ -1,5 +1,5 @@
 <table class="table table-striped text-center" id="tag_container">
-    <thead style="background:#dc3545;"class="text-white">
+    <thead class="text-white thead-yasc">
         <tr>
             <th width="100px">ID</th>
             <th>Name</th>

@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SettingsModel;
-
-
-
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
     public function index(Request $request)
-    {           
+    {          
+        $user = Auth::user();
+        $id_menu=5;
+        $menu = menu($user,$id_menu);
+        if($menu['validate']){  
                 $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
@@ -21,10 +23,13 @@ class SettingsController extends Controller
                 } 
                 $data=$data2;
                 if ($request->ajax()) {
-                    return view('settings.table', compact('data'));
+                    return view('settings.table', ["data"=>$data]);
                 }
   
-        return view('settings.index',compact('data'));
+        return view('settings.index',["data"=>$data,"menu"=>$menu,]);
+         }else{
+            return redirect('/');
+         }
             
     }
 
