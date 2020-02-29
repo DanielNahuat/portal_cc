@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActionModel extends Model
+class BaDetailModel extends Model
 {
-    protected $table = 'basic_actions';
+    protected $table = 'ba_detail';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id_menu','name'
+        'id_tu_detail','id_basic_actions'
     ];
 }

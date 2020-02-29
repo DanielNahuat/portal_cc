@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class BasicActionsTable extends Migration
+class CreateBreakRulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class BasicActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('basic_actions', function (Blueprint $table) {
+        Schema::create('break_rules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_menu');
-            $table->string('mat', 3)->default('BAC');
-            $table->string('name', 100)->nullable;
+            $table->string('mat', 3)->default('DCL');
+            $table->string('interval');
+            $table->string('duration');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class BasicActionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basic_actions');
+        Schema::dropIfExists('break_rules');
     }
 }

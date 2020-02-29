@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-<title>:: Delichef :: Home</title>
+<title>:: YASC Portal :: Home</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -55,7 +55,30 @@
 
 
  @include('template/sidebar')
-
+ <nav class="navbar navbar-fixed-top">
+    <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+        </div>
+        <div class="navbar-brand">
+            YASC PORTAL
+        </div>
+        <div class="navbar-right">
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav">
+                                                            
+                    <li>
+                            <form id="logout-form" class="form-prevent-multiple-submit" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-lg btn-outline-light text-dark button-prevent-multiple-submit">
+                                <i class="icon-login"></i> Salir
+                                </button> 
+                            </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div id="main-content">
         <div class="container-fluid">
             <div class="block-header">
@@ -127,8 +150,7 @@
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.print.min.js')}}"></script>
 <script src="{{asset('vendor/select2/select2.min.js')}}"></script>
-
-
+<script src="{{asset('js/bootstrap-notify.js')}}"></script>
 <script src="{{asset('bundles/mainscripts.bundle.js')}}"></script>
 @yield('script')
 </body>

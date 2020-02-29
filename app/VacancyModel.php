@@ -9,6 +9,6 @@ class VacancyModel extends Model
     protected $table = 'vacancies';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name','status',
+        'name','description','status',
     ];
 }
