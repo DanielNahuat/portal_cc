@@ -8,23 +8,122 @@
 				
 				<form enctype="multipart/form-data" method="POST" id="candidateForm" class="form-horizontal">
 					<div class="modal-body">
-							<div class="form-group error">
-								<div class="btn-group col-sm-12">
-									<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
-									<input type="text" class="form-control has-error" id="name" name="name" placeholder="Ingrese nueva Vacante" value="" maxlength ="15">
+					
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									</div>
+									<input type="text" class="form-control has-error" id="name" name="name" placeholder="Name" value="" maxlength ="15">
+								</div> 
+							</div>
+							<div class="col-md-6 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									</div>
+									<input type="text" class="form-control has-error" id="last_name" name="last_name" placeholder="Last Name" value="" maxlength ="15">
+								</div> 
+							</div>
+                   		</div>
+
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									</div>
+									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="Phone" value="" maxlength ="15">
+								</div> 
+							</div>
+							<div class="col-md-4 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									</div>
+									<input type="text" class="form-control has-error" id="mail" name="mail" placeholder="Email" value="" maxlength ="15">
+								</div> 
+							</div>
+
+							<div class="col-md-4 mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+									</div>
+									<input type="text" class="form-control has-error" id="channel" name="channel" placeholder="Channel" value="" maxlength ="15">
+								</div> 
+							</div>
+                   		</div>
+
+						<button type="button" class="btn btn-danger btn-lg btn-block">Faking Good Alert</button>
+
+						<br>
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label>Listening Test</label>
+								<div class="input-group">
+									<select class="custom-select" name="id_school" id = "id_school" >
+										
+												<option value = ""></option> 
+											
+									</select>  
+								</div> 
+							</div>
+							<div class="col-md-6 mb-3">
+								<label>Grammar Test</label>
+								<div class="input-group">
+									<select class="custom-select" name="id_coffeeshop" id = "id_coffeeshop" >
+											
+												<option value = ""></option> 
+											
+									</select>
 								</div>
 							</div>
-							<div class="form-group error">
-								<div class="btn-group col-sm-12">
-									<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
-									<textarea class="form-control has-error" id="description"  name="description" rows="3"></textarea>
-								</div>
+						</div>
+
+						
+						<div class="form-row">
+							<div class="col-md-3 mb-3">
+								<label>Typing Test</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+								</div> 
 							</div>
+							<div class="col-md-3 mb-3">
+								<label>&nbsp</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+								</div> 
+							</div>
+							<div class="col-md-3 mb-3">
+								<label>&nbsp</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+								</div> 
+							</div>
+							<div class="col-md-3 mb-3">
+								<label>&nbsp</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+								</div> 
+							</div>
+                   		</div>
+
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label>Personality Test</label>
+								<input type="file" id="personality_test" name="personality_test"><br><br>
+							</div>
+                   		</div>
+						  
 					</div>
+
 					<div class="modal-footer">
 						<button type="button"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 						<button type="submit" class="btn modaldelichef" id="btn-save" value="add">Guardar</button>
 					</div>
+
 				</form> 
 			  <input type="hidden" id="candidate_id" name="candidate_id" value="0"> 
             </div>
