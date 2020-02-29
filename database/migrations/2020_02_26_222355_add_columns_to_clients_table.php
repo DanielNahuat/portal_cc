@@ -31,13 +31,14 @@ class AddColumnsToClientsTable extends Migration
      */
     public function down()
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn('name');
-            $table->dropColumn('description');
-            $table->dropColumn('color');
-            $table->dropColumn('documents');
-            $table->dropColumn('updated_by');
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('clients');
+        // Schema::table('clients', function (Blueprint $table) {
+        //     $table->dropColumn('name');
+        //     $table->dropColumn('description');
+        //     $table->dropColumn('color');
+        //     $table->dropColumn('documents');
+        //     $table->dropColumn('updated_by');
+        //     $table->dropColumn('status');
+        // });
     }
 }

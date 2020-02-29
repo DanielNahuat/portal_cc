@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-<title>:: Delichef :: Home</title>
+<title>:: YASC Portal :: Home</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -43,10 +43,10 @@
 <body class="theme-green">
 
 <!-- Page Loader -->
-<div class="page-loader-wrapper">
+<div class="page-loader-wrapper" style="background:white;">
     <div class="loader">
-        <div class="m-t-30"><img src="{{asset('images/logo.png')}}" width="100" height="100" alt="Lucid"></div>
-        <p>Wait a Moment...</p>        
+        <div class=""><img src="{{asset('images/logo.jpeg')}}" width="200" height="150" alt="Lucid"></div>
+        <p class="text-danger">Loading...</p>        
     </div>
 </div>
 <!-- Overlay For Sidebars -->
@@ -55,13 +55,41 @@
 
 
  @include('template/sidebar')
-
+ <nav class="navbar navbar-fixed-top">
+    <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+        </div>
+        <div class="navbar-brand">
+            YASC PORTAL
+        </div>
+        <div class="navbar-right">
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/schedule" class="icon-menu d-none d-sm-block d-md-none d-lg-block"><i class="icon-calendar"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://yascemail.com/" class="icon-menu d-none d-sm-block"><i class="icon-envelope"></i></a>
+                    </li>                                     
+                    <li>
+                            <form id="logout-form" class="form-prevent-multiple-submit" action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-lg btn-outline-light text-dark button-prevent-multiple-submit">
+                                        <i class="icon-login"></i> Salir
+                                </button> 
+                            </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div id="main-content">
         <div class="container-fluid">
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-12">
-                        <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Delichef</h2>
+                        <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Your Answer Solutions Center</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"> <i class="icon-home"></i></a></li>
                             <li class="breadcrumb-item active nameDeli"></li>
@@ -71,21 +99,21 @@
                     <div class="col-lg-6 col-md-4 col-sm-12 text-right">
                         <div class="bh_chart hidden-xs">
                             <div class="float-left m-r-15">
-                                <small>Usuarios</small>
+                                <small>Operators Start Shift</small>
                                 <h6 class="mb-0 mt-1"><i class="icon-user"></i> </h6>
                             </div>
                             <span class="bh_visitors float-right">2,5,1,8,3,6,7,5</span>
                         </div>
                         <div class="bh_chart hidden-sm">
                             <div class="float-left m-r-15">
-                                <small>Pedidos</small>
+                                <small>Operators Breack</small>
                                 <h6 class="mb-0 mt-1"><i class="fa fa-cutlery"></i> </h6>
                             </div>
                             <span class="bh_visits float-right">10,8,9,3,5,8,5</span>
                         </div>
                         <div class="bh_chart hidden-sm">
                             <div class="float-left m-r-15">
-                                <small>Ventas</small>
+                                <small>Operators Day Off</small>
                                 <h6 class="mb-0 mt-1"><i class="fa fa-line-chart"></i> </h6>
                             </div>
                             <span class="bh_chats float-right">1,8,5,6,2,4,3,2</span>
@@ -127,8 +155,7 @@
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.html5.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-datatable/buttons/buttons.print.min.js')}}"></script>
 <script src="{{asset('vendor/select2/select2.min.js')}}"></script>
-
-
+<script src="{{asset('js/bootstrap-notify.js')}}"></script>
 <script src="{{asset('bundles/mainscripts.bundle.js')}}"></script>
 @yield('script')
 </body>

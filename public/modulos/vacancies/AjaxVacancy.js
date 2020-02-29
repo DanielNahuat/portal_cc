@@ -150,7 +150,7 @@ const vacancies ={
     button: function(dato){
            var buttons='<div class="btn-group">';
             if(dato.status== 1){
-
+                buttons += '<a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Ver Candidatos" href="/candidates/'+dato.id+'"><i class="fa fa-users"></i></a>';
                buttons += '<button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"  ><i class="fa fa-edit"></i></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-vacancy" title="Deactivated" data-type="confirm" value="'+dato.id+'"><i class="fa fa-window-close"></i></button>';
           
@@ -192,6 +192,7 @@ const success = {
             var vacancy = `<tr id="vacancy_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.description}</td>
                                 <td class="hidden-xs">${vacancies.status(dato)}</td>
                                 <td>${vacancies.button(dato)}</td>
                             </tr>`;
@@ -213,6 +214,7 @@ const success = {
         console.log(data);
         $('#vacancy_id').val(data.id);
         $('#name').val(data.name);
+        $('#description').val(data.description);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },
@@ -224,6 +226,7 @@ const success = {
             var vacancy = `<tr id="vacancy_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.description}</td>
                                 <td class="hidden-xs">${vacancies.status(dato)}</td>
                                 <td>${vacancies.button(dato)}</td>
                             </tr>`;

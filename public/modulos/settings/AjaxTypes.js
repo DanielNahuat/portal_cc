@@ -2,7 +2,7 @@ getData(1);
 $(document).ready(function(){
      
     
-    var nameDeli='<a href="/types">Users Types</i></a>';
+    var nameDeli='<a href="/settings">Settings</i></a>';
     $('.nameDeli').html(nameDeli);
     $('#sidebar10').addClass('active');  
 
@@ -13,7 +13,7 @@ $(document).ready(function(){
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
-        $('#typeUserForm').trigger("reset");
+        $('#settingsForm').trigger("reset");
         $("#image").attr('src','');
         $('#myModal').modal('show');
     });
@@ -23,9 +23,9 @@ $(document).ready(function(){
 
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(){
-        $('#typeUserForm').trigger("reset");
-        var usertype_id = $(this).val();
-        var my_url = url + '/' + usertype_id;
+        $('#settingsForm').trigger("reset");
+        var settings_id = $(this).val();
+        var my_url = url + '/' + settings_id;
 
             actions.show(my_url);
        
@@ -34,26 +34,32 @@ $(document).ready(function(){
 
 
     //create new product / update existing product ***************************
-    $("#typeUserForm").on('submit',function (e) {
+    $("#settingsForm").on('submit',function (e) {
         console.log('button');
       
         e.preventDefault(); 
-        var formData =  $("#typeUserForm").serialize();
+        var formData =  $("#settingsForm").serialize();
         
         if($("#name").val().length > 30)
         {
-            alert("Ingrese un nombre menor a 30 caracteres");
+            alert("Enter a name less than 30 characters");
+            return false;
+        }
+
+        if($("#type").val().length > 30)
+        {
+            alert("Enter a type less than 30 characters");
             return false;
         }
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
-        var usertype_id = $('#usertype_id').val();;
+        var settings_id = $('#settings_id').val();;
         var my_url = url;
         if (state == "update"){
             type = "POST"; //for updating existing resource
-            my_url += '/' + usertype_id;
+            my_url += '/' + settings_id;
         }
         
             console.log(formData);
@@ -72,23 +78,23 @@ $(document).ready(function(){
             })
                 if($(this).attr('class') == 'btn btn-sm btn-outline-success off-type')
                 {
-                    title= "¿Deseas activar este Usuario?";
-                    text="El Usuario se activara";
-                    confirmButtonText="Activar";
+                    title= "Do you want to activate this option?";
+                    text="The Option will be activated";
+                    confirmButtonText="Activate";
 
-                    datatitle="Activado";
-                    datatext="activado";
-                    datatext2="Activacion";
+                    datatitle="Activated";
+                    datatext="activated";
+                    datatext2="Activation";
                 }
                 else 
                 {
-                    title= "¿Desea desactivar este Usuario?";
-                    text= "El Usuario se desactivara";
+                    title= "Do you want to disable this option?";
+                    text= "The Option will be deactivated";
                     confirmButtonText="Desactivar";
 
-                    datatitle="Desactivado";
-                    datatext="desactivado";
-                    datatext2="Desactivacion";
+                    datatitle="Deactivated";
+                    datatext="deactivated";
+                    datatext2="Deactivation";
 
                 }
     
@@ -100,18 +106,18 @@ $(document).ready(function(){
                     showCancelButton: true,
                     confirmButtonClass: "btn btn-danger",
                     confirmButtonText: confirmButtonText,
-                    cancelButtonText: "Cancelar",
+                    cancelButtonText: "Cancel",
                     closeOnConfirm: false,
                     closeOnCancel: false
                 },
                 function(isConfirm) {
                     if (isConfirm) {
-                    swal(datatitle, "Usuario "+datatext, "success");
+                    swal(datatitle, "Option "+datatext, "success");
                     actions.deactivated(my_url);
                     } 
                     else {
                     
-                    swal("Cancelado", datatext2+" cancelada", "error");
+                    swal("Cancelled", datatext2+" cancelled", "error");
                 
                     }
             });
@@ -127,13 +133,13 @@ $(document).ready(function(){
             }
         })
         swal({
-            title: "¿Desea eliminar este Usuario?",
-            text: "El usuario se eliminara permanentemente",
+            title: "Are you sure you wish to delete this option?",
+            text: "All records with this option will be modified",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn btn-danger",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
             closeOnConfirm: true,
             closeOnCancel: false
           },
@@ -141,7 +147,7 @@ $(document).ready(function(){
             if (isConfirm) {
                 actions.deactivated(my_url);
             }else {
-               swal("Cancelado", "Eliminacion cancelada", "error");
+               swal("Cancelled", "Deletion Canceled", "error");
             }
           });
         });
@@ -149,12 +155,12 @@ $(document).ready(function(){
 
     //display modal form for product DETAIL ***************************
     $(document).on('click','.open_detail',function(){
-        var usertype_id = $(this).val();
+        var settings_id = $(this).val();
        
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/' + usertype_id,
+            url: url + '/' + settings_id,
             success: function (data) {
                 console.log(data);
                 $(".modal-body-detail").html(data);
@@ -169,16 +175,16 @@ $(document).ready(function(){
 });
 const types ={
     button: function(dato){
-           var buttons='';
+           var buttons='<div class="btn-group">';
             if(dato.status== 1){
-               buttons +='<a class="btn btn-sm btn-outline-primary" title="Assignament Type" id="btn-edit" href="/assignmenttype/'+dato.id+'"  ><i class="fa fa-info-circle"></i></a>'
-               buttons += ' <button class="btn btn-sm btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
-               buttons += '	<button type="button" class="btn btn-sm btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+               buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += '	<button type="button" class="btn btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
           
            }else if(dato.status == 2){
-               buttons+='<button type="button" class="btn btn-sm btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
-               buttons += '<button class="btn btn-danger btn-sm btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
+               buttons+='<button type="button" class="btn btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
+               buttons += '<button class="btn btn-danger btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
            }
+           buttons+='</div>';
            return buttons;
     },
     status:function(dato){
@@ -197,6 +203,8 @@ const success = {
         console.log(data);
         var dato = data;
         var typename =$('#name').val();
+        var type =$('#type').val();
+
         
         if(dato =='error en agregar datos.'){
             swal({
@@ -207,19 +215,20 @@ const success = {
               });
         }
         else{
-            var profile = `<tr id="usertype_id${dato.id}">
+            var settings = `<tr id="settings_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.type}</td>
                                 <td class="hidden-xs">${types.status(dato)}</td>
                                 <td>${types.button(dato)}</td>
                             </tr>`;
         
             if (state == "add"){ 
-              $("#usertype-list").append(profile);
-              $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");    
+              $("#settings-list").append(settings);
+              $("#settings_id"+dato.id).css("background-color", "#c3e6cb");    
             }else{
-              $("#usertype_id"+dato.id).replaceWith(profile);
-              $("#usertype_id"+dato.id).css("background-color", "#ffdf7e");  
+              $("#settings_id"+dato.id).replaceWith(settings);
+              $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
             }
 
             $('#myModal').modal('hide')
@@ -231,31 +240,27 @@ const success = {
         console.log(data);
         var dato = data;
         if(dato.status != 0){
-            var profile = `<tr id="usertype_id${dato.id}">
+            var profile = `<tr id="settings_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
                                 <td class="hidden-xs">${types.status(dato)}</td>
                                 <td>${types.button(dato)}</td>
                             </tr>`;
           
-            $("#usertype_id"+dato.id).replaceWith(profile);
-            if(dato.status == 1){
-                color ="#c3e6cb";
-            }else if(dato.status == 2){
-                color ="#ed969e";
-            }
-            $("#usertype_id"+dato.id).css("background-color", color);  
-            
+            $("#settings_id"+dato.id).replaceWith(profile);
+
         }else if(dato.status == 0){
-            $("#usertype_id"+dato.id).remove();
+            $("#settings_id"+dato.id).remove();
         }
        
     },
 
     show: function(data){
         console.log(data);
-        $('#usertype_id').val(data.id);
+        $('#settings_id').val(data.id);
         $('#name').val(data.name);
+        // $('#typeUserImageUpdate').val(data.typeUserImage);
+        // $('#image').attr('src','/images/typeUsers/'+data.typeUserImage);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },

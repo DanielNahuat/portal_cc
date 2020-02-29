@@ -46,6 +46,7 @@ class VacancyController extends Controller
             $vacancy_id="";
             VacancyController::validateVacancy($request,$vacancy_id);
             $vacancy = VacancyModel::firstOrCreate(['name'=>$request->name,
+            'description'=>$request->description,
             'status'=>1,]);
 
             return response()->json($vacancy);
@@ -64,6 +65,7 @@ class VacancyController extends Controller
             VacancyController::validateVacancy($request,$vacancy_id);
             $vacancy = VacancyModel::find($vacancy_id);
             $vacancy->name = $request->name;
+            $vacancy->description = $request->description;
             $vacancy->status=1;
             $vacancy->save();
             return response()->json($vacancy);
