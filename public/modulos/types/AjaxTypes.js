@@ -2,7 +2,7 @@ getData(1);
 $(document).ready(function(){
      
     
-    var nameDeli='<a href="/types">Perfiles</i></a>';
+    var nameDeli='<a href="/types">Users Types</i></a>';
     $('.nameDeli').html(nameDeli);
     $('#sidebar10').addClass('active');  
 

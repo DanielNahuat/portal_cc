@@ -124,7 +124,7 @@ $(document).ready(function(){
         });
 
     //delete product and remove it from TABLE list ***************************
-    $(document).on('click','.delete-profile',function(){
+    $(document).on('click','.deleteSettings',function(){
         var privada_id = $(this).val();
         var my_url = url + '/delete/' + privada_id;
         $.ajaxSetup({
@@ -243,11 +243,18 @@ const success = {
             var profile = `<tr id="settings_id${dato.id}">
                                 <td>${dato.id}</td>
                                 <td>${dato.name}</td>
+                                <td>${dato.type}</td>
                                 <td class="hidden-xs">${types.status(dato)}</td>
                                 <td>${types.button(dato)}</td>
                             </tr>`;
           
             $("#settings_id"+dato.id).replaceWith(profile);
+            if(dato.status == 1){
+                color ="#c3e6cb";
+            }else if(dato.status == 2){
+                color ="#ed969e";
+            }
+            $("#settings_id"+dato.id).css("background-color", color); 
 
         }else if(dato.status == 0){
             $("#settings_id"+dato.id).remove();

@@ -16,7 +16,8 @@
 					<button type="submit" class="btn modaldelichef" id="btn-save" value="add">Guardar</button>
                 </div>
 			  </form> 
-			  <input type="hidden" id="usertype_id" name="usertype_id" value="0"> 
+			      <input type="hidden" id="usertype_id" name="usertype_id" value="0">
+            <input type="hidden" id="id_menu" name="id_menu" value="0"> 
             </div>
           </div>
         </div>

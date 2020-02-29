@@ -17,6 +17,12 @@ class TypeUserController extends Controller
      */
     public function index(Request $request)
     {           
+        $user = Auth::user();
+        
+        $id_menu=5;
+        $menu = menu($user,$id_menu);
+        if($menu['validate']){          
+        
                 $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
@@ -26,11 +32,13 @@ class TypeUserController extends Controller
                 } 
                 $data=$data2;
                 if ($request->ajax()) {
-                    return view('types.table', compact('data'));
+                    return view('types.table', ["data"=>$data]);
                 }
-  
-        return view('types.index',compact('data'));
             
+        return view('types.index',["data"=>$data,"menu"=>$menu,]);
+        }else{
+            return redirect('/');
+        }
     }
 
     public function validateType($request,$usertype_id =""){

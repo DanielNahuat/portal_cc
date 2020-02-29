@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="{{$setting->id}}" ><i class="fa fa-check-square-o"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deletetype" title="Delete" data-type="confirm" value="{{$setting->id}}"><i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="{{$setting->id}}"><i class="fa fa-trash-o"></i></button>
                 </td>
                 @break
             @endswitch
