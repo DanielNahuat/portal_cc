@@ -230,3 +230,7 @@ $(window).on('hashchange', function() {
               alert('No response from server');
         });
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });

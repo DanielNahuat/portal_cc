@@ -2,7 +2,7 @@
 $(document).ready(function(){
      
     
-    var nameDeli='<a href="/types">Perfiles</i></a>';
+    var nameDeli='<a href="/types">Types User</i></a>';
     $('.nameDeli').html(nameDeli);
     $('#sidebar10').addClass('active');  
 
@@ -40,6 +40,7 @@ $(document).ready(function(){
         e.preventDefault(); 
         var formData ={
             data:types.datadetailactions(),
+            id_menu:$("#id_menu").val(),
         } 
         
         
@@ -152,6 +153,7 @@ const success = {
     show: function(data){
         console.log(data);
         $('#usertype_id').val(data.id);
+        $('#id_menu').val(data.id_menu);
         var dato = '';
         $.each(data.ActionCat, function (index, da) {
             var dato2 = `<div class="form-check col-sm-6">

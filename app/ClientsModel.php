@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BaDetailModel extends Model
+class ClientsModel extends Model
 {
-    protected $table = 'ba_detail';
+    protected $table = 'clients';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id_tu_detail','id_basic_actions','id_menu'
+        'mat','name', 'description', 'color', 'documents', 'status'
     ];
 }
