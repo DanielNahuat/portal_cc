@@ -38,3 +38,14 @@ Route::get('/vacancies', 'VacancyController@index');
 
 //Training
 Route::get('/training', 'TrainingController@index');
+Route::post('/training', 'TrainingController@store');
+Route::post('/training/{user_id}', 'TrainingController@update');
+Route::delete('/training/{user_id}', 'TrainingController@destroy');
+Route::delete('/training/delete/{id}', 'TrainingController@delete');
+
+//Settings
+Route::get('/settings', 'SettingsController@index');
+Route::post('/settings', 'SettingsController@store');
+Route::post('/settings/{user_id}', 'SettingsController@update');
+Route::delete('/settings/{user_id}', 'SettingsController@destroy');
+Route::delete('/settings/delete/{id}', 'SettingsController@delete');
