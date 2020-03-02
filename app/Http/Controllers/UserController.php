@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -11,9 +12,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // $data = User::with('User_info')->paginate(10);
+        // dd($data);
+
+        $search = trim($request->dato);
+
+                if(strlen($request->type) > 0 &&  strlen($search) > 0){
+                    $data2 = User::with('User_info')->paginate(10);
+                } else{
+                    $data2 = User::with('User_info')->paginate(10);
+                } 
+                $data=$data2;
+                if ($request->ajax()) {
+                    return view('users.table', compact('data'));
+                }
+        return view('users.index',compact('data'));
     }
 
     /**
