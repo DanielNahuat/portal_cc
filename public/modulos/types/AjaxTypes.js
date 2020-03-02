@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     var nameDeli='<a href="/types">Users Types</i></a>';
     $('.nameDeli').html(nameDeli);
-    $('#sidebar10').addClass('active');  
+    $('#sidebar1').addClass('active') 
 
     //get base URL *********************
     var url = $('#url').val();
