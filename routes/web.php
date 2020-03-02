@@ -54,6 +54,14 @@ Route::group(['middleware'=>['auth']], function(){
 
     //Clients
     Route::get('/clients', 'ClientsController@index');
+
+    //User
+    Route::get('/users','UserController@index');
+    Route::get('/types/{UserType_id?}', 'TypeUserController@show');
+    Route::post('/users', 'TypeUserController@store');
+    Route::post('/users/{UserType_id}', 'TypeUserController@update');
+    Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
+    Route::delete('/users/delete/{id}', 'TypeUserController@delete');
 });
 
 

@@ -13,8 +13,10 @@ class CreateEmployeeClientTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_client', function (Blueprint $table) {
+        Schema::create('users_client', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('id_user');
+            $table->integer('id_client');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateEmployeeClientTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_client');
+        Schema::dropIfExists('users_client');
     }
 }
