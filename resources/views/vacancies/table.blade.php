@@ -20,6 +20,7 @@
                         <span class='badge badge-success'>Activated</span>
                     </td>
                     <td>
+                        <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Ver Candidatos" href="{{ action('CandidateController@index', ['id' => $vacancy->id]) }}"><i class="fa fa-users"></i></a>
                         <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="{{$vacancy->id}}"  ><i class="fa fa-edit"></i></button>
                         <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-vacancy" title="Deactivated" data-type="confirm" value="{{$vacancy->id}}"><i class="fa fa-window-close"></i></button>
                     </td>

@@ -1,5 +1,5 @@
-<table class="table table-bordered" id="tag_container">
-    <thead>
+<table class="table table-striped text-center" id="tag_container">
+    <thead class="text-white thead-yasc">
         <tr>
             <th width="100px">ID</th>
             <th>Name</th>
@@ -18,8 +18,9 @@
                         <span class='badge badge-success'>Activated</span>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="{{$type->id}}"  ><i class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="{{$type->id}}"><i class="fa fa-window-close"></i></button>
+                        <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Assignament Type" id="btn-edit" href="/assignmenttype/{{$type->id}}"  ><i class="fa fa-info-circle"></i></a>
+                        <button type="button" class="btn btn-sm btn-outline-secondary open_modal" data-toggle="tooltip" title="Edit" id="btn-edit" value="{{$type->id}}"  ><i class="fa fa-edit"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" data-toggle="tooltip" title="Deactivated" data-type="confirm" value="{{$type->id}}"><i class="fa fa-window-close"></i></button>
                     </td>
                 @break
                 @case(2)
@@ -27,8 +28,8 @@
                     <span class='badge badge-secondary'>Deactivated</span>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="{{$type->id}}" ><i class="fa fa-check-square-o"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deletetype" title="Delete" data-type="confirm" value="{{$type->id}}"><i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-toggle="tooltip" data-type="confirm" value="{{$type->id}}" ><i class="fa fa-check-square-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deletetype" data-toggle="tooltip" title="Delete" data-type="confirm" value="{{$type->id}}"><i class="fa fa-trash-o"></i></button>
                 </td>
                 @break
             @endswitch

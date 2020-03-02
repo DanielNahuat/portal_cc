@@ -14,14 +14,14 @@ class MenuTable extends Seeder
         DB::table('basic_menu')->truncate();
 
         $menus = [
-            ['name'=> 'Bitacoras','icon'=> 'fa fa-print','link'=>'/app/bitacoras','prioridad'=> '3','status'=> 1,],
-            ['name'=> 'QR','icon'=> 'fa fa-qrcode','link'=>'/app/qr','prioridad'=> '3','status'=> 1,],
-            ['name'=> 'Servicios','icon'=> 'fa fa-building','link'=>'/app/servicios','prioridad'=> '3','status'=> 1,],
-            ['name'=> 'Lotes','icon'=> 'fa fa-home','link'=>'/app/lotes','prioridad'=> '4','status'=> 1,],
-            ['name'=> 'Perfiles','icon'=> 'fa fa-address-card','link'=>'/app/Perfiles','prioridad'=> '2','status'=> 1,],
-            ['name'=> 'Usuarios','icon'=> 'fa fa-users','link'=>'/app/usuarios','prioridad'=> '1','status'=> 1,],
-            ['name'=> 'Residentes','icon'=> 'fa fa-users','link'=>'/app/usuariosPrivada','prioridad'=> '1','status'=> 1,],
-      ];
+            ['name'=> 'Types User','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Users','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Operators','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Clients','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Schedule','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Settings','icon'=> 'fa fa-address-card','link'=>'/settings','prioridad'=> '1','status'=> 1,],
+
+        ];
       
       foreach($menus as $menu){
             DB::table('basic_menu')->insert($menu);
