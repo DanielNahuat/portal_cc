@@ -4,13 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SettingsModel extends Model
+class BreakRulesModel extends Model
 {
-    protected $table = 'settings';
+    
+    protected $table = 'break_rules';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'mat','id_option','name','status'
+       'interval', 'duration', 'id_client'
     ];
-
-    
 }

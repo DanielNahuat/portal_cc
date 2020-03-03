@@ -120,7 +120,7 @@ class TypeUserController extends Controller
             $usertype->save();
      
         
-        return response()->json($user);
+        return response()->json($usertype);
     }
 
     public function destroy($usertype_id)
