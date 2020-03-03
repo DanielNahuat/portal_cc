@@ -18,12 +18,14 @@ class CandidateController extends Controller
         if($menu['validate']){   
 
 
-            // $data2 = CandidateModel::select('candidates.id as id', 'candidates.name as name', 'candidates.cod as cod', 'prov.name as name_prov', 'coffee.name as name_coffee', 'cat.name as name_cat', 'supplies.name as name','supplies.quantity as quantity', 'supplies.price as price', 'supplies.cost as cost', 'supplies.total_price as total_price', 'supplies.status as status')
-            // ->join('vacancies as vac', 'vac.id', '=', 'candidates.id_vacancy')
-            // ->where('candidates.id_vacancy',$id)
-            // ->whereIn('candidates.status',[1,2]) 
-            // ->whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5)
-            // ->get();
+                        // $candidate = CandidateModel::select('candidates.id as id', 'candidates.name as name', 'candidates.last_name as last_name', 'candidates.phone as phone', 
+                        // 'candidates.mail as mail', 'candidates.channel as channel', 
+                        // 'candidates.listening_test as listening_test', 'candidates.grammar_test as grammar_test', 
+                        // 'candidates.typing_test as typing_test', 'candidates.personality_test as personality_test', 'candidates.recording as recording', 'candidates.cv as cv')
+                        // ->join('vacancies as vac', 'vac.id', '=', 'candidates.id_vacancy')
+                        // ->where('candidates.id_vacancy',$id)
+                        // ->whereIn('candidates.status',[1,2]) 
+                        // ->get();
 
                 $search = trim($request->dato);
 
