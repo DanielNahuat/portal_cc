@@ -8,6 +8,7 @@ use App\TypeUserModel;
 use App\BasicMenuModel;
 use App\AssignamentTypeModel;
 use App\ClientModel;
+use App\ClientColorModel;
 use App\BreakRulesModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,20 +21,35 @@ class ClientsController extends Controller
         
         $id_menu=4;
         $menu = menu($user,$id_menu);
-        if($menu['validate']){          
+        if($menu['validate']){    
+            $color = ClientColorModel::all();      
             $search = trim($request->dato);
 
             if(strlen($request->type) > 0 &&  strlen($search) > 0){
                 $data2 = ClientModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(10);
             } else{
-                $data2 = ClientModel::whereNotIn('status',[0])->paginate(10);
+                $data2 = ClientModel::select('clients.id as id', 
+                                             'clients.name as name',
+                                             'clients.description as description',
+                                             'clients.color as id_color',
+                                             'clients.status as status',
+                                             'brk.interval as interval',
+                                             'brk.duration as duration',
+                                             'clc.hex as color'
+                                             )
+                                        ->join('break_rules as brk', 'brk.id_client', '=', 'clients.id')
+                                        ->join('client_color as clc', 'clc.id', '=', 'clients.color')
+                                        ->where('clients.status', '!=', 0)
+                                        ->paginate(10);
             } 
+           
             $data=$data2;
+            // dd($data);
             if ($request->ajax()) {
                 return view('clients.table', ["data"=>$data]);
             }
        
-             return view('clients.index',["data"=>$data,"menu"=>$menu,]);
+             return view('clients.index',["data"=>$data,"menu"=>$menu, "color" => $color]);
             
      
         }else{
@@ -50,6 +66,7 @@ class ClientsController extends Controller
 
         $this->validate(request(), [
             'name' => 'unique:clients|required|max:30',
+            'color' => 'unique:clients'
         ]); 
     }
 
@@ -57,12 +74,13 @@ class ClientsController extends Controller
  
     public function store(Request $request)
     {
+    
         ClientsController::validateClient($request);
         $data = $request->input();
         $clients = ClientModel::firstOrCreate([
         'name'=>$data['name'],
         'description'=>$data['description'],
-        'color'=>$data['color']
+        'color'=>$data['color'],
         ]);
 
         $id_client = $clients->id;
@@ -86,8 +104,10 @@ class ClientsController extends Controller
                                           'break_rules.duration as duration', 
                                           'clt.name as name', 
                                           'clt.description as description', 
-                                          'clt.color as color')
+                                          'clt.color as color',
+                                          'clc.hex as hex')
                               ->join('clients as clt', 'clt.id', '=', 'break_rules.id_client')
+                              ->join('client_color as clc', 'clc.id', '=', 'clt.color')
                               ->where('clt.status', 1)
                               ->where('break_rules.id_client', $client_id)
                               ->first();
