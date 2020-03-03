@@ -15,9 +15,15 @@ class TypeUserTableSeed extends Seeder
         
         $types = [
             ['mat'=> 'TYU','name'=> 'Administrador','status'=> 1,],
-            ['mat'=> 'TYU','name'=> 'Administrador Servicios','status'=> 1,],
-            ['mat'=> 'TYU','name'=> 'Prooveedor','status'=> 1,],
-            ['mat'=> 'TYU','name'=> 'Residente','status'=> 1,],        
+            ['mat'=> 'TYU','name'=> 'Team Leader','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'Trainer','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'QA','status'=> 1,],     
+            ['mat'=> 'TYU','name'=> 'IT','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'Accountant','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'HR','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'Marketing','status'=> 1,], 
+            ['mat'=> 'TYU','name'=> 'Operator','status'=> 1,],
+            ['mat'=> 'TYU','name'=> 'Default','status'=> 1,],   
           ]; 
 
         foreach($types as $type){

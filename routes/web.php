@@ -71,8 +71,8 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     //User
     Route::get('/users','UserController@index');
     Route::get('/types/{UserType_id?}', 'TypeUserController@show');
-    Route::post('/users', 'TypeUserController@store');
-    Route::post('/users/{UserType_id}', 'TypeUserController@update');
+    Route::get('/users/{user}', 'UserController@edit');
+    Route::post('/users', 'UserController@store');
     Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
     Route::delete('/users/delete/{id}', 'TypeUserController@delete');
 });

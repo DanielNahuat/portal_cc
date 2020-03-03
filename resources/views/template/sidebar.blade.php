@@ -1,5 +1,5 @@
 <div id="left-sidebar"  class="sidebar table-success">
-        <div class="sidebar-scroll style="max-height: calc(100vh - 5rem);overflow-y: auto;">
+        <div class="sidebar-scroll" style="max-height: calc(100vh - 5rem);overflow-y: auto;">
             <nav id="left-sidebar-nav" class="sidebar-nav">
                 <ul id="main-menu" class="metismenu" >
                     @foreach ($menu['menuUser'] as $optionmenu)
