@@ -14,7 +14,9 @@ $(document).ready(function(){
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
         $('#settingsForm').trigger("reset");
-        $("#image").attr('src','');
+        $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
+
+        // $("#image").attr('src','');
         $('#myModal').modal('show');
     });
 
@@ -39,18 +41,6 @@ $(document).ready(function(){
       
         e.preventDefault(); 
         var formData =  $("#settingsForm").serialize();
-        
-        if($("#name").val().length > 30)
-        {
-            alert("Enter a name less than 30 characters");
-            return false;
-        }
-
-        if($("#type").val().length > 30)
-        {
-            alert("Enter a type less than 30 characters");
-            return false;
-        }
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
@@ -173,18 +163,22 @@ $(document).ready(function(){
     });
     
 });
-const types ={
+const settings2 ={
     button: function(dato){
-           var buttons='<div class="btn-group">';
+           var buttons='';
             if(dato.status== 1){
+<<<<<<< HEAD
                buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'"><i class="fa fa-window-close"></i></button>';
+=======
+               buttons += ' <button class="btn  btn-sm btn-outline-secondary open_modal"  data-toggle="tooltip" title="Edit"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+>>>>>>> 3afb99d1dde79663a240bb01642eb95da9dbb848
           
            }else if(dato.status == 2){
-               buttons+='<button type="button" class="btn btn-outline-success off-type" title="Activar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
-               buttons += '<button class="btn btn-danger btn-delete delete-profile" data-toggle="tooltip" title="Desactivar Perfil" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
+               buttons+='<button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
+               buttons += '<button class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" data-toggle="tooltip" title="Delete" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
            }
-           buttons+='</div>';
            return buttons;
     },
     status:function(dato){
@@ -203,35 +197,39 @@ const success = {
         console.log(data);
         var dato = data;
         var typename =$('#name').val();
-        var type =$('#type').val();
+        var type =$('#id_option').val();
 
+        switch (dato.No) {
+            case 1:
+                swal({
+                    title: "Datos Existentes",
+                    text: dato.msg,
+                    type: "warning",
+    
+                  });
+                break;
+            case 2:
+            
+            break;
         
-        if(dato =='error en agregar datos.'){
-            swal({
-                title: "Datos Existentes",
-                text: "El perfil: "+typename+" ya existe",
-                type: "warning",
+            default:
+                var setting = `<tr id="settings_id${dato.id}">
+                    <td>${dato.id}</td>
+                    <td>${dato.name}</td>
+                    <td>${dato.option}</td>
+                    <td class="hidden-xs">${settings2.status(dato)}</td>
+                    <td>${settings2.button(dato)}</td>
+                </tr>`;
 
-              });
-        }
-        else{
-            var settings = `<tr id="settings_id${dato.id}">
-                                <td>${dato.id}</td>
-                                <td>${dato.name}</td>
-                                <td>${dato.type}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
-                            </tr>`;
-        
-            if (state == "add"){ 
-              $("#settings-list").append(settings);
-              $("#settings_id"+dato.id).css("background-color", "#c3e6cb");    
-            }else{
-              $("#settings_id"+dato.id).replaceWith(settings);
-              $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
-            }
-
-            $('#myModal').modal('hide')
+                if (state == "add"){ 
+                    $("#settings-list").append(setting);
+                    $("#settings_id"+dato.id).css("background-color", "#c3e6cb");    
+                }else{
+                    $("#settings_id"+dato.id).replaceWith(setting);
+                    $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
+                }
+                $('#myModal').modal('hide')
+                break;
         }
         
     },
@@ -240,15 +238,15 @@ const success = {
         console.log(data);
         var dato = data;
         if(dato.status != 0){
-            var profile = `<tr id="settings_id${dato.id}">
-                                <td>${dato.id}</td>
-                                <td>${dato.name}</td>
-                                <td>${dato.type}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
-                            </tr>`;
+            var setting = `<tr id="settings_id${dato.id}">
+                <td>${dato.id}</td>
+                <td>${dato.name}</td>
+                <td>${dato.option}</td>
+                <td class="hidden-xs">${settings2.status(dato)}</td>
+                <td>${settings2.button(dato)}</td>
+            </tr>`;
           
-            $("#settings_id"+dato.id).replaceWith(profile);
+            $("#settings_id"+dato.id).replaceWith(setting);
             if(dato.status == 1){
                 color ="#c3e6cb";
             }else if(dato.status == 2){
@@ -266,9 +264,9 @@ const success = {
         console.log(data);
         $('#settings_id').val(data.id);
         $('#name').val(data.name);
-        // $('#typeUserImageUpdate').val(data.typeUserImage);
-        // $('#image').attr('src','/images/typeUsers/'+data.typeUserImage);
+        $('#id_option').val(data.id_option);
         $('#btn-save').val("update");
+        $('#myModalLabel').html(`Update Settings <i class="fa fa-user-plus"></i>`);
         $('#myModal').modal('show');
     },
 

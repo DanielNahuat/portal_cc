@@ -1,10 +1,9 @@
 
 $(document).ready(function(){
-     
-    
-    var nameDeli='<a href="/types">Types User</i></a>';
+    var url = $('#url').val();
+    var nameDeli='<a href="/types">Users Types</i></a> / <a href="'+url+'">Detail User Type</i></a>';
     $('.nameDeli').html(nameDeli);
-    $('#sidebar10').addClass('active');  
+    $('#sidebar1').addClass('active');  
 
     //get base URL *********************
     var url = $('#url').val();

@@ -18,7 +18,6 @@ class TypeUserController extends Controller
     public function index(Request $request)
     {           
         $user = Auth::user();
-        
         $id_menu=5;
         $menu = menu($user,$id_menu);
         if($menu['validate']){          
@@ -121,7 +120,7 @@ class TypeUserController extends Controller
             $usertype->save();
      
         
-        return response()->json($user);
+        return response()->json($usertype);
     }
 
     public function destroy($usertype_id)

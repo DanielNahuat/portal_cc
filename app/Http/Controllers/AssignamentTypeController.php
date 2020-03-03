@@ -14,6 +14,10 @@ class AssignamentTypeController extends Controller
 {
     public function index($id)
     {
+        $user = Auth::user();
+        $id_menu=5;
+        $menu = menu($user,$id_menu);
+        if($menu['validate']){ 
                             
                             $optionsmenu =  AssignamentTypeModel::select('tu_detail.id as id','bm.name as name', 'bm.icon as icon', 'tu_detail.status as status')
                             ->join('basic_menu as bm', 'bm.id', '=', 'tu_detail.id_menu')
@@ -23,8 +27,12 @@ class AssignamentTypeController extends Controller
                     
                             return view('assignmenttype.index',
                             ["optionsmenu"=>$optionsmenu,
-                            "typeuser"=>$typeuser, 
+                            "typeuser"=>$typeuser,
+                            "menu"=>$menu,
                             ]);
+        }else{
+            return redirect('/');
+        }
                            
                            
     }

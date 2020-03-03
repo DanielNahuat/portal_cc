@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SettingsModel extends Model
+class ClientModel extends Model
 {
-    protected $table = 'settings';
+    protected $table = 'clients';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'mat','id_option','name','status'
+        'mat','name', 'description', 'color', 'documents', 'status'
     ];
-
-    
 }

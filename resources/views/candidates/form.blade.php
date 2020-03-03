@@ -20,9 +20,6 @@
 							</div>
 							<div class="col-md-6 mb-3">
 								<div class="input-group">
-									<div class="input-group-prepend">
-										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
-									</div>
 									<input type="text" class="form-control has-error" id="last_name" name="last_name" placeholder="Last Name" value="" maxlength ="15">
 								</div> 
 							</div>
@@ -32,7 +29,7 @@
 							<div class="col-md-4 mb-3">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+										<button class="btn modaldelichef" disabled><i class="fa fa-phone"></i></button>
 									</div>
 									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="Phone" value="" maxlength ="15">
 								</div> 
@@ -40,7 +37,7 @@
 							<div class="col-md-4 mb-3">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+										<button class="btn modaldelichef" disabled><i class="fa fa-envelope"></i></button>
 									</div>
 									<input type="text" class="form-control has-error" id="mail" name="mail" placeholder="Email" value="" maxlength ="15">
 								</div> 
@@ -49,7 +46,7 @@
 							<div class="col-md-4 mb-3">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button>
+										<button class="btn modaldelichef" disabled><i class="fa fa-id-badge"></i></button>
 									</div>
 									<input type="text" class="form-control has-error" id="channel" name="channel" placeholder="Channel" value="" maxlength ="15">
 								</div> 
@@ -63,20 +60,22 @@
 							<div class="col-md-6 mb-3">
 								<label>Listening Test</label>
 								<div class="input-group">
-									<select class="custom-select" name="id_school" id = "id_school" >
-										
-												<option value = ""></option> 
-											
+									<select class="custom-select" name="listening_test" id = "listening_test" >
+											<option value = "">Select</option> 
+											<option value = "A1">A1</option>
+											<option value = "A2">A2</option> 
+											<option value = "A3">A3</option> 
 									</select>  
 								</div> 
 							</div>
 							<div class="col-md-6 mb-3">
 								<label>Grammar Test</label>
 								<div class="input-group">
-									<select class="custom-select" name="id_coffeeshop" id = "id_coffeeshop" >
-											
-												<option value = ""></option> 
-											
+									<select class="custom-select" name="grammar_test" id = "grammar_tes" >
+											<option value = "">Select</option> 
+											<option value = "A1">A1</option>
+											<option value = "A2">A2</option> 
+											<option value = "A3">A3</option> 
 									</select>
 								</div>
 							</div>
@@ -87,25 +86,40 @@
 							<div class="col-md-3 mb-3">
 								<label>Typing Test</label>
 								<div class="input-group">
-									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+									<input type="number" class="form-control has-error" id="typing_test" name="typing_test" placeholder="" value="" maxlength ="15">
 								</div> 
 							</div>
 							<div class="col-md-3 mb-3">
 								<label>&nbsp</label>
 								<div class="input-group">
-									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+									<input type="number" class="form-control has-error" id="" name="" placeholder="" value="" maxlength ="15">
 								</div> 
 							</div>
 							<div class="col-md-3 mb-3">
 								<label>&nbsp</label>
 								<div class="input-group">
-									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+									<input type="number" class="form-control has-error" id="" name="" placeholder="" value="" maxlength ="15">
 								</div> 
 							</div>
 							<div class="col-md-3 mb-3">
 								<label>&nbsp</label>
 								<div class="input-group">
-									<input type="number" class="form-control has-error" id="phone" name="phone" placeholder="" value="" maxlength ="15">
+									<input type="number" class="form-control has-error" id="" name="" placeholder="" value="" maxlength ="15">
+								</div> 
+							</div>
+                   		</div>
+
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label>Recording</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="recording" name="recording" placeholder="" value="" maxlength ="15">
+								</div> 
+							</div>
+							<div class="col-md-6 mb-3">
+								<label>CV</label>
+								<div class="input-group">
+									<input type="number" class="form-control has-error" id="cv" name="cv" placeholder="" value="" maxlength ="15">
 								</div> 
 							</div>
                    		</div>
