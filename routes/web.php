@@ -79,6 +79,14 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::post('/users/{UserType_id}', 'TypeUserController@update');
     Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
     Route::delete('/users/delete/{id}', 'TypeUserController@delete');
+
+    //Schedule
+    Route::get('/weekly', 'ScheduleWeeklyController@index');
+    Route::get('/weekly/{UserType_id?}', 'ScheduleWeeklyController@show');
+    Route::post('/weekly', 'ScheduleWeeklyController@store');
+    Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
+    Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
+    Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
 });
 
 

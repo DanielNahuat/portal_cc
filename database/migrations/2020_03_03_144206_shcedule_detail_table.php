@@ -13,18 +13,16 @@ class ShceduleDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedule', function (Blueprint $table) {
+        Schema::create('schedule_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_trainer')->nullable();
-            $table->integer('id_user')->nullable();
-            $table->integer('id_client')->nullable();
-            $table->string('mat', 3)->default('SCH');
-            $table->date('date_start');
-            $table->date('date_end');
+            $table->integer('id_schedule')->nullable();
+            $table->integer('id_operator')->nullable();
+            $table->integer('id_day')->nullable();
+            $table->string('mat', 3)->default('SCD');
+            $table->time('time_start');
+            $table->date('time_end');
             $table->integer('type_schedule');
-            $table->integer('week');
-            $table->integer('month');
-            $table->integer('year');
+            $table->integer('option');
             $table->integer('status')->nullable();
             $table->timestamps();
         });
@@ -37,6 +35,6 @@ class ShceduleDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedule');
+        Schema::dropIfExists('schedule_detail');
     }
 }
