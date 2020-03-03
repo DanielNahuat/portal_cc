@@ -52,6 +52,7 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/candidates/{id}', 'CandidateController@index');
     Route::get('/candidates/{id}/{candidate_id?}', 'CandidateController@show');
     Route::post('/candidates/{id}', 'CandidateController@store');
+    Route::post('/candidates/{id}/{vacancy_id?}', 'CandidateController@update');
     Route::delete('/candidates/{id}/delete/{candidate_id?}', 'CandidateController@delete');
     Route::delete('/candidates/{id}/{candidate_id?}', 'CandidateController@destroy');
 

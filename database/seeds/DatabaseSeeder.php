@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileDetailTable::class);
         $this->call(ActionsTable::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(OptionsSettingsTable::class);
+        $this->call(OptionsSettingTableSeeder::class);
+        $this->call(ClientColorSeeder::class);
+
 
 
         
