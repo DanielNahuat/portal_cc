@@ -14,7 +14,7 @@ class DaysTable extends Migration
     public function up()
     {
         Schema::create('days', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id');
             $table->string('mat', 3)->default('DAY');
             $table->string('name');
             $table->string('Eng-name');
