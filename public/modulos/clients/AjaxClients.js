@@ -163,7 +163,7 @@ $(document).ready(function(){
     });
     
 });
-const types ={
+const clients ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
@@ -191,14 +191,14 @@ const success = {
     new_update: function (data,state){
         console.log(data);
         var dato = data;
-        var typename =$('#name').val();
+        var clientname =$('#name').val();
         var type =$('#type').val();
 
         
         if(dato =='error en agregar datos.'){
             swal({
                 title: "Datos Existentes",
-                text: "El perfil: "+typename+" ya existe",
+                text: "El perfil: "+clientname+" ya existe",
                 type: "warning",
 
               });
@@ -206,8 +206,8 @@ const success = {
         else{
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
+                                <td class="hidden-xs">${clients.status(dato)}</td>
+                                <td>${clients.button(dato)}</td>
                             </tr>`;
         
             if (state == "add"){ 
@@ -229,8 +229,8 @@ const success = {
         if(dato.status != 0){
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
+                                <td class="hidden-xs">${clients.status(dato)}</td>
+                                <td>${clients.button(dato)}</td>
                             </tr>`;
           
             $("#client_id"+dato.id).replaceWith(client);

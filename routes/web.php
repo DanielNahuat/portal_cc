@@ -72,19 +72,27 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
     //Clients
     Route::get('/clients', 'ClientsController@index');
-
-    //User
-    Route::get('/users','UserController@index');
-    Route::get('/types/{UserType_id?}', 'TypeUserController@show');
-    Route::post('/users', 'TypeUserController@store');
-    Route::post('/users/{UserType_id}', 'TypeUserController@update');
-    Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
-    Route::delete('/users/delete/{id}', 'TypeUserController@delete');
     Route::post('/clients', 'ClientsController@store');
     Route::get('/clients/{client_id}', 'ClientsController@show');
     Route::put('/clients/{client_id}', 'ClientsController@update');
     Route::delete('/clients/{client_id}', 'ClientsController@destroy');
     Route::delete('/clients/delete/{id}', 'ClientsController@delete');
+
+    //User
+    Route::get('/users','UserController@index');
+    Route::get('/types/{UserType_id?}', 'TypeUserController@show');
+    Route::get('/users/{user}', 'UserController@edit');
+    Route::post('/users', 'UserController@store');
+    Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
+    Route::delete('/users/delete/{id}', 'TypeUserController@delete');
+   
+    //Schedule
+    Route::get('/weekly', 'ScheduleWeeklyController@index');
+    Route::get('/weekly/{UserType_id?}', 'ScheduleWeeklyController@show');
+    Route::post('/weekly', 'ScheduleWeeklyController@store');
+    Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
+    Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
+    Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
 });
 
 

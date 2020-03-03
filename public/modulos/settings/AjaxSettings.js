@@ -167,8 +167,13 @@ const settings2 ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
+<<<<<<< HEAD
+               buttons += ' <button class="btn btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'"><i class="fa fa-window-close"></i></button>';
+=======
                buttons += ' <button class="btn  btn-sm btn-outline-secondary open_modal"  data-toggle="tooltip" title="Edit"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+>>>>>>> 3afb99d1dde79663a240bb01642eb95da9dbb848
           
            }else if(dato.status == 2){
                buttons+='<button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
