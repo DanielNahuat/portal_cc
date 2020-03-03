@@ -5,9 +5,10 @@ use App\User;
 use Illuminate\Http\Request;
 use App\ScheduleModel;
 use App\DaysModel;
-use App\ClientsModel;
+use App\ClientModel;
 use App\ScheduleDetailModel;
 use App\AssignamentTypeModel;
+use Carbon\Carbon; 
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleWeeklyController extends Controller
@@ -22,8 +23,11 @@ class ScheduleWeeklyController extends Controller
         $user = Auth::user();
         $id_menu=5;
         $menu = menu($user,$id_menu);
-        if($menu['validate']){          
-        
+        if($menu['validate']){     
+                $now = Carbon::now();
+                $week = $now->weekOfYear;
+                $dayOfWeek = $now->dayOfWeek;
+
                 $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
@@ -32,7 +36,7 @@ class ScheduleWeeklyController extends Controller
                     $data2 = ScheduleModel::whereNotIn('status',[0])->paginate(10);
                     $days= DaysModel::all();
                     $operators=User::select('users.id as id', 'ui.name as name', 'ui.last_name as lname')->join('users_info as ui', 'ui.id_user', '=', 'users.id')->get();
-                    $clients=ClientsModel::all();
+                    $clients=ClientModel::all();
                 } 
                 $data=$data2;
                

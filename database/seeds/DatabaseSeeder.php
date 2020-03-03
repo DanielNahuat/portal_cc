@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ActionsTable::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(OptionsSettingTableSeeder::class);
+        $this->call(ClientColorSeeder::class);
+
 
 
         

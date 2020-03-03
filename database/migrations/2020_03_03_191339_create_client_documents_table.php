@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DaysTable extends Migration
+class CreateClientDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class DaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('days', function (Blueprint $table) {
-            $table->integer('id');
-            $table->string('mat', 3)->default('DAY');
+        Schema::create('client_documents', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('mat', 3)->default('CLD');
+            $table->integer('id_client');
             $table->string('name');
-            $table->string('Eng-name');
+            $table->string('path');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
-    
     }
 
     /**
@@ -30,6 +31,6 @@ class DaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('days');
+        Schema::dropIfExists('client_documents');
     }
 }

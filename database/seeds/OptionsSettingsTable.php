@@ -2,15 +2,16 @@
 
 use Illuminate\Database\Seeder;
 
-class OptionsSettingTableSeeder extends Seeder
+class OptionsSettingsTable extends Seeder
 {
-    /**
+     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run()
-    {
+    {   
+        DB::table('options_settings')->truncate();
         $options = [
             ['mat'=> 'OST','option'=> 'Schedule Daily'],
             ['mat'=> 'OST','option'=> 'Incident'],
