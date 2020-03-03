@@ -16,7 +16,7 @@ class CreateScheduleTable extends Migration
         Schema::create('schedule', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_trainer')->nullable();
-            $table->integer('id_user')->nullable();
+            $table->integer('id_operator')->nullable();
             $table->integer('id_client')->nullable();
             $table->string('mat', 3)->default('SCH');
             $table->date('date_start');

@@ -13,13 +13,16 @@ class CreateDatailScheduleUser extends Migration
      */
     public function up()
     {
-        Schema::create('datail_schedule_user', function (Blueprint $table) {
+        Schema::create('detail_schedule_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_schedule')->nullable();
-            $table->integer('id_user')->nullable();
-            $table->time('time_start')->nullable();
-            $table->time('time_end')->nullable();
-            $table->integer('type_schedule');
+            $table->integer('id_operator')->nullable();
+            $table->integer('id_day')->nullable();
+            $table->string('mat', 3)->default('SCD');
+            $table->time('time_start');
+            $table->date('time_end');
+            $table->integer('type_daily');
+            $table->integer('option');
             $table->integer('status')->nullable();
             $table->timestamps();
         });
@@ -32,6 +35,6 @@ class CreateDatailScheduleUser extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('datail_schedule_user');
+        Schema::dropIfExists('detail_schedule_user');
     }
 }

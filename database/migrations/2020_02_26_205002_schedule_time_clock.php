@@ -16,11 +16,12 @@ class ScheduleTimeClock extends Migration
         Schema::create('schedule_time_clock', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_schedule')->nullable();
-            $table->integer('id_user')->nullable();
+            $table->integer('id_schedule_detail')->nullable();
+            $table->integer('id_operator')->nullable();
             $table->integer('id_client')->nullable();
             $table->dateTime('date_start')->nullable();
             $table->dateTime('date_end')->nullable();
-            $table->integer('duration')->nullable();
+            $table->float('duration')->nullable();
             $table->integer('type');
             $table->integer('status')->nullable();
             $table->timestamps();
