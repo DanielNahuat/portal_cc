@@ -46,8 +46,18 @@ class ClientsController extends Controller
         return $data;
     }
 
+    public function validateClient($request){
+
+        $this->validate(request(), [
+            'name' => 'unique:clients|required|max:30',
+        ]); 
+    }
+
+
+ 
     public function store(Request $request)
     {
+        ClientsController::validateClient($request);
         $data = $request->input();
         $clients = ClientModel::firstOrCreate([
         'name'=>$data['name'],
@@ -99,10 +109,15 @@ class ClientsController extends Controller
         $client->color = $request['color'];
         $client->save();
 
+        $id_client = $client->id;
+
         $break = BreakRulesModel::where('id_client', $client_id)->first();
         $break->interval = $request['interval'];
         $break->duration = $request['duration'];
         $break->save();
+
+        $result = $this->getResult($client->id);
+        return response()->json($result);
     }
 
     public function destroy($client_id)
