@@ -12,7 +12,7 @@
             <th>Options</th>
         </tr>
     </thead>
-    <tbody id="usertype-list">
+    <tbody id="user-list">
         @foreach ($data as $user)
         <tr id="usertype_id{{$user->id}}">
             <td>{{ $user->id }}</td>

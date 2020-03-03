@@ -8,7 +8,7 @@ $(document).ready(function(){
 
     //get base URL *********************
     var url = $('#url').val();
-
+    $('.js-example-basic-single').select2();
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
