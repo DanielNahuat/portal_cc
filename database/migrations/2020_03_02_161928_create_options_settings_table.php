@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeClientTable extends Migration
+class CreateOptionsSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateEmployeeClientTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_client', function (Blueprint $table) {
+        Schema::create('options_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_user');
-            $table->integer('id_client');
+            $table->string('mat', 3)->default('OST');
+            $table->string('option');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateEmployeeClientTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_client');
+        Schema::dropIfExists('options_settings');
     }
 }

@@ -22,8 +22,8 @@
                                         <div class="input-group mb-3 input-group-sm">
                                             <div class="input-group-prepend">
                                                 <select class="form-control" id="typesearch">
-                                                    <option value="name">Option</option>
-                                                    <option value="type">Type</option>
+                                                    <option value="name">Name</option>
+                                                    <option value="option">Option</option>
                                                     <option value="id">ID</option>
                                                 </select>
                                             </div>

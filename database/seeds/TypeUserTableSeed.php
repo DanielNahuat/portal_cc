@@ -18,10 +18,11 @@ class TypeUserTableSeed extends Seeder
             ['mat'=> 'TYU','name'=> 'Administrador Servicios','status'=> 1,],
             ['mat'=> 'TYU','name'=> 'Prooveedor','status'=> 1,],
             ['mat'=> 'TYU','name'=> 'Residente','status'=> 1,],        
-          ];     
-          foreach($types as $type){
-                DB::table('type_user')->insert($type);
-                            }
+          ]; 
+
+        foreach($types as $type){
+            DB::table('type_user')->insert($type);              
+        }
     }
     
 }
