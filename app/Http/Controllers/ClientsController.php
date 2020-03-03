@@ -74,7 +74,7 @@ class ClientsController extends Controller
 
         ]);
          $result = $this->getResult($id_client);
-        return response()->json([$result]);
+        return response()->json($result);
 
     }
 
