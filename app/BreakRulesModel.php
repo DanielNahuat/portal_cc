@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClientsModel extends Model
+class BreakRulesModel extends Model
 {
-    protected $table = 'clients';
+    
+    protected $table = 'break_rules';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'mat','name', 'description', 'color', 'documents', 'status'
+       'interval', 'duration', 'id_client'
     ];
 }
