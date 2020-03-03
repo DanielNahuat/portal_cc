@@ -196,7 +196,7 @@ const success = {
         else{
             var candidate = `<tr id="candidate_id${dato.id}">
                                 <td>${dato.id}</td>
-                                <td>${dato.id_candidate}</td>
+                                <td>${dato.name_vacancy}</td>
                                 <td>${dato.name}</td>
                                 <td>${dato.last_name}</td>
                                 <td>${dato.phone}</td>
@@ -228,6 +228,7 @@ const success = {
     show: function(data){
         console.log(data);
         $('#candidate_id').val(data.id);
+        $('#id_vacancy').val(data.id_vacancy);
         $('#name').val(data.name);
         $('#last_name').val(data.last_name);
         $('#phone').val(data.phone);
@@ -251,7 +252,7 @@ const success = {
 
             var candidate = `<tr id="candidate_id${dato.id}">
                                 <td>${dato.id}</td>
-                                <td>${dato.id_candidate}</td>
+                                <td>${dato.name_vacancy}</td>
                                 <td>${dato.name}</td>
                                 <td>${dato.last_name}</td>
                                 <td>${dato.phone}</td>
