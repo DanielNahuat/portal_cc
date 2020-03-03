@@ -50,6 +50,10 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     //Display Index Page Candidates
    
     Route::get('/candidates/{id}', 'CandidateController@index');
+    Route::get('/candidates/{id}/{candidate_id?}', 'CandidateController@show');
+    Route::post('/candidates/{id}', 'CandidateController@store');
+    Route::delete('/candidates/{id}/delete/{candidate_id?}', 'CandidateController@delete');
+    Route::delete('/candidates/{id}/{candidate_id?}', 'CandidateController@destroy');
 
     //Training
     Route::get('/training', 'TrainingController@index');
@@ -67,6 +71,14 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
     //Clients
     Route::get('/clients', 'ClientsController@index');
+
+    //User
+    Route::get('/users','UserController@index');
+    Route::get('/types/{UserType_id?}', 'TypeUserController@show');
+    Route::post('/users', 'TypeUserController@store');
+    Route::post('/users/{UserType_id}', 'TypeUserController@update');
+    Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
+    Route::delete('/users/delete/{id}', 'TypeUserController@delete');
 });
 
 

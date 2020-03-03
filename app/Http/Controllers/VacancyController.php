@@ -10,7 +10,14 @@ class VacancyController extends Controller
 {
 
     public function index(Request $request)
-    {           
+    {          
+        
+        $user = Auth::user();
+        
+        $id_menu=5;
+        $menu = menu($user,$id_menu);
+        if($menu['validate']){   
+
                 $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
@@ -23,7 +30,10 @@ class VacancyController extends Controller
                     return view('vacancies.table', compact('data'));
                 }
 
-                return view('vacancies.index',compact('data'));
+                  return view('vacancies.index',["data"=>$data,"menu"=>$menu,]);
+        }else{
+            return redirect('/');
+        }
             
     }
 
