@@ -15,13 +15,13 @@ class DaysTableSeed extends Seeder
         DB::table('days')->truncate();
         
         $days = [
-            ['name'=> 'Lunes','Eng-name'=>'Monday'],
-            ['name'=> 'Martes','Eng-name'=>'Tuesday'],
-            ['name'=> 'Miercoles','Eng-name'=>'Wednesday'],
-            ['name'=> 'Jueves','Eng-name'=>'Thursday'],
-            ['name'=> 'Viernes','Eng-name'=>'Friday'],
-            ['name'=> 'Sabado','Eng-name'=>'Saturday'], 
-            ['name'=> 'Domingo','Eng-name'=>'Sunday'],
+            ['id' => 1, 'name'=> 'Lunes','Eng-name'=>'Monday'],
+            ['id' => 2, 'name'=> 'Martes','Eng-name'=>'Tuesday'],
+            ['id' => 3, 'name'=> 'Miercoles','Eng-name'=>'Wednesday'],
+            ['id' => 4, 'name'=> 'Jueves','Eng-name'=>'Thursday'],
+            ['id' => 5, 'name'=> 'Viernes','Eng-name'=>'Friday'],
+            ['id' => 6, 'name'=> 'Sabado','Eng-name'=>'Saturday'], 
+            ['id' => 0, 'name'=> 'Domingo','Eng-name'=>'Sunday'],
         
       ];
       
