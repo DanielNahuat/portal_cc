@@ -60,6 +60,7 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
     //Settings
     Route::get('/settings', 'SettingsController@index');
+    Route::get('/settings/{settings_id?}', 'SettingsController@show');
     Route::post('/settings', 'SettingsController@store');
     Route::post('/settings/{settings_id}', 'SettingsController@update');
     Route::delete('/settings/{settings_id}', 'SettingsController@destroy');

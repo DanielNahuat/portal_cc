@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SettingsModel extends Model
+class OptionsSettingModel extends Model
 {
-    protected $table = 'settings';
+    protected $table = 'options_settings';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'mat','id_option','name','status'
+        'mat','option',
     ];
-
-    
 }

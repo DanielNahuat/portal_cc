@@ -14,7 +14,13 @@
                 </div>
                 <div class="form-group col-sm-12">
 									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-									 <input type="text" class="form-control has-error" id="type" name="type" placeholder="Type" value="" maxlength ="15">
+                   <!-- <input type="text" class="form-control has-error" id="type" name="type" placeholder="Type" value="" maxlength ="15"> -->
+                   <select name="id_option" id="id_option" class='form-control'>
+                     @foreach($options_settings as $option)
+                     <option value="{{$option->id}}">{{$option->option}}</option>
+
+                     @endforeach
+                   </select>
                 </div>
 							</div>
             </div>

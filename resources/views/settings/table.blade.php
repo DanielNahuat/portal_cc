@@ -12,8 +12,8 @@
         @foreach ($data as $setting)
         <tr id="settings_id{{$setting->id}}">
             <td>{{ $setting->id }}</td>
-            <td>{{ $setting->name }}</td>
-            <td class="hidden-xs">{{ $setting->type }}</td>
+            <td>{{ $setting->name }}</td>              
+            <td class="hidden-xs">{{ $setting->option }}</td>
             @switch($setting->status)
                 @case(1)
                     <td class="hidden-xs">
