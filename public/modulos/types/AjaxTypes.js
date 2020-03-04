@@ -216,7 +216,8 @@ const success = {
         
             if (state == "add"){ 
               $("#usertype-list").append(profile);
-              $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");    
+              $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");
+              $('#table-row').hide(); 
             }else{
               $("#usertype_id"+dato.id).replaceWith(profile);
               $("#usertype_id"+dato.id).css("background-color", "#ffdf7e");  
@@ -248,6 +249,9 @@ const success = {
             
         }else if(dato.status == 0){
             $("#usertype_id"+dato.id).remove();
+            if ($('.rowType').length == 0) {
+                $('#table-row').show();
+              }
         }
        
     },
