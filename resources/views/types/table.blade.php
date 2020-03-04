@@ -45,5 +45,4 @@
 </table>
 
 
-
 {!! $data->render() !!}

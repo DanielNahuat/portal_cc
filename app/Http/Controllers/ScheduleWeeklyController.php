@@ -28,7 +28,10 @@ class ScheduleWeeklyController extends Controller
             
               
                 $days= DaysModel::all();
-                $operators=User::select('users.id as id', 'ui.name as name', 'ui.last_name as lname')->join('users_info as ui', 'ui.id_user', '=', 'users.id')->get();
+                $operators=User::select('users.id as id', 'ui.name as name', 'ui.last_name as lname')
+                ->join('users_info as ui', 'ui.id_user', '=', 'users.id')
+                ->where('users.id_type_user','=',9)
+                ->get();
                 $clients=ClientModel::all();
 
                 if($request->date !=""){

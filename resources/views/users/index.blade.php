@@ -6,10 +6,11 @@
                         <div class="header">
                             <h1>Users <i class="fa fa-tasks"></i></h1>
                             <ul class="header-dropdown">
-                                <li><a href="javascript:void(0);" class="btn btn-primary" disabled id="btn_add" >New User <i class="fa fa-plus"></i></a></li>
+                                <li><a href="javascript:void(0);" class="btn btn-success" disabled id="btn_add" >New User <i class="fa fa-plus"></i></a></li>
                             </ul>
                         </div>
-                        <div class="body">
+                        @include('users.form')
+                        <div class="body tableUser">
                                 <div class="table-responsive">
                                     <div class="input-group mb-3 input-group-sm">
                                     <div class="input-group-prepend">
@@ -27,7 +28,6 @@
                     </div>
                 </div>
             </div>
-            @include('users.form')
              <!-- Passing BASE URL to AJAX -->
         <input id="url" type="hidden" value="{{ \Request::url() }}">
         <input id="baseUrl" type="hidden" value="{{ \Request::root() }}">

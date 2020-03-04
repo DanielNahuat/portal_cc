@@ -40,7 +40,7 @@ class ClientsController extends Controller
                                         ->join('break_rules as brk', 'brk.id_client', '=', 'clients.id')
                                         ->join('client_color as clc', 'clc.id', '=', 'clients.color')
                                         ->where('clients.status', '!=', 0)
-                                        ->paginate(10);
+                                        ->paginate(8);
             } 
            
             $data=$data2;
@@ -58,7 +58,20 @@ class ClientsController extends Controller
        
     }
     public function getResult($client_id){
-        $data = ClientModel::whereNotIn('status',[0])->where('id', $client_id)->first();
+        $data = ClientModel::select('clients.id as id', 
+                                    'clients.name as name',
+                                    'clients.description as description',
+                                    'clients.color as id_color',
+                                    'clients.status as status',
+                                    'brk.interval as interval',
+                                    'brk.duration as duration',
+                                    'clc.hex as color'
+                                    )
+                            ->join('break_rules as brk', 'brk.id_client', '=', 'clients.id')
+                            ->join('client_color as clc', 'clc.id', '=', 'clients.color')
+                            ->where('clients.status', '!=', 0)
+                            ->where('clients.id', $client_id)->first();
+        // ClientModel::whereNotIn('status',[0])->where('id', $client_id)->first();
         return $data;
     }
 
@@ -143,7 +156,19 @@ class ClientsController extends Controller
     public function destroy($client_id)
     {
         // dd($client_id);
-        $client = ClientModel::find($client_id);
+        $client = ClientModel::select('clients.id as id', 
+                                        'clients.name as name',
+                                        'clients.description as description',
+                                        'clients.color as id_color',
+                                        'clients.status as status',
+                                        'brk.interval as interval',
+                                        'brk.duration as duration',
+                                        'clc.hex as color'
+                                        )
+                                ->join('break_rules as brk', 'brk.id_client', '=', 'clients.id')
+                                ->join('client_color as clc', 'clc.id', '=', 'clients.color')
+                                ->where('clients.status', '!=', 0)
+                                ->where('clients.id', $client_id)->first();
         // dd($client);
         if($client->status == 2)
         {
@@ -166,4 +191,30 @@ class ClientsController extends Controller
       
         return response()->json($client);
     } 
+
+    //CONTACTS
+    public function storeContacts(Request $request)
+    {
+        dd($request);
+        // ClientsController::validateClient($request);
+        // $data = $request->input();
+        // $clients = ClientModel::firstOrCreate([
+        // 'name'=>$data['name'],
+        // 'description'=>$data['description'],
+        // 'color'=>$data['color'],
+        // ]);
+
+        // $id_client = $clients->id;
+
+        // $breaks = BreakRulesModel::firstOrCreate([
+        // 'interval'=>$data['interval'],
+        // 'duration'=>$data['duration'],
+        // 'id_client'=>$id_client
+
+        // ]);
+        //  $result = $this->getResult($id_client);
+        // return response()->json($result);
+
+    }
+
 }

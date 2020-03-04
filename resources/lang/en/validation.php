@@ -132,6 +132,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'birthdate' => [
+            'before' => 'User age should be 18+',
+        ],
+        'gender' => [
+            'not_in' => 'Choose the gender',
+        ],
+        'id_type_user' => [
+            'gt' => 'Choose the type user',
+        ],
     ],
 
     /*

@@ -19,18 +19,18 @@ class CreateUsersInfoTable extends Migration
             $table->integer('id_user');
             $table->string('name');
             $table->string('last_name');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('phone');
-            $table->string('emergency_contact_name');
-            $table->string('emergency_contact_phone');
-            $table->string('notes');
-            $table->string('description');
+            $table->string('emergency_contact_name')->nullable();
+            $table->string('emergency_contact_phone')->nullable();
+            $table->string('notes')->nullable();
+            $table->string('description')->nullable();
             $table->string('gender');
             $table->string('birthdate');
-            $table->string('profile_picture');
-            $table->date('entrance_date');
-            $table->string('biotime_status');
-            $table->string('access_code');
+            $table->string('profile_picture')->nullable();
+            $table->date('entrance_date')->nullable();
+            $table->string('biotime_status')->nullable();
+            $table->string('access_code')->nullable();
             
 
             $table->timestamps();
