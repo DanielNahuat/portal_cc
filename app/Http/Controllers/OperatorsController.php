@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\User_info;
+use Illuminate\Support\Facades\File;
 
 class OperatorsController extends Controller
 {
@@ -39,11 +40,13 @@ class OperatorsController extends Controller
     }
 
     public function store(Request $request){
+
+        $imageName = OperatorsController::documents($request, "operators");
         
         $user =  User::Create([
             'id_type_user'=>9,
             'id_status'=>1,
-            'nickname'=>$request->nickname,
+            'nickname'=>"",
             'email'=>$request->email,
             'password'=>$request->password,
         ]);
@@ -60,7 +63,7 @@ class OperatorsController extends Controller
             'description'=>$request->description,
             'gender'=>"",
             'birthdate'=>$request->birthdate,
-            'profile_picture'=>"",
+            'profile_picture'=>$imageName,
             'biotime_status'=>"",
             'access_code'=>"",
             'entrance_date'=>$request->entrance_date,
@@ -78,5 +81,18 @@ class OperatorsController extends Controller
             ->where('usr.id', $id)
             ->first();
         return $data;
+    }
+
+    //save document
+    public function documents($request, $folder){
+        
+        $imageName = '';
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $imageName = time().$image->getClientOriginalName();
+            $image->move(public_path().'/images/'.$folder.'/',$imageName);
+            return $imageName;
+
+         }
     }
 }

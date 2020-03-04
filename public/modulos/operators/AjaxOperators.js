@@ -36,24 +36,20 @@ $(document).ready(function(){
     $("#formOperators").on('submit',function (e) {
 
         e.preventDefault(); 
-        $('#btn-save').attr('disabled', true);
+        // $('#btn-save').attr('disabled', true);
         
-        // var formData = new FormData(this);
-        var formData = $("#formOperators").serialize();
+        var formData = new FormData(this);
+        // var formData = $("#formOperators").serialize();
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
         var my_url = baseUrl + '/operators';
-        // var file = "file";
+        var file = "file";
         // if (state == "update"){
         //     type = "POST"; //for updating existing resource
         //     my_url += '/' + qr_id;
         // }
 
-        // if (state != "update"){
-        //     base_64 = $('#qr_img').attr('src');
-        //     $('#img_base64').val(base_64);
-        // }
-        actions.edit_create(type,my_url,state,formData);
+        actions.edit_create(type,my_url,state,formData, file);
     });
 
 

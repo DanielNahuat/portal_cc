@@ -3,6 +3,8 @@
 <div class="row clearfix">
                 <div class="col-lg-12">
                     <div class="card">
+                    <div class = "table-clients"> 
+                    @include('clients.form')   
                         <div class="header">
                             <h1>Clients <i class="fa fa-suitcase"></i></h1>
                             <ul class="header-dropdown">
@@ -11,7 +13,7 @@
                         </div>
                         <div class="body">
                            
-                                <div class="table-clients">
+                                <div>
                                     <div class="input-group mb-3 input-group-sm">
                                         <div class="input-group-prepend">
                                             <select class="form-control" id="typesearch">
@@ -25,11 +27,11 @@
                                 @include('clients.table')
                                 </div>
                         </div>
-                        
+                        </div>
                     </div>
                 </div>
             </div>
-            @include('clients.form')
+            
           
              <!-- Passing BASE URL to AJAX -->
         <input id="url" type="hidden" value="{{ \Request::url() }}">
