@@ -1,9 +1,37 @@
 $(document).ready(function(){
     var url = $('#url').val();
     var baseUrl = $('#baseUrl').val();
+    var radioState;
 
     $('#sidebar3').addClass('active'); 
     $('#myTable').DataTable();
+    $(".pass").hide();
+    function disablePassInput()
+    {
+        $('#password').attr('disabled','disabled');
+        $('#password_confirmation').attr('disabled','disabled');
+    }
+
+    function enablePassInput()
+    {
+        $('#password').removeAttr('disabled');
+        $('#password_confirmation').removeAttr('disabled');
+    }
+
+
+    $("#show_pass").on("click", function(e) {
+        if (radioState === this) {
+            $(".pass").hide();
+            disablePassInput()
+            this.checked = false;
+            radioState = null;
+        } else {
+            $(".pass").show();
+            enablePassInput()
+            console.log("false");
+            radioState = this;
+        }
+    });
 
     // BTN NEW
     $('#btn_add').click(function(){
@@ -14,6 +42,11 @@ $(document).ready(function(){
         $('#btn-save').val("add");
         $("#formOperators").trigger('reset');
         $('#tag_put').remove();
+        enablePassInput();
+        $(".pass").show();
+        $(".show_pass_div").hide();
+        $(".nickname").hide();
+        $("#nickname").attr('disabled', true);
 
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
@@ -47,7 +80,7 @@ $(document).ready(function(){
         var my_url = baseUrl + '/operators';
         var file = "file";
         if (state == "update"){
-            type = "PUT"; //for updating existing resource
+            type = "POST"; //for updating existing resource
             my_url += '/' + id;
         }
 
@@ -64,9 +97,13 @@ $(document).ready(function(){
         $(".tablaOperator").hide();
         $("#btn_add").hide();
         $(".nickname").show();
+        $("#nickname").attr('disabled', false);
         $('#btn-save').val("update");
         $("#formOperators").trigger('reset');
         $('#tag_put').remove();
+        disablePassInput();
+        $(".show_pass_div").show();
+        $(".pass").hide();
 
         actions.show(my_url);
     });
@@ -147,6 +184,7 @@ $(document).ready(function(){
             }
         });
     });
+
  });      
 
 
@@ -227,6 +265,9 @@ const success = {
     },
     show: function(data){
         console.log(data);
+        $('#tag_put').remove();
+        $form = $('#formOperators');
+        $form.append('<input type="hidden" id="tag_put" name="_method" value="PUT">');
         var baseUrl = $('#baseUrl').val();
         var rutaImage = baseUrl + '/images/operators/' + data.image;
           
@@ -242,6 +283,7 @@ const success = {
             drEvent.init();
 
         $('#email').val(data.email);
+        $('#nickname').val(data.nickname);
         $('#id_hidden').val(data.id);
         $('#name').val(data.name);
         $('#last_name').val(data.last_name);

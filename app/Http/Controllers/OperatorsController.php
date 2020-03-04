@@ -41,16 +41,18 @@ class OperatorsController extends Controller
     }
 
     public function validateForm($request,$user=''){
+        $user=='' ? $email = 'required|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
         $this->validate(request(), [
             'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
+            'phone' => 'max:20|regex:/^[0-9]{0,20}(\.?)[0-9]{0,2}$/',
             'birthdate' => 'required|date|before:18 years ago',
-            'emergency_contact_name' => 'max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'emergency_contact_phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
+            'emergency_contact_name' => 'max:150|alpha|nullable',
+            'emergency_contact_phone' => 'numeric|nullable',
+            'nickname' => 'sometimes|required',
             'image' => 'image',
             'gender' => 'required',
-            'email' => 'required|unique:users,email,'.$user.',id,id_status,1,id_status,2',
+            'email' => $email,
             'password' => 'sometimes|required|confirmed|min:8',
         ]);
     }
@@ -106,15 +108,20 @@ class OperatorsController extends Controller
     public function update(Request $request, $id){
 
         $user = User::find($id);
-
+        OperatorsController::validateForm($request, $id);
         $user->nickname = $request->nickname;
         $user->email = $request->email;
         
         if($request->password != null)
         {
             $user->password = Hash::make($request->password);
-        }
+        }    
 
+        $user->update();
+
+        $user_info = User_info::where('id_user', $user->id)->first();
+
+        
         if($request->file('image')) {
             
             $file_path = public_path().'/images/operators/'.$user->profile_picture;
@@ -123,16 +130,10 @@ class OperatorsController extends Controller
             $name = time().$image->getClientOriginalName();
             $image->move(public_path().'/images/operators/',$name);
             $user->profile_picture = $name;
-        }
-        else
+        }else
         {
             $user->profile_picture = $user->profile_picture;
         }
-    
-
-        $user->update();
-
-        $user_info = User_info::where('id_user', $user->id)->first();
 
         $user_info->name = $request->name;
         $user_info->last_name = $request->last_name;

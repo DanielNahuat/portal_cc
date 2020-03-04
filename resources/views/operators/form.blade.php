@@ -12,11 +12,16 @@
                     <h6>Email:</h6>
                     <input type="text" name="email" id="email" class="form-control" title="Email" maxlength="120">
                 </div>
-                <div class="col-sm-6 form-group">
+                <div class="form-group error btn-group col-sm-12 show_pass_div">
+                    <div class="fancy-checkbox" bis_skin_checked="1" style="text-align:center; vertical-align:middle;">
+                    <label><input type="checkbox" id="show_pass"><span>Cambiar Contraseña</span></label>
+                    </div>  
+                </div>
+                <div class="col-sm-6 form-group pass">
                     <h6>Password:</h6>
                     <input type="password" name="password" id="password" class="form-control" maxlength="20">
                 </div>
-                <div class="col-sm-6 form-group">
+                <div class="col-sm-6 form-group pass">
                     <h6>Confirm Password:</h6>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" maxlength="20">
                 </div>
