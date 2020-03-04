@@ -16,9 +16,16 @@
 									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
 					<input type="text" class="form-control has-error" id="description" name="description" placeholder="Description" value="" maxlength ="15">
                 </div>
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
+                <!-- <div class="form-group col-sm-12">
 					<input type="text" class="form-control has-error" id="color" name="color" placeholder="Color" value="" maxlength ="15">
+                </div> -->
+                <div class="form-group col-sm-12">
+                
+                  <select name="color" id = "color">
+                    @foreach($color as $color)
+                      <option style = "background:{{$color->hex}}" value = "{{$color->id}}">{{$color->mat}}{{$color->hex}}</option>
+                      @endforeach
+                  </select>
                 </div>
                 <div class="form-group col-sm-12">
 									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
@@ -31,8 +38,8 @@
 				</div>
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success" id="btn-save" value="add">Guardar</button>
+                <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
             </div>
 			    </form> 
           <input type="hidden" id="client_id" name="client_id" value="0"> 
