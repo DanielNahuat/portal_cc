@@ -16,8 +16,8 @@ class MenuTable extends Seeder
         $menus = [
             ['name'=> 'Types User','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
             ['name'=> 'Users','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
-            ['name'=> 'Operators','icon'=> 'fa fa-address-card','link'=>'/operators','prioridad'=> '1','status'=> 1,],
-            ['name'=> 'Clients','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Operators','icon'=> 'fa fa-address-card','link'=>'/types','prioridad'=> '1','status'=> 1,],
+            ['name'=> 'Clients','icon'=> 'fa fa-suitcase','link'=>'/clients','prioridad'=> '1','status'=> 1,],
             ['name'=> 'Schedule Weekly','icon'=> 'fa fa-address-card','link'=>'/weekly','prioridad'=> '1','status'=> 1,],
             ['name'=> 'Settings','icon'=> 'fa fa-address-card','link'=>'/settings','prioridad'=> '1','status'=> 1,],
             ['name'=> 'Schedule Daily','icon'=> 'fa fa-address-card','link'=>'/','prioridad'=> '1','status'=> 1,],

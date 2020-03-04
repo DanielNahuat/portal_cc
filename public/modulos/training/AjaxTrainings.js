@@ -1,8 +1,20 @@
 getData(1);
+
 $(document).ready(function(){
-     
+    $('[data-toggle="tabajax"]').click(function(e) {
+        var $this = $(this),
+            loadurl = $this.attr('href'),
+            targ = $this.attr('data-target');
     
-    var nameDeli='<a href="/clients">Clients</i></a>';
+        $.get(loadurl, function(data) {
+            $(targ).html(data);
+        });
+    
+        $this.tab('show');
+        return false;
+    });
+    
+    var nameDeli='<a href="/training">Training</i></a>';
     $('.nameDeli').html(nameDeli);
     $('#sidebar10').addClass('active');  
 
@@ -12,19 +24,22 @@ $(document).ready(function(){
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
-        // $('#tag_put').remove();
         $('#btn-save').val("add");
-        $('#clientsForm').trigger("reset");
-        $("#image").attr('src','');
+        $('#settingsForm').trigger("reset");
+        $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
+
+        // $("#image").attr('src','');
         $('#myModal').modal('show');
     });
 
 
+
+
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(){
-        $('#clientsForm').trigger("reset");
-        var client_id = $(this).val();
-        var my_url = url + '/' + client_id;
+        $('#settingsForm').trigger("reset");
+        var settings_id = $(this).val();
+        var my_url = url + '/' + settings_id;
 
             actions.show(my_url);
        
@@ -33,29 +48,20 @@ $(document).ready(function(){
 
 
     //create new product / update existing product ***************************
-    $("#clientsForm").on('submit',function (e) {
+    $("#settingsForm").on('submit',function (e) {
         console.log('button');
       
         e.preventDefault(); 
-        var formData =  $("#clientsForm").serialize();
-        // var formData = {
-        //        name: $('#name').val(),
-        //        description: $('#description').val(),
-        //        id_color: $('#id_color').val(),
-        //        interval: $('#interval').val(),
-        //        duration: $('#duration').val(),
-               
-        //    }
+        var formData =  $("#settingsForm").serialize();
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
-        var client_id = $('#client_id').val();
+        var settings_id = $('#settings_id').val();;
         var my_url = url;
         if (state == "update"){
-            type = "PUT"; //for updating existing resource
-            my_url += '/' + client_id;
-            $('#myModal').modal('hide');
+            type = "POST"; //for updating existing resource
+            my_url += '/' + settings_id;
         }
         
             console.log(formData);
@@ -74,8 +80,8 @@ $(document).ready(function(){
             })
                 if($(this).attr('class') == 'btn btn-sm btn-outline-success off-type')
                 {
-                    title= "Do you want to activate this client?";
-                    text="The client will be activated";
+                    title= "Do you want to activate this option?";
+                    text="The Option will be activated";
                     confirmButtonText="Activate";
 
                     datatitle="Activated";
@@ -84,9 +90,9 @@ $(document).ready(function(){
                 }
                 else 
                 {
-                    title= "Do you want to disable this client?";
-                    text= "The client will be deactivated";
-                    confirmButtonText="Deactivate";
+                    title= "Do you want to disable this option?";
+                    text= "The Option will be deactivated";
+                    confirmButtonText="Desactivar";
 
                     datatitle="Deactivated";
                     datatext="deactivated";
@@ -169,22 +175,16 @@ $(document).ready(function(){
     });
     
 });
-const clients ={
+const settings2 ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += ' <button class="btn  btn-sm btn-outline-secondary open_modal"  data-toggle="tooltip" title="Edit"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
           
            }else if(dato.status == 2){
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" > <i class="fa fa-check-square-o"></i></button>'
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="'+dato.id+'"> <i class="fa fa-trash-o"></i> </button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
+               buttons+='<button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-check-square-o"></i></button>'
+               buttons += '<button class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" data-toggle="tooltip" title="Delete" value="'+dato.id+'"><i class="fa fa-trash-o"></i> </button>';
            }
            return buttons;
     },
@@ -203,36 +203,40 @@ const success = {
     new_update: function (data,state){
         console.log(data);
         var dato = data;
-        var clientname =$('#name').val();
-        var type =$('#type').val();
+        var typename =$('#name').val();
+        var type =$('#id_option').val();
 
+        switch (dato.No) {
+            case 1:
+                swal({
+                    title: "Datos Existentes",
+                    text: dato.msg,
+                    type: "warning",
+    
+                  });
+                break;
+            case 2:
+            
+            break;
         
-        if(dato =='error en agregar datos.'){
-            swal({
-                title: "Datos Existentes",
-                text: "El perfil: "+clientname+" ya existe",
-                type: "warning",
+            default:
+                var setting = `<tr id="settings_id${dato.id}">
+                    <td>${dato.id}</td>
+                    <td>${dato.name}</td>
+                    <td>${dato.option}</td>
+                    <td class="hidden-xs">${settings2.status(dato)}</td>
+                    <td>${settings2.button(dato)}</td>
+                </tr>`;
 
-              });
-        }
-        else{
-            var client = `<tr id="client_id${dato.id}">
-                                <td>${dato.name}</td>
-                                <td>${dato.description}</td>
-                                <td style ="background:"${dato.color}""></td>
-                                <td class="hidden-xs">${clients.status(dato)}</td>
-                                <td>${clients.button(dato)}</td>
-                            </tr>`;
-        
-            if (state == "add"){ 
-              $("#client-list").append(client);
-              $("#client_id"+dato.id).css("background-color", "#c3e6cb");    
-            }else{
-              $("#client_id"+dato.id).replaceWith(client);
-              $("#client_id"+dato.id).css("background-color", "#ffdf7e");  
-            }
-
-            $('#myModal').modal('hide')
+                if (state == "add"){ 
+                    $("#settings-list").append(setting);
+                    $("#settings_id"+dato.id).css("background-color", "#c3e6cb");    
+                }else{
+                    $("#settings_id"+dato.id).replaceWith(setting);
+                    $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
+                }
+                $('#myModal').modal('hide')
+                break;
         }
         
     },
@@ -241,36 +245,35 @@ const success = {
         console.log(data);
         var dato = data;
         if(dato.status != 0){
-            var client = `<tr id="client_id${dato.id}">
-                                <td>${dato.name}</td>
-                                <td class="hidden-xs">${clients.status(dato)}</td>
-                                <td>${clients.button(dato)}</td>
-                            </tr>`;
+            var setting = `<tr id="settings_id${dato.id}">
+                <td>${dato.id}</td>
+                <td>${dato.name}</td>
+                <td>${dato.option}</td>
+                <td class="hidden-xs">${settings2.status(dato)}</td>
+                <td>${settings2.button(dato)}</td>
+            </tr>`;
           
-            $("#client_id"+dato.id).replaceWith(client);
+            $("#settings_id"+dato.id).replaceWith(setting);
             if(dato.status == 1){
                 color ="#c3e6cb";
             }else if(dato.status == 2){
                 color ="#ed969e";
             }
-            $("#client_id"+dato.id).css("background-color", color); 
+            $("#settings_id"+dato.id).css("background-color", color); 
 
         }else if(dato.status == 0){
-            $("#client_id"+dato.id).remove();
+            $("#settings_id"+dato.id).remove();
         }
        
     },
 
     show: function(data){
-       
         console.log(data);
-        $('#client_id').val(data.id_client);
+        $('#settings_id').val(data.id);
         $('#name').val(data.name);
-        $('#description').val(data.description);
-        $('#color').val(data.color);
-        $('#interval').val(data.interval);
-        $('#duration').val(data.duration);
+        $('#id_option').val(data.id_option);
         $('#btn-save').val("update");
+        $('#myModalLabel').html(`Update Settings <i class="fa fa-user-plus"></i>`);
         $('#myModal').modal('show');
     },
 
