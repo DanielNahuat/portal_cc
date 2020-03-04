@@ -20,7 +20,7 @@
             <td>{{$op->phone}}</td>
             <td>{{$op->emergency_contact_phone}}</td>
             <td>{{$op->birthdate}}</td>
-            @switch($op->status)
+            @switch($op->id_status)
                 @case(1)
                     <td class="hidden-xs">
                         <span class='badge badge-success'>Activated</span>

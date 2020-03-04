@@ -28,9 +28,6 @@
             <input type="hidden" id="img_base64">
             <div class="col-sm-12 form-group">
                 <div class="card">
-                    <div class="header">
-                        <h2>Image</h2>
-                    </div>
                     <div class="body">
                         <input type="file" class="dropify" name="image" id="dropify-event" data-default-file="" data-show-remove="false">
                     </div>
@@ -47,7 +44,7 @@
             <h6>Last  Name:</h6>
             <input type="text" name="last_name" id="last_name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Este campo solo admite letras" maxlength="60">
         </div>
-        <div class="col-sm-3 form-group">
+        <div class="col-sm-3 form-group" style="display:none">
             <h6>Nickname:</h6>
             <input type="text" name="nickname" id="nickname" class="form-control" title="Este campo solo admite letras" maxlength="60">
         </div>
@@ -82,8 +79,8 @@
     </div>
 
     <div class="col-sm-12 text-center">					 
-        <button type="button" class="btn btn-danger btn-cancel">Cancelar</button>
-        <button type="submit" class="btn btn-success" id="btn-save" value="add">Guardar</button>
+        <button type="button" class="btn btn-danger btn-cancel">Cancel</button>
+        <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
     </div>	
 </form>
 </div>
