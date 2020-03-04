@@ -1,128 +1,156 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+
 use Illuminate\Http\Request;
-use App\TypeUserModel;
-use App\BasicMenuModel;
-use App\AssignamentTypeModel;
+use App\SettingsModel;
 use Illuminate\Support\Facades\Auth;
+use App\OptionsSettingModel;
+use Carbon\Carbon;
+
 
 class TrainingController extends Controller
 {
-   /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index(Request $request)
-    {           
-                $search = trim($request->dato);
+    {          
+        $user = Auth::user();
+        $id_menu=5;
+        $menu = menu($user,$id_menu);
+        if($menu['validate']){  
+            $now = Carbon::now();
+            $week = $now->weekOfYear;
+            $dayOfWeek = $now->dayOfWeek;
+
+            $search = trim($request->dato);
 
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
-                    $data2 = TypeUserModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
+                     $type= SettingsController::search_settings($request->type);
+
+                    $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+                            ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+                            ->whereNotIn('settings.status',[0])->where($type,'LIKE','%'.$search.'%')->paginate(5);
+                    // $data2 = SettingsModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
                 } else{
-                    $data2 = TypeUserModel::whereNotIn('status',[0])->paginate(5);
+                    $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+                    ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+                    ->whereNotIn('settings.status',[0])->paginate(5);
                 } 
                 $data=$data2;
                 if ($request->ajax()) {
-                    return view('types.table', compact('data'));
+                    return view('training.table', ["data"=>$data]);
                 }
+                $options= OptionsSettingModel::all();
   
-        return view('types.index',compact('data'));
+        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,]);
+         }else{
+            return redirect('/');
+         }
             
     }
 
-    public function validateType($request,$usertype_id){
-        if($usertype_id==""){
+    public function data_settings($id){
+        $data2 =  SettingsModel::select('settings.id as id','op.id as id_option','op.option as option','settings.name as name', 'settings.status as status')
+        ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+        ->where('settings.id',$id)->first();
+
+        return $data2;
+    }
+
+    public function validateSettings($request,$setting_id){
+        if($setting_id==""){
         $this->validate(request(), [
-            'name' => 'required|unique:type_user|max:30',
+            'name' => 'required|max:30',
+            'id_option' => 'required',
+
         ]); 
         }else{
             $this->validate(request(), [
                 'name' => 'required|max:30',
+                'id_option' => 'required',
             ]);   
         }
     }
- 
-   
-    public function store(Request $request)
-    {     $usertype_id="";
-        
-            TypeUserController::validateType($request,$usertype_id);
-            $user = TypeUserModel::Create($request->input());
-            $menu = BasicMenuModel::where('status','1')->get();
 
-            foreach($menu as $option){
-                $data = [
-                    'id_type_user' => $user->id,
-                    'id_menu' => $option->id,
-                    'status' => 0,
-                ];
-         
+    public function store(Request $request)
+    {     
+        $setting_id="";
+        
+        SettingsController::validateSettings($request,$setting_id);
+        $validation= SettingsController::validateSettingsExists($request->name,$request->id_option);
+        if (!$validation) {
+            $setting = SettingsModel::Create($request->input());
+             $dataSettings= SettingsController::data_settings($setting->id);
+    
+             return response()->json($dataSettings);
             
-               $new = AssignamentTypeModel::insert($data);
-              
-             }
-             $usertype2 = TypeUserModel::find($user->id);
-             return response()->json($usertype2);
+        }else{
+            $msg='Another option already has that name and that type';
+            $data=['No'=>1,'msg'=>$msg];
+            return response()->json($data);
+        }
+
       
            
     }
-  
-    public function show($usertype_id)
+
+    public function show($settings_id)
     {
 
-        $usertype = TypeUserModel::find($usertype_id);
-        $usertype->status=1;
-        return response()->json($usertype);
+        $dataSettings= SettingsController::data_settings($settings_id);
+        $dataSettings->status=1;
+        return response()->json($dataSettings);
     }
 
-    public function update(Request $request, $usertype_id)
-    {
-
-        $userValidation = TypeUserModel::where('name', $request->name)
+    public function validateSettingsExists($name, $id_option){
+        $settingValidation = SettingsModel::where('name',$name)
+        ->where('id_option', $id_option)
         ->whereIn('status', [1,2])
-        ->first(); 
-    
-
-        if($userValidation == null){
-            TypeUserController::validateType($request,$usertype_id);
-            $usertype = TypeUserModel::find($usertype_id);
-            $usertype->name = $request->name;
-            $usertype->status=1;
-            $usertype->save();
-            return response()->json($usertype);
-        }
-        else{
-            $user='Otro Perfil ya cuenta con ese Nombre.';
-            return response()->json($user);
-        }
-       
+        ->exists();
+        return $settingValidation;
     }
 
-    public function destroy($usertype_id)
+    public function update(Request $request, $settings_id)
     {
-        $type = TypeUserModel::find($usertype_id);
-        if($type->status == 2)
+        $settingValidation = SettingsController::validateSettingsExists($request->name,$request->id_option);
+        if(!$settingValidation){
+            SettingsController::validateSettings($request,$settings_id);
+            $setting = SettingsModel::find($settings_id);
+            $setting->name = $request->name;
+            $setting->id_option = $request->id_option;
+            $setting->status=1;
+            $setting->save();
+            $dataSettings= SettingsController::data_settings($setting->id);
+
+            return response()->json($dataSettings);
+        }else{
+            $msg='Another option already has that name and that type';
+            $data=['No'=>1,'msg'=>$msg];
+            return response()->json($data);
+        }
+    }
+
+    public function destroy($settings_id)
+    {
+        $setting = SettingsModel::find($settings_id);
+        if($setting->status == 2)
         {
-            $type->status = 1;
+            $setting->status = 1;
         }
         else
         {
-            $type->status = 2;  
+            $setting->status = 2;  
         }
-        $type->save();
+        $setting->save();
+        $dataSettings= SettingsController::data_settings($setting->id);
 
-        return response()->json($type);
+        return response()->json($dataSettings);
     } 
-
-    public function delete($usertype_id)
+    public function delete($settings_id)
     {
-        $type = TypeUserModel::find($usertype_id);
-            $type->status = 0;
-            $type->save();
-      
-        return response()->json($type);
+        $setting = SettingsModel::find($settings_id);
+            $setting->status = 0;
+            $setting->save();
+        return response()->json($setting);
     } 
 }

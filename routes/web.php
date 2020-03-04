@@ -58,8 +58,8 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     //Training
     Route::get('/training', 'TrainingController@index');
     Route::post('/training', 'TrainingController@store');
-    Route::post('/training/{user_id}', 'TrainingController@update');
-    Route::delete('/training/{user_id}', 'TrainingController@destroy');
+    Route::post('/training/{trainee_id}', 'TrainingController@update');
+    Route::delete('/training/{trainee_id}', 'TrainingController@destroy');
     Route::delete('/training/delete/{id}', 'TrainingController@delete');
 
     //Settings
