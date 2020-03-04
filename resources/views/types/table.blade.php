@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody id="usertype-list">
-        @foreach ($data as $type)
+        @forelse ($data as $type)
         <tr id="usertype_id{{$type->id}}" class="rowType">
             <td>{{ $type->id }}</td>
             <td>{{ $type->name }}</td>
@@ -34,16 +34,16 @@
                 @break
             @endswitch
         </tr>
-        @endforeach
+        @empty
+            <tr id="table-row" class="text-center">
+                <th colspan="4" class="text-center">
+                    <h2><span class="badge  badge-pill badge-info">Data Not Found</span></h2>
+                </th>
+            </tr>
+        @endforelse
     </tbody>
 </table>
-@if(count($data) == 0)
-            <div id="table-row" class="col-sm-12 text-center">
-        @else
-            <div id="table-row" class="col-sm-12 text-center" style="display:none">
-        @endif
-            <h2 class="text-center"><span class="badge badge-info">Data Not Found</span></h2>
-        </div>
 
-        
+
+
 {!! $data->render() !!}
