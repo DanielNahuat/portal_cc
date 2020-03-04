@@ -20,7 +20,7 @@ class OperatorsController extends Controller
             if(strlen($request->type) > 0 &&  strlen($search) > 0){
                 // $data2 = TypeUserModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(10);
             } else{
-                $data2 = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status as status')
+                $data2 = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status')
                 ->join('users as usr', 'users_info.id_user', '=', 'usr.id')
                 ->where('usr.id_type_user', 9)
                 ->whereIn('usr.id_status', [1,2])
@@ -71,10 +71,11 @@ class OperatorsController extends Controller
     }
 
     public function getResult($id){
-        $data = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status as status')
+        $data = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status')
             ->join('users as usr', 'users_info.id_user', '=', 'usr.id')
             ->where('usr.id_type_user', 9)
             ->whereIn('usr.id_status', [1,2])
+            ->where('usr.id', $id)
             ->first();
         return $data;
     }

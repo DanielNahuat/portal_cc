@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="{{asset('vendor/jquery-datatable/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('vendor/sweetalert/sweetalert.css')}}">
 <link rel="stylesheet" href="{{asset('vendor/select2/select2.css')}}">
+<link rel="stylesheet" href="{{asset('vendor/dropify/css/dropify.min.css')}}">
+
 @yield('css')
 
 
@@ -157,6 +159,7 @@
 <script src="{{asset('vendor/select2/select2.min.js')}}"></script>
 <script src="{{asset('js/bootstrap-notify.js')}}"></script>
 <script src="{{asset('bundles/mainscripts.bundle.js')}}"></script>
+<script src="{{asset('vendor/dropify/js/dropify.min.js')}}"></script>
 @yield('script')
 </body>
 </html>

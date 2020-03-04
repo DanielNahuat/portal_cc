@@ -14,6 +14,14 @@ $(document).ready(function(){
         $('#btn-save').val("add");
         $("#formTutees").trigger('reset');
         $('#tag_put').remove();
+
+        var drEvent = $('#dropify-event').dropify();
+        drEvent = drEvent.data('dropify');
+        drEvent.resetPreview();
+        drEvent.clearElement();
+        drEvent.settings.defaultFile = "";
+        drEvent.destroy();
+        drEvent.init();
     });
     //BTN CANCEL
     $('.btn-cancel').click(function(){
