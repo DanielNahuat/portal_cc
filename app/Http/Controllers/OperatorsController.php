@@ -39,7 +39,23 @@ class OperatorsController extends Controller
         }
     }
 
+    public function validateForm($request){
+        $this->validate(request(), [
+            'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
+            'birthdate' => 'required',
+            'emergency_contact_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'emergency_contact_phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
+            'profile_picture' => 'image',
+            'email' => 'email',
+            'password' => 'required',
+        ]);
+    }
+
     public function store(Request $request){
+
+        OperatorsController::validateForm($request);
 
         $imageName = OperatorsController::documents($request, "operators");
         
@@ -55,13 +71,13 @@ class OperatorsController extends Controller
             'id_user'=>$user->id,
             'name'=>$request->name,
             'last_name'=>$request->last_name,
-            'address'=>"",
+            'address'=>$request->address,
             'phone'=>$request->phone,
             'emergency_contact_name'=>$request->emergency_contact_name,
             'emergency_contact_phone'=>$request->emergency_contact_phone,
             'notes'=>$request->notes,
             'description'=>$request->description,
-            'gender'=>"",
+            'gender'=>$request->gender,
             'birthdate'=>$request->birthdate,
             'profile_picture'=>$imageName,
             'biotime_status'=>"",

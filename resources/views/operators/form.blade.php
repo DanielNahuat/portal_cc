@@ -15,11 +15,11 @@
                 </div>
                 <div class="col-sm-6 form-group">
                     <h6>Password:</h6>
-                    <input type="password" name="password" id="password" class="form-control" title="Este campo solo admite letras" maxlength="60">
+                    <input type="password" name="password" id="password" class="form-control" maxlength="20">
                 </div>
                 <div class="col-sm-6 form-group">
                     <h6>Confirm Password:</h6>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" title="Este campo solo admite letras" maxlength="60">
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" maxlength="20">
                 </div>
             </div>
         </div>
@@ -35,42 +35,55 @@
             </div>          
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-sm-3 form-group">
             <h6>First Name:</h6>
-            <input type="text" name="name" id="name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Este campo solo admite letras" maxlength="60">
+            <input type="text" name="name" id="name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" maxlength="150">
         </div>
         <div class="col-sm-3 form-group">
             <h6>Last  Name:</h6>
-            <input type="text" name="last_name" id="last_name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Este campo solo admite letras" maxlength="60">
+            <input type="text" name="last_name" id="last_name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" maxlength="150">
         </div>
         <div class="col-sm-3 form-group nickname" style="display:none">
             <h6>Nickname:</h6>
-            <input type="text" name="nickname" id="nickname" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="text" name="nickname" id="nickname" class="form-control" maxlength="150">
         </div>
         <div class="col-sm-3 form-group">
             <h6>First Day of Work (YYYY-MM-DD):</h6>
-            <input type="date" name="entrance_date" id="entrance_date" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="date" name="entrance_date" id="entrance_date" class="form-control">
         </div>
         <div class="col-sm-3 form-group">
             <h6>Phone:</h6>
-            <input type="text" name="phone" id="phone" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="tel" name="phone" id="phone" class="form-control" maxlength="20">
+        </div>
+        <div class="col-sm-6 form-group">
+            <h6>Address:</h6>
+            <input type="text" name="address" id="address" class="form-control" maxlength="190">
+        </div>
+        <div class="col-sm-1 form-group">
+            <h6>Gender:</h6>
+            <select name="gender" id="gender" class="form-control">
+                <option value="0">Select</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            </select>
         </div>
         <div class="col-sm-3 form-group">
             <h6>Emergency Contact Name:</h6>
-            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control" maxlength="150">
         </div>
         <div class="col-sm-3 form-group">
             <h6>Emergency Contact Phone:</h6>
-            <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="tel" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control" maxlength="20">
         </div>
         <div class="col-sm-3 form-group">
             <h6>Birthday (YYYY-MM-DD):</h6>
-            <input type="date" name="birthdate" id="birthdate" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="date" name="birthdate" id="birthdate" class="form-control">
         </div>
         <div class="col-sm-12 form-group">
             <h6>Notes:</h6>
-            <input type="text" name="notes" id="notes" class="form-control" title="Este campo solo admite letras" maxlength="60">
+            <input type="text" name="notes" id="notes" class="form-control" maxlength="150">
         </div>
         <div class="col-sm-12 form-group">
             <h6>Information:</h6>
