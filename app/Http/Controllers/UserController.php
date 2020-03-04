@@ -82,23 +82,23 @@ class UserController extends Controller
     {
         // dd($request);
         $this->validateUser($request);
-        // try {
-        //     DB::beginTransaction();
-        //         $input = $request->input();
-        //         $input['id_status'] = 1;
-        //         $input['nickname'] = 'nick'.$input['name'];
-        //         $input['password'] = Hash::make($input['password']);
-        //         $user = User::create($input);
+        try {
+            DB::beginTransaction();
+                $input = $request->input();
+                $input['id_status'] = 1;
+                $input['nickname'] = 'nick'.$input['name'];
+                $input['password'] = Hash::make($input['password']);
+                $user = User::create($input);
 
-        //         $input['id_user'] = $user->id;
-        //         $user_info = User_info::create($input);
+                $input['id_user'] = $user->id;
+                $user_info = User_info::create($input);
 
-        //     DB::commit();
-        //     return response()->json(User::where('id',$user->id)->with('User_info')->first());
-        // } catch (\Exception $e) {
-        //     return response()->json($e);    
-        //     DB::rollBack();
-        // }
+            DB::commit();
+            return response()->json(User::where('id',$user->id)->with('User_info')->first());
+        } catch (\Exception $e) {
+            return response()->json($e);    
+            DB::rollBack();
+        }
     }
 
     /**
