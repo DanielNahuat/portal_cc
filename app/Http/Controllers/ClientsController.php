@@ -191,4 +191,30 @@ class ClientsController extends Controller
       
         return response()->json($client);
     } 
+
+    //CONTACTS
+    public function storeContacts(Request $request)
+    {
+        dd($request);
+        // ClientsController::validateClient($request);
+        // $data = $request->input();
+        // $clients = ClientModel::firstOrCreate([
+        // 'name'=>$data['name'],
+        // 'description'=>$data['description'],
+        // 'color'=>$data['color'],
+        // ]);
+
+        // $id_client = $clients->id;
+
+        // $breaks = BreakRulesModel::firstOrCreate([
+        // 'interval'=>$data['interval'],
+        // 'duration'=>$data['duration'],
+        // 'id_client'=>$id_client
+
+        // ]);
+        //  $result = $this->getResult($id_client);
+        // return response()->json($result);
+
+    }
+
 }

@@ -23,7 +23,7 @@ $(document).ready(function(){
     });
 
     $('.btn-cancel').click(function(){
-        $('#labelTitle').html("Client  <i class='fa fa-briefcase'></i>");
+        $('#labelTitle').html("Clients  <i class='fa fa-briefcase'></i>");
         $(".formulario").hide();
         $(".tableClient").show();
         $('#btn_add').show();
@@ -34,12 +34,22 @@ $(document).ready(function(){
     });
 
     //Add Contacts
-    $('#btn_add_contacts').click(function(){
+    $('.btn_add_contacts').click(function(){
         $('#labelTitle').html("Add Contacts  <i class='fa fa-plus'></i>");
         $(".formulario").hide();
         $(".formulario_contacts").show();
         $(".tableClient").hide();
         $('#btn_add').hide();
+        $('#formClients').trigger("reset");
+        $('#tag_put').remove();
+    });
+
+    $('.btn-cancel-contacts').click(function(){
+        $('#labelTitle').html("Clients  <i class='fa fa-briefcase'></i>");
+        $(".formulario").hide();
+        $(".tableClient").show();
+        $('#btn_add').show();
+        $(".formulario_contacts").hide();
         $('#formClients').trigger("reset");
         $('#tag_put').remove();
     });
@@ -54,7 +64,7 @@ $(document).ready(function(){
      
 
         //used to determine the http verb to use [add=POST], [update=PUT]
-        var state = $('#btn-save').val();
+        var state = $('#btn-save-contacts').val();
         var type = "POST"; //for creating new resource
         var client_id = $('#client_id').val();
         var my_url = url;
@@ -74,6 +84,32 @@ $(document).ready(function(){
             $('#tag_put').remove();
     
     });
+
+    //Create Contacts for Clients
+    $("#formContacts").on('submit',function (e) {
+        console.log('button');
+      
+        e.preventDefault(); 
+        var formData =  $("#formContacts").serialize();
+     
+
+        //used to determine the http verb to use [add=POST], [update=PUT]
+        var state = $('#btn-save-contacts').val();
+        var type = "POST"; //for creating new resource
+        var client_id = $('#client_id').val();
+        var my_url = url + '/contacts';
+        if (state == "update"){
+            type = "PUT"; //for updating existing resource
+            my_url += '/' + client_id;
+            $('#myModal').modal('hide');
+        }
+            console.log(formData);
+            actions.edit_create(type,my_url,state,formData);   
+        
+    
+    });
+
+
 
      //display modal form for product EDIT ***************************
      $(document).on('click','.btn-edit',function(){
@@ -205,14 +241,14 @@ const clients ={
                buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" title="Edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
           
            }else if(dato.status == 2){
                buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" > <i class="fa fa-check-square-o"></i></button>'
                buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="'+dato.id+'"> <i class="fa fa-trash-o"></i> </button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
            }
            return buttons;
@@ -246,9 +282,9 @@ const success = {
         }
         else{
             var client = `<tr id="client_id${dato.id}">
+                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td>${dato.name}</td>
                                 <td>${dato.description}</td>
-                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
@@ -262,7 +298,6 @@ const success = {
               $("#client_id"+dato.id).css("background-color", "#ffdf7e");  
             }
 
-            $('#myModal').modal('hide')
         }
         
     },
@@ -272,9 +307,9 @@ const success = {
         var dato = data;
         if(dato.status != 0){
             var client = `<tr id="client_id${dato.id}">
+                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td>${dato.name}</td>
                                 <td>${dato.description}</td>
-                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
