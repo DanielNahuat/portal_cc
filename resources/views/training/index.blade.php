@@ -15,6 +15,21 @@
                                 </div>
                             </div>
                         </div><br>
+                        <div class="col-sm-12">
+                            <div class='row'>
+                                <div class="form-group col-lg-2 col-xl-2 col-xs-4 col-md-2 col-sm-4">
+                                    <label for="sel1 ">Select Day:</label>
+                                    <select class="form-control" id="sel1">
+                                        <option value="all">All days</option>
+                                    
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-4 col-xl-4 col-xs-12 col-md-4 col-sm-12">
+                                    <label for="sel1">Select Date:</label>
+                                    <input type="date" id="datesearch" name="datesearch" class="form-control">
+                                </div>
+                            </div>
+                        </div>
                         <div class="body">
                             <!-- <div class="table-responsive">
                                 @include('training.search')
