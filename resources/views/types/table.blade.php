@@ -9,7 +9,7 @@
     </thead>
     <tbody id="usertype-list">
         @foreach ($data as $type)
-        <tr id="usertype_id{{$type->id}}">
+        <tr id="usertype_id{{$type->id}}" class="rowType">
             <td>{{ $type->id }}</td>
             <td>{{ $type->name }}</td>
             @switch($type->status)
@@ -37,4 +37,13 @@
         @endforeach
     </tbody>
 </table>
+@if(count($data) == 0)
+            <div id="table-row" class="col-sm-12 text-center">
+        @else
+            <div id="table-row" class="col-sm-12 text-center" style="display:none">
+        @endif
+            <h2 class="text-center"><span class="badge badge-info">Data Not Found</span></h2>
+        </div>
+
+        
 {!! $data->render() !!}
