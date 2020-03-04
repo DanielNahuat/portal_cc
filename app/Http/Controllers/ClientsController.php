@@ -40,7 +40,7 @@ class ClientsController extends Controller
                                         ->join('break_rules as brk', 'brk.id_client', '=', 'clients.id')
                                         ->join('client_color as clc', 'clc.id', '=', 'clients.color')
                                         ->where('clients.status', '!=', 0)
-                                        ->paginate(10);
+                                        ->paginate(8);
             } 
            
             $data=$data2;
