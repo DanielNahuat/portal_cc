@@ -108,7 +108,7 @@ $(document).ready(function(){
                 },
                 function(isConfirm) {
                     if (isConfirm) {
-                    swal(datatitle, "Option "+datatext, "success");
+                    swal(datatitle, "Client "+datatext, "success");
                     actions.deactivated(my_url);
                     } 
                     else {
@@ -219,7 +219,8 @@ const success = {
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
                                 <td>${dato.description}</td>
-                                <td style ="background:"${dato.color}""></td>
+                                <td style ="background:${dato.color}"></td>
+                                <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
                             </tr>`;
@@ -243,6 +244,9 @@ const success = {
         if(dato.status != 0){
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
+                                <td>${dato.description}</td>
+                                <td style ="background:${dato.color}"></td>
+                                <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
                             </tr>`;

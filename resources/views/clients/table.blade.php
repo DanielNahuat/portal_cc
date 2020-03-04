@@ -13,7 +13,7 @@
         <tr id="client_id{{$client->id}}" >
             <td>{{ $client->name }}</td>
             <td>{{$client->description}}</td>
-            <td style = "background:{{$client->color}}"></td>
+            <td><span class="badge badge-secondary" style = "background:{{$client->color}}">&nbsp;&nbsp;&nbsp;</span></td>
             <td>
                 @switch($client->status)
                     @case(1)
