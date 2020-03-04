@@ -1,4 +1,4 @@
-getData(1);
+
 $(document).ready(function(){
      
     
@@ -7,45 +7,51 @@ $(document).ready(function(){
     $('#sidebar10').addClass('active');  
 
     //get base URL *********************
-    var url = $('#url').val();
-
+    var url = $('#url').val();  
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
-        // $('#tag_put').remove();
+        $('#labelTitle').html("New Client  <i class='fa fa-plus'></i>");
+        $(".formulario").show();
+        $(".formulario_contacts").hide();
         $('#btn-save').val("add");
-        $('#clientsForm').trigger("reset");
-        $("#image").attr('src','');
-        $('#myModal').modal('show');
+        $(".tableClient").hide();
+        $('#btn_add').hide();
+        $('#formClients').trigger("reset");
+        $('#tag_put').remove();
+    
     });
 
-
-    //display modal form for product EDIT ***************************
-    $(document).on('click','.open_modal',function(){
-        $('#clientsForm').trigger("reset");
-        var client_id = $(this).val();
-        var my_url = url + '/' + client_id;
-
-            actions.show(my_url);
-       
+    $('.btn-cancel').click(function(){
+        $('#labelTitle').html("Client  <i class='fa fa-briefcase'></i>");
+        $(".formulario").hide();
+        $(".tableClient").show();
+        $('#btn_add').show();
+        $(".formulario_contacts").hide();
+        $('#formClients').trigger("reset");
+        $('#tag_put').remove();
+    
     });
 
+    //Add Contacts
+    $('#btn_add_contacts').click(function(){
+        $('#labelTitle').html("Add Contacts  <i class='fa fa-plus'></i>");
+        $(".formulario").hide();
+        $(".formulario_contacts").show();
+        $(".tableClient").hide();
+        $('#btn_add').hide();
+        $('#formClients').trigger("reset");
+        $('#tag_put').remove();
+    });
 
 
     //create new product / update existing product ***************************
-    $("#clientsForm").on('submit',function (e) {
+    $("#formClients").on('submit',function (e) {
         console.log('button');
       
         e.preventDefault(); 
-        var formData =  $("#clientsForm").serialize();
-        // var formData = {
-        //        name: $('#name').val(),
-        //        description: $('#description').val(),
-        //        id_color: $('#id_color').val(),
-        //        interval: $('#interval').val(),
-        //        duration: $('#duration').val(),
-               
-        //    }
+        var formData =  $("#formClients").serialize();
+     
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
@@ -57,11 +63,34 @@ $(document).ready(function(){
             my_url += '/' + client_id;
             $('#myModal').modal('hide');
         }
-        
             console.log(formData);
-        
-            actions.edit_create(type,my_url,state,formData);
+            actions.edit_create(type,my_url,state,formData);   
+            $('#labelTitle').html("Client  <i class='fa fa-briefcase'></i>");
+            $(".formulario").hide();
+            $(".tableClient").show();
+            $('#btn_add').show();
+            $(".formulario_contacts").hide();
+            $('#formClients').trigger("reset");
+            $('#tag_put').remove();
     
+    });
+
+     //display modal form for product EDIT ***************************
+     $(document).on('click','.btn-edit',function(){
+        $('#labelTitle').html("Edit Client  <i class='fa fa-briefcase'></i>");
+        $(".formulario").show();
+        $(".formulario_contacts").hide();
+        $('#btn-save').val("update");
+        $(".tableClient").hide();
+        $('#btn_add').hide();
+        $('#formClients').trigger("reset");
+        $('#tag_put').remove();
+
+        var client_id = $(this).val();
+        var my_url = url + '/' + client_id;
+
+            actions.show(my_url);
+       
     });
 
         $(document).on('click','.off-type',function(){
@@ -174,7 +203,7 @@ const clients ={
            var buttons='';
             if(dato.status== 1){
                buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" title="Edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';

@@ -46,14 +46,15 @@ class UserController extends Controller
     }
 
     public function validateUser($request,$user=''){
-        // dd($request);
+        $user=='' ? $email = 'required|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
+        // dd($email);
         $this->validate(request(), [
             'name' => 'required|max:40',
             'last_name' => 'required|max:40',
             'phone' => 'max:16',
             'emergency_contact_phone' => 'max:16',
             'emergency_contact_name' => 'max:40',
-            'email' => 'required|unique:users,email,'.$user.',id,id_status,1,id_status,2',
+            'email' => $email,
             'birthdate' => 'date|before:18 years ago',
             'phone' => 'max:20',
             'gender' => 'not_in:0',
@@ -82,23 +83,23 @@ class UserController extends Controller
     {
         // dd($request);
         $this->validateUser($request);
-        // try {
-        //     DB::beginTransaction();
-        //         $input = $request->input();
-        //         $input['id_status'] = 1;
-        //         $input['nickname'] = 'nick'.$input['name'];
-        //         $input['password'] = Hash::make($input['password']);
-        //         $user = User::create($input);
+        try {
+            DB::beginTransaction();
+                $input = $request->input();
+                $input['id_status'] = 1;
+                $input['nickname'] = 'nick'.$input['name'];
+                $input['password'] = Hash::make($input['password']);
+                $user = User::create($input);
 
-        //         $input['id_user'] = $user->id;
-        //         $user_info = User_info::create($input);
+                $input['id_user'] = $user->id;
+                $user_info = User_info::create($input);
 
-        //     DB::commit();
-        //     return response()->json(User::where('id',$user->id)->with('User_info')->first());
-        // } catch (\Exception $e) {
-        //     return response()->json($e);    
-        //     DB::rollBack();
-        // }
+            DB::commit();
+            return response()->json(User::where('id',$user->id)->with('User_info')->first());
+        } catch (\Exception $e) {
+            return response()->json($e);    
+            DB::rollBack();
+        }
     }
 
     /**
