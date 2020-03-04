@@ -52,15 +52,6 @@ $(document).ready(function(){
         actions.edit_create(type,my_url,state,formData, file);
     });
 
-
-
-
-
-       
-        
-    
-  
-
     //delete category and remove it from TABLE list ***************************
     $(document).on('click','.deleteCategory',function(){
         var id = $(this).val();
