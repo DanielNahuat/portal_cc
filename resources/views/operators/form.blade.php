@@ -60,7 +60,7 @@
             <h6>Address:</h6>
             <input type="text" name="address" id="address" class="form-control" maxlength="190">
         </div>
-        <div class="col-sm-1 form-group">
+        <div class="col-sm-2 form-group">
             <h6>Gender:</h6>
             <select name="gender" id="gender" class="form-control">
                 <option value="">Select</option>
@@ -93,6 +93,7 @@
     <div class="col-sm-12 text-center">					 
         <button type="button" class="btn btn-danger btn-cancel">Cancel</button>
         <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
+        <input type="hidden" id="id_hidden" name="id_hidden" value="0">
     </div>	
 </form>
 </div>
