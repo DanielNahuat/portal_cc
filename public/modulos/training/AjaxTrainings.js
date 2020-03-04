@@ -27,11 +27,20 @@ $(document).ready(function(){
         $('#btn-save').val("add");
         $('#settingsForm').trigger("reset");
         $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
-
         // $("#image").attr('src','');
-        $('#myModal').modal('show');
+        $(".bodyIndex").hide();
+        $('#formCU').show();
+        
     });
-
+       //display modal form for creating new product *********************
+    $('.cancel-cu').click(function(){
+        $('#btn-save').val("add");
+        $('#settingsForm').trigger("reset");
+        $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
+        // $("#image").attr('src','');
+        $('#formCU').hide();
+        $(".bodyIndex").show();
+    });
 
 
 
@@ -235,7 +244,8 @@ const success = {
                     $("#settings_id"+dato.id).replaceWith(setting);
                     $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
                 }
-                $('#myModal').modal('hide')
+                $('#formCU').hide();
+                $(".bodyIndex").show();
                 break;
         }
         
