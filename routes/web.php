@@ -52,14 +52,15 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/candidates/{id}', 'CandidateController@index');
     Route::get('/candidates/{id}/{candidate_id?}', 'CandidateController@show');
     Route::post('/candidates/{id}', 'CandidateController@store');
+    Route::post('/candidates/{id}/{vacancy_id?}', 'CandidateController@update');
     Route::delete('/candidates/{id}/delete/{candidate_id?}', 'CandidateController@delete');
     Route::delete('/candidates/{id}/{candidate_id?}', 'CandidateController@destroy');
 
     //Training
     Route::get('/training', 'TrainingController@index');
     Route::post('/training', 'TrainingController@store');
-    Route::post('/training/{user_id}', 'TrainingController@update');
-    Route::delete('/training/{user_id}', 'TrainingController@destroy');
+    Route::post('/training/{trainee_id}', 'TrainingController@update');
+    Route::delete('/training/{trainee_id}', 'TrainingController@destroy');
     Route::delete('/training/delete/{id}', 'TrainingController@delete');
 
     //Settings
@@ -93,6 +94,11 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
     Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
     Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
+
+    //Operators
+    Route::get('/operators', 'OperatorsController@index');
+    Route::post('/operators', 'OperatorsController@store');
+
 });
 
 

@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $this->validate(request(), [
             'name' => 'required|max:40',
-            'lastname' => 'required|max:40',
+            'last_name' => 'required|max:40',
             'email' => 'required|unique:users,email,',
             'phone' => 'max:20',
             'password' => 'sometimes|required|confirmed|min:8',
@@ -85,7 +85,7 @@ class UserController extends Controller
                 $user = User::create($input);
 
                 $input['id_user'] = $user->id;
-                $input['last_name'] = $input['lastname'];
+                // $input['last_name'] = $input['lastname'];
                 $input['gender'] = 'M';
                 $input['birthdate'] =Carbon::now();
                 $input['profile_picture'] = 'adadasasdas';

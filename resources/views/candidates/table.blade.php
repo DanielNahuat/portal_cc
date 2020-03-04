@@ -22,7 +22,7 @@
         @foreach ($data as $candidate)
         <tr id="candidate_id{{$candidate->id}}">
             <td>{{ $candidate->id }}</td>
-            <td>{{ $candidate->id_vacancy }}</td>
+            <td>{{ $candidate->name_vacancy }}</td>
             <td>{{ $candidate->name}}</td>
             <td>{{ $candidate->last_name}}</td>
             <td>{{ $candidate->phone }}</td>
