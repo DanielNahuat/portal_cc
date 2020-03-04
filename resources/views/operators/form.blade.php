@@ -44,7 +44,7 @@
             <h6>Last  Name:</h6>
             <input type="text" name="last_name" id="last_name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="Este campo solo admite letras" maxlength="60">
         </div>
-        <div class="col-sm-3 form-group" style="display:none">
+        <div class="col-sm-3 form-group nickname" style="display:none">
             <h6>Nickname:</h6>
             <input type="text" name="nickname" id="nickname" class="form-control" title="Este campo solo admite letras" maxlength="60">
         </div>
