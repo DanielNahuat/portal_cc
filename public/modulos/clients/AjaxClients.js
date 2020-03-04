@@ -219,7 +219,7 @@ const success = {
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
                                 <td>${dato.description}</td>
-                                <td style ="background:${dato.color}"></td>
+                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
@@ -245,7 +245,7 @@ const success = {
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
                                 <td>${dato.description}</td>
-                                <td style ="background:${dato.color}"></td>
+                                <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td></td>
                                 <td class="hidden-xs">${clients.status(dato)}</td>
                                 <td>${clients.button(dato)}</td>
