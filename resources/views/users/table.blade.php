@@ -1,5 +1,5 @@
-<table class="table table-bordered" id="tag_container">
-    <thead class="text-center">
+<table class="table table-striped text-center" id="tag_container">
+    <thead class="text-center text-white thead-yasc">
         <tr>
             <th width="100px">ID</th>
             <th>Name</th>
@@ -14,7 +14,7 @@
     </thead>
     <tbody id="user-list">
         @foreach ($data as $user)
-        <tr id="usertype_id{{$user->id}}">
+        <tr id="user_id{{$user->id}}">
             <td>{{ $user->id }}</td>
             <td>{{ $user->User_info['name'] }}</td>
             <td>{{ $user->User_info['last_name'] }}</td>

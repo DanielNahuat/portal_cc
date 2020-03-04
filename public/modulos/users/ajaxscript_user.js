@@ -47,7 +47,9 @@ $(document).ready(function(){
         //display modal form for creating new product *********************
         $('#btn_add').click(function(){
             $('#myModalLabel').html("Agregar Usuario  <i class='fa fa-tasks'></i>");
-            enablePassInput()
+            enablePassInput();
+            $('.formulario').show();
+            $('.tableUser').hide();
             $('#tag_put').remove();
             $('.stage').hide();
             $('.cafeteria').hide();
@@ -57,6 +59,11 @@ $(document).ready(function(){
             $(".show_pass_div").hide();
             $('#myModal').modal('show');
         
+        });
+
+        $('.cancelar').click(function(){
+            $('.formulario').hide();
+            $('.tableUser').show();     
         });
 
         $('#id_profile').change(function(){
@@ -123,6 +130,8 @@ $(document).ready(function(){
         $(document).on('click','#btn-edit',function(){
             $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
             $('#userForm').trigger("reset");
+            $('.formulario').show();
+            $('.tableUser').hide();
             disablePassInput()
             $('#tag_put').remove();
             $form = $('#userForm');
@@ -415,7 +424,8 @@ const success = {
                             </tr>`;
         
     
-                        
+                $('.formulario').hide();
+                $('.tableUser').show(); 
                 $("#user-list").append(user);
                 $("#user_id"+dato.id).css("background-color", "#c3e6cb");    
 
@@ -424,7 +434,7 @@ const success = {
             else
             { //if user updated an existing record
                 swal({
-                    title: dato.name,
+                    title: dato.user_info.name,
                     text: "Usuario modificado",
                     type: "success",
                     button: "OK",
@@ -442,7 +452,9 @@ const success = {
                                 <td>${types.button(dato)}</td>
                             </tr>`;
                 
-                $("#settings_id"+dato.id).replaceWith(user);
+                $('.formulario').hide();
+                $('.tableUser').show(); 
+                $("#user_id"+dato.id).replaceWith(user);
                 $("#user_id"+dato.id).css("background-color", "#ffdf7e"); 
             }
             $('#userForm').trigger("reset");
