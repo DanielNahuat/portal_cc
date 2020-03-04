@@ -8,18 +8,24 @@
 <div class="row">
   <div class="col-sm-7">
       <div class="row">
-      <input type="hidden" id="id_type_user" name="id_type_user" value="9">
+      {{-- <input type="hidden" id="id_type_ user" name="id_type_user" value="9"> --}}
           <div class="col-sm-12 form-group">
               <h6>Email:</h6>
               <input type="text" name="email" id="email" class="form-control" title="Email" maxlength="120">
           </div>
-          <div class="col-sm-6 form-group">
-              <h6>Password:</h6>
-              <input type="password" name="password" id="password" class="form-control" title="Este campo solo admite letras" maxlength="60">
+
+          <div class="form-group error btn-group col-sm-12 show_pass_div">
+            <div class="fancy-checkbox" bis_skin_checked="1" style="text-align:center; vertical-align:middle;">
+              <label><input type="checkbox" id="show_pass"><span>Cambiar Contraseña</span></label>
+            </div>  
           </div>
-          <div class="col-sm-6 form-group">
-              <h6>Confirm Password:</h6>
-              <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" title="Este campo solo admite letras" maxlength="60">
+          <div class="col-sm-6 form-group pass">
+            <h6>Password:</h6>
+            <input type="password" name="password" id="password" class="form-control" title="Este campo solo admite letras" maxlength="60">
+          </div>
+          <div class="col-sm-6 form-group pass">
+            <h6>Confirm Password:</h6>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" title="Este campo solo admite letras" maxlength="60">
           </div>
       </div>
   </div>
@@ -36,6 +42,7 @@
       </div>          
   </div>
 </div>
+<hr>
 <div class="row">
   <div class="col-sm-3 form-group">
       <h6>First Name:</h6>
@@ -85,6 +92,16 @@
     </select>
   </div>
 
+  <div class="col-sm-3 form-group">
+    <h6>Type User:</h6>
+    <select  class="custom-select" name="id_type_user" id="id_type_user">
+      <option value="0" selected disabled>Select Type User</option>
+      @foreach ($types as $type)
+        <option value='{{$type->id}}'>{{$type->name}}</option>
+      @endforeach
+    </select>
+  </div>
+
   <div class="col-sm-12 form-group">
       <h6>Notes:</h6>
       <input type="text" name="notes" id="notes" class="form-control" title="Este campo solo admite letras" maxlength="60">
@@ -98,6 +115,7 @@
   <div class="col-sm-12 text-center">					 
     <button type="button" class="btn btn-danger btn-cancel">Cancel</button>
     <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
+    <input type="text" name="" id="id_user" value="" disabled hidden>
   </div>
 </div>
 	
