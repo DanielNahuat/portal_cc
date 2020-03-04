@@ -1,9 +1,37 @@
 $(document).ready(function(){
     var url = $('#url').val();
     var baseUrl = $('#baseUrl').val();
+    var radioState;
 
     $('#sidebar3').addClass('active'); 
     $('#myTable').DataTable();
+    $(".pass").hide();
+    function disablePassInput()
+    {
+        $('#password').attr('disabled','disabled');
+        $('#password_confirmation').attr('disabled','disabled');
+    }
+
+    function enablePassInput()
+    {
+        $('#password').removeAttr('disabled');
+        $('#password_confirmation').removeAttr('disabled');
+    }
+
+
+    $("#show_pass").on("click", function(e) {
+        if (radioState === this) {
+            $(".pass").hide();
+            disablePassInput()
+            this.checked = false;
+            radioState = null;
+        } else {
+            $(".pass").show();
+            enablePassInput()
+            console.log("false");
+            radioState = this;
+        }
+    });
 
     // BTN NEW
     $('#btn_add').click(function(){
@@ -12,8 +40,13 @@ $(document).ready(function(){
         $(".tablaOperator").hide();
         $("#btn_add").hide();
         $('#btn-save').val("add");
-        $("#formTutees").trigger('reset');
+        $("#formOperators").trigger('reset');
         $('#tag_put').remove();
+        enablePassInput();
+        $(".pass").show();
+        $(".show_pass_div").hide();
+        $(".nickname").hide();
+        $("#nickname").attr('disabled', true);
 
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
@@ -29,10 +62,11 @@ $(document).ready(function(){
         $(".formulario").hide();
         $(".tablaOperator").show();
         $("#btn_add").show();
-        $("#formTutees").trigger('reset');
+        $("#formOperators").trigger('reset');
         $('#tag_put').remove();
     });
 
+    //SAVE OPERATOR
     $("#formOperators").on('submit',function (e) {
 
         e.preventDefault(); 
@@ -41,77 +75,65 @@ $(document).ready(function(){
         var formData = new FormData(this);
         // var formData = $("#formOperators").serialize();
         var state = $('#btn-save').val();
+        var id = $('#id_hidden').val();
         var type = "POST"; //for creating new resource
         var my_url = baseUrl + '/operators';
         var file = "file";
-        // if (state == "update"){
-        //     type = "POST"; //for updating existing resource
-        //     my_url += '/' + qr_id;
-        // }
+        if (state == "update"){
+            type = "POST"; //for updating existing resource
+            my_url += '/' + id;
+        }
 
         actions.edit_create(type,my_url,state,formData, file);
     });
 
-    //delete category and remove it from TABLE list ***************************
-    $(document).on('click','.deleteCategory',function(){
+     //SHOW
+     $(document).on('click','.btn-edit',function(){
         var id = $(this).val();
-        var my_url = baseUrl + '/user/delete/' + id;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })
-        swal({
-            title: "¿Desea eliminar este usuario",
-            text: "El usuarioo se eliminara permanentemente",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn btn-danger",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar",
-            closeOnConfirm: true,
-            closeOnCancel: false
-            },
-            function(isConfirm) {
-            if (isConfirm) {
-                actions.deactivated(my_url);
-            }else {
-                swal("Cancelado", "Eliminacion cancelada", "error");
-            }
-            });
-    });
-       
-    //delete product and remove it from TABLE list ***************************
-    $(document).on('click','.delete-category',function(){
-        var id = $(this).val();
-        var my_url =baseUrl + '/users/' + id;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })
-        if($(this).attr('class') == 'btn btn-sm btn-outline-success delete-category')
-        {
-            title= "¿Deseas activar este usuario?";
-            text="El usuario se activara";
-            confirmButtonText="Activar";
+        var my_url = url + '/' + id;
 
-            datatitle="Activado";
-            datatext="activada";
-            datatext2="Activacion";
-        }
-        else 
-        {
-            title= "¿Desea desactivar este usuario?";
-            text= "La usuario se desactivara";
+        $('#labelTitle').html("Edit Operator  <i class='fa fa-tasks'></i>");
+        $(".formulario").show();
+        $(".tablaOperator").hide();
+        $("#btn_add").hide();
+        $(".nickname").show();
+        $("#nickname").attr('disabled', false);
+        $('#btn-save').val("update");
+        $("#formOperators").trigger('reset');
+        $('#tag_put').remove();
+        disablePassInput();
+        $(".show_pass_div").show();
+        $(".pass").hide();
+
+        actions.show(my_url);
+    });
+
+    //DELETE
+    $(document).on('click','.delete-op',function(){
+        var id = $(this).val();
+        var my_url =url + '/' + id;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+        if($(this).attr('class') == 'btn btn-sm btn-outline-success delete-op'){
+            title= "Do you want to activate this operator?";
+            text="Operator will be activated";
+            confirmButtonText="Activate";
+
+            datatitle="Activated";
+            datatext="activated";
+            datatext2="Activation";
+        }else {
+            title= "Do you want to disable this Operator?";
+            text= "Operator will be deactivated";
             confirmButtonText="Desactivar";
 
-            datatitle="Desactivado";
-            datatext="desactivada";
-            datatext2="Desactivacion";
-
+            datatitle="Deactivated";
+            datatext="deactivated";
+            datatext2="Deactivation";
         }
-
 
         swal({
             title: title,
@@ -120,40 +142,63 @@ $(document).ready(function(){
             showCancelButton: true,
             confirmButtonClass: "btn btn-danger",
             confirmButtonText: confirmButtonText,
-            cancelButtonText: "Cancelar",
+            cancelButtonText: "Cancel",
             closeOnConfirm: false,
             closeOnCancel: false
         },
         function(isConfirm) {
             if (isConfirm) {
-            swal(datatitle, "Categoria "+datatext, "success");
-            actions.deactivated(my_url);
+                swal(datatitle, "Option "+datatext, "success");
+                actions.deactivated(my_url);
             } 
             else {
-            
-            swal("Cancelado", datatext2+" cancelada", "error");
-        
+            swal("Cancelled", datatext2+" cancelled", "error");
             }
         });
-
-        
     });
 
+    $(document).on('click','.destroy-op',function(){
+        var id = $(this).val();
+        var my_url = url + '/delete/' + id;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+        swal({
+            title: "Are you sure you wish to delete this option?",
+            text: "All records with this option will be modified",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn btn-danger",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: true,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                actions.deactivated(my_url);
+            }else {
+            swal("Cancelled", "Deletion Canceled", "error");
+            }
+        });
+    });
 
-    
  });      
 
 
 const types ={
     button: function(dato){
-           var buttons='<div class="btn-group">';
+           var buttons='<div>';
             if(dato.id_status== 1){
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"><i class="fa fa-edit"></i></button>';
-               buttons += '	<button type="button" class="btn btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+               buttons += ` <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" data-toggle="tooltip" title="Edit" value="${dato.id}"  ><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert delete-op" data-toggle="tooltip" title="Desactivated" data-type="confirm" value="${dato.id}"><i class="fa fa-window-close"></i></button>
+               ` ;
           
            }else if(dato.id_status == 2){
-               buttons  +=' <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'"><i class="fa fa-check-square-o"></i></button>'
-               buttons  += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deletetype" title="Delete" data-type="confirm" value="'+dato.id+'"><i class="fa fa-trash-o"></i></button>';
+               buttons  += `<button type="button" class="btn btn-sm btn-outline-success delete-op" title="Activated" data-toggle="tooltip" data-type="confirm" value="${dato.id}" ><i class="fa fa-check-square-o"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert destroy-op" data-toggle="tooltip" title="Delete" data-type="confirm" value="{{$op->id}}"><i class="fa fa-trash-o"></i></button>`
            }
            buttons+='</div>';
            return buttons;
@@ -176,12 +221,8 @@ const success = {
         console.log(data);
         $('#btn-save').attr('disabled', false);
         var dato = data;
-        if(data[0]){
-            datos = data[0].No;
-        }else{
-            datos = data;
-        }
-        switch(datos) {
+       
+        switch(dato) {
             case 2:
                 $.notify({
                     // options
@@ -194,7 +235,6 @@ const success = {
             break;
         
             default:
-            
 
                 var operator = `<tr id="operator_id${dato.id}">
                     <td>${dato.id}</td>
@@ -225,56 +265,73 @@ const success = {
     },
     show: function(data){
         console.log(data);
-        // $('#school_id').val(data.id);
-        $('#name').val(data.user_info.name);
-        $('#lastname').val(data.user_info.last_name);
-        $('#address').val(data.user_info.address);
-        $('#phone').val(data.user_info.phone);
-        $('#emergency_contact_name').val(data.user_info.emergency_contact_name);
-        $('#emergency_contact_phone').val(data.user_info.emergency_contact_phone);
-        $('#id_type_user').val(data.id_type_user);
-        $('#notes').val(data.user_info.notes);
-        $('#description').val(data.user_info.description);
+        $('#tag_put').remove();
+        $form = $('#formOperators');
+        $form.append('<input type="hidden" id="tag_put" name="_method" value="PUT">');
+        var baseUrl = $('#baseUrl').val();
+        var rutaImage = baseUrl + '/images/operators/' + data.image;
+          
+        var drEvent = $('#dropify-event').dropify(
+            {
+                defaultFile: rutaImage
+            });
+            drEvent = drEvent.data('dropify');
+            drEvent.resetPreview();
+            drEvent.clearElement();
+            drEvent.settings.defaultFile = rutaImage;
+            drEvent.destroy();
+            drEvent.init();
+
         $('#email').val(data.email);
-        $('#btn-save').val("update");
-        $('#myModal').modal('show');
+        $('#nickname').val(data.nickname);
+        $('#id_hidden').val(data.id);
+        $('#name').val(data.name);
+        $('#last_name').val(data.last_name);
+        $('#entrance_date').val(data.entrance_date);
+        $('#address').val(data.address);
+        $('#gender').val(data.gender);
+        $('#phone').val(data.phone);
+        $('#birthdate').val(data.birthdate);
+        $('#emergency_contact_name').val(data.emergency_contact_name);
+        $('#emergency_contact_phone').val(data.emergency_contact_phone);
+        $('#notes').val(data.notes);
+        $('#description').val(data.description);
+
+       
+    
     },
     deactivated:  function(data){
-        // console.log(data.user.status);
-        if(data.user.id_status == 0){
-            $('#myTable').dataTable().fnDeleteRow('#user_id' + data.user.id);
-
-            $.notify({
-                // options
-                title: "Error!",
-                message:"Se elimino correctamente",
-            },{
-                // settings
-                type: 'danger'
-            });
-        }else if(data.user.id_status == 1 || data.user.id_status == 2){
-            var dato=data;
-            var edit = [
-                // dato.mat+dato.id,
-                // dato.name,
-                dato.user.profile.name,
-                dato.user.name,
-                dato.user.email,
-                dato.user.phone,
-                category.status(dato),
-                category.buttons(dato),
-            ];
-
-            $('#myTable').dataTable().fnUpdate(edit,$('tr#user_id'+dato.user.id)[0]);
-            if(dato.user.id_status==1){
-                $('#user_id'+dato.user.id).css("background-color", "#c3e6cb");
-            }else{
-                $('#user_id'+dato.user.id).css("background-color", "#f2dede");
+        console.log(data);
+        var dato = data;
+        if(dato.id_status != 0){
+            var operator = `<tr id="operator_id${dato.id}">
+                <td>${dato.id}</td>
+                <td>${dato.email}</td>
+                <td>${dato.name}</td>
+                <td>${dato.phone}</td>
+                <td>${dato.emergency_contact_phone}</td>
+                <td>${dato.birthdate}</td>
+                <td class="hidden-xs">${types.status(dato)}</td>
+                <td>${types.button(dato)}</td>
+            </tr>`;
+          
+            $("#operator_id"+dato.id).replaceWith(operator);
+            if(dato.id_status == 1){
+                color ="#c3e6cb";
+            }else if(dato.id_status == 2){
+                color ="#ed969e";
             }
+            $("#operator_id"+dato.id).css("background-color", color);  
+            
+        }else if(dato.status == 0){
+            $("#operator_id"+dato.id).remove();
+            if ($('.rowType').length == 0) {
+                $('#table-row').show();
+              }
         }
        
             
-        },
+    },
         msj: function(data){
             $('#btn-save').attr('disabled', false);
             $.notifyClose();

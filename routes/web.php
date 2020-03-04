@@ -99,7 +99,11 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
     //Operators
     Route::get('/operators', 'OperatorsController@index');
+    Route::get('/operators/{id}', 'OperatorsController@show');
     Route::post('/operators', 'OperatorsController@store');
+    Route::put('/operators/{id}', 'OperatorsController@update');
+    Route::delete('/operators/{id}', 'OperatorsController@destroy');
+    Route::delete('/operators/delete/{id}', 'OperatorsController@delete');
 
 });
 

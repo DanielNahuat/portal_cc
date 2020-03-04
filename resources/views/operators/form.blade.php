@@ -12,11 +12,16 @@
                     <h6>Email:</h6>
                     <input type="text" name="email" id="email" class="form-control" title="Email" maxlength="120">
                 </div>
-                <div class="col-sm-6 form-group">
+                <div class="form-group error btn-group col-sm-12 show_pass_div">
+                    <div class="fancy-checkbox" bis_skin_checked="1" style="text-align:center; vertical-align:middle;">
+                    <label><input type="checkbox" id="show_pass"><span>Cambiar Contraseña</span></label>
+                    </div>  
+                </div>
+                <div class="col-sm-6 form-group pass">
                     <h6>Password:</h6>
                     <input type="password" name="password" id="password" class="form-control" maxlength="20">
                 </div>
-                <div class="col-sm-6 form-group">
+                <div class="col-sm-6 form-group pass">
                     <h6>Confirm Password:</h6>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" maxlength="20">
                 </div>
@@ -60,7 +65,7 @@
             <h6>Address:</h6>
             <input type="text" name="address" id="address" class="form-control" maxlength="190">
         </div>
-        <div class="col-sm-1 form-group">
+        <div class="col-sm-2 form-group">
             <h6>Gender:</h6>
             <select name="gender" id="gender" class="form-control">
                 <option value="">Select</option>
@@ -93,6 +98,7 @@
     <div class="col-sm-12 text-center">					 
         <button type="button" class="btn btn-danger btn-cancel">Cancel</button>
         <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
+        <input type="hidden" id="id_hidden" name="id_hidden" value="0">
     </div>	
 </form>
 </div>
