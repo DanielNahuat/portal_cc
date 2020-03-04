@@ -17,7 +17,7 @@ const actions ={
                         processData:false, 
                         success: function (data) {
                             success.new_update(data,state,actions);
-                        
+                            
                         },
                         error: function (data) {
                             console.log('Error:', data);
@@ -34,7 +34,6 @@ const actions ={
                     dataType: 'json',
                     success: function (data) {
                         success.new_update(data,state,actions);
-                    
                     },
                     error: function (data) {
                         console.log('Error:', data);
@@ -215,7 +214,8 @@ $(window).on('hashchange', function() {
     function getData(page){
         var search = $('#search').val()
         var type =$('#typesearch').val();
-
+                $('.table-responsive').hide();
+                $('.loading-table').show();
         $.ajax(
         {
             url: '?page=' + page,
@@ -226,6 +226,8 @@ $(window).on('hashchange', function() {
             $('.pagination').remove();
             $("#tag_container").empty().html(data);
             location.hash = page;
+            $('.table-responsive').show();
+            $('.loading-table').hide();
         }).fail(function(jqXHR, ajaxOptions, thrownError){
               alert('No response from server');
         });
