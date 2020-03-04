@@ -46,11 +46,11 @@ class UserController extends Controller
     }
 
     public function validateUser($request,$user=''){
-
         $this->validate(request(), [
             'name' => 'required|max:40',
             'last_name' => 'required|max:40',
             'email' => 'required|unique:users,email,'.$user,
+            'birthdate' => 'date|before:18 years ago',
             'phone' => 'max:20',
             'password' => 'sometimes|required|confirmed|min:8',
         ]);
