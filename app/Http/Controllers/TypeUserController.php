@@ -40,7 +40,7 @@ class TypeUserController extends Controller
         }
     }
 
-    public function validateType($request,$usertype_id =""){
+    public function validateType($request){
         
             $this->validate(request(), [
                 'name' => 'required|max:30',
@@ -48,17 +48,22 @@ class TypeUserController extends Controller
         }
     
 
-    public function ValidateExtraType($request,$usertype_id =""){
+    public function ValidateExtraType($request,$usertype_id){
         $ExtraTypeValidation=[]; 
         $n ="";
         $data = [];
 
-        $userValidation = TypeUserModel::where('id','!=',$usertype_id)->where('name', $request->name)
-        ->whereIn('status', [1,2])
-        ->count();
+        $name = TypeUserModel::where('name', $request->name)
+        ->whereIn('status', [1,2]);
 
-        if($name > 0){      
-            $n = 'Otro Proveedor ya cuenta con ese Nombre';
+        if($usertype_id > 0){
+            $name->where('id','!=',$usertype_id);
+        }
+            
+        $nameV = $name->count();
+
+        if($nameV > 0){      
+            $n = 'Another user type already has that Name';
             
         }
         if($n==''){
@@ -68,7 +73,7 @@ class TypeUserController extends Controller
               $data=[
                   'No' =>2,
                   'name'=>$n,
-              ];
+                ];
 
               array_push($ExtraTypeValidation,$data);
           }
@@ -78,7 +83,14 @@ class TypeUserController extends Controller
    
     public function store(Request $request)
     {   
-            TypeUserController::validateType($request,$usertype_id ="");
+        $answer= TypeUserController::ValidateExtraType($request,0);
+      
+          if($answer){
+
+                return response()->json($answer);
+
+            }else{
+            TypeUserController::validateType($request);
             $user = TypeUserModel::Create($request->input());
             $menu = BasicMenuModel::where('status','1')->get();
 
@@ -95,6 +107,7 @@ class TypeUserController extends Controller
              }
              $usertype2 = TypeUserModel::find($user->id);
              return response()->json($usertype2);
+            }
       
            
     }
@@ -109,10 +122,13 @@ class TypeUserController extends Controller
 
     public function update(Request $request, $usertype_id)
     {
+        $answer= TypeUserController::ValidateExtraType($request,$usertype_id);
+      
+        if($answer){
 
-       
-    
-   
+              return response()->json($answer);
+
+          }else{
             TypeUserController::validateType($request,$usertype_id);
             $usertype = TypeUserModel::find($usertype_id);
             $usertype->name = $request->name;
@@ -120,7 +136,8 @@ class TypeUserController extends Controller
             $usertype->save();
      
         
-        return response()->json($usertype);
+                return response()->json($usertype);
+          }
     }
 
     public function destroy($usertype_id)
