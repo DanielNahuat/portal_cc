@@ -85,17 +85,17 @@
   <div class="col-sm-3 form-group">
     <h6>Gender:</h6>
     <select  class="custom-select" name="gender" id="gender">
-      <option value="0" selected disabled>Select Gender</option>
-      <option value="FEMALE">FEMALE</option>
-      <option value="MALE">MALE</option>
-      <option value="SHEMALE">SHEMALE</option>
+      <option value="0" selected>Select Gender</option>
+      <option value="F">FEMALE</option>
+      <option value="M">MALE</option>
+      <option value="O">OTRO</option>
     </select>
   </div>
 
   <div class="col-sm-3 form-group">
     <h6>Type User:</h6>
     <select  class="custom-select" name="id_type_user" id="id_type_user">
-      <option value="0" selected disabled>Select Type User</option>
+      <option value="0" selected>Select Type User</option>
       @foreach ($types as $type)
         <option value='{{$type->id}}'>{{$type->name}}</option>
       @endforeach
