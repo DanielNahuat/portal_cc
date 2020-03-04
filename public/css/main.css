@@ -238,3 +238,8 @@ hr.hrblue {
 .thead-yasc{
 	background:#dc3545;
 }
+
+.btn-success-create{
+	background-color: #9bcb5b;
+	color:#ffffff;
+}

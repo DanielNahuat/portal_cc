@@ -1,18 +1,6 @@
 getData(1);
 
 $(document).ready(function(){
-    $('[data-toggle="tabajax"]').click(function(e) {
-        var $this = $(this),
-            loadurl = $this.attr('href'),
-            targ = $this.attr('data-target');
-    
-        $.get(loadurl, function(data) {
-            $(targ).html(data);
-        });
-    
-        $this.tab('show');
-        return false;
-    });
     
     var nameDeli='<a href="/training">Training</i></a>';
     $('.nameDeli').html(nameDeli);
@@ -26,7 +14,7 @@ $(document).ready(function(){
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
         $('#settingsForm').trigger("reset");
-        $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
+        $('#myModalLabel').html(`Create New Trainee `);
         // $("#image").attr('src','');
         $(".bodyIndex").hide();
         $('#formCU').show();
@@ -36,13 +24,28 @@ $(document).ready(function(){
     $('.cancel-cu').click(function(){
         $('#btn-save').val("add");
         $('#settingsForm').trigger("reset");
-        $('#myModalLabel').html(`Create New Setting <i class="fa fa-user-plus"></i>`);
+        $('#myModalLabel').html(`Create New Trainee`);
         // $("#image").attr('src','');
         $('#formCU').hide();
         $(".bodyIndex").show();
     });
 
+    $('#dateSearch').change(function(){
+        //  $('#daySearch').val(),
+        var date = $('#dateSearch').val();
+         date = moment(date).format('YYYY/MM/DD');
+        var fecha = new Date(date);
+        fecha = new Date(fecha.setHours(0,0,0,0));
+        var weekday = fecha.getDay();
+         $('#daySearch').val(weekday);
+         $('#daySearch').trigger('change');
 
+        training.get_data(1);
+    });
+
+    $('.trainingSearch').change(function(){
+        training.get_data(1);
+    });
 
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(){
@@ -184,7 +187,7 @@ $(document).ready(function(){
     });
     
 });
-const settings2 ={
+const training ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
@@ -206,6 +209,28 @@ const settings2 ={
         }
        return status;
     },
+    get_data: function(page){
+        var formData={
+            day: $('#daySearch').val(),
+            // client:$('#clientSearch').val(),
+            date:$('#dateSearch').val(),
+            // operator:$('#operatorSearch').val(),
+        }
+        console.log(formData);
+        $.ajax(
+        {
+            url: '?page=' + page,
+            data:formData,
+            type: "get",
+            datatype: "html"
+        }).done(function(data){
+            $('.pagination').remove();
+            $("#tag_container").empty().html(data);
+            location.hash = page;
+        }).fail(function(jqXHR, ajaxOptions, thrownError){
+              alert('No response from server');
+        });
+    }
 }
 const success = {
 
