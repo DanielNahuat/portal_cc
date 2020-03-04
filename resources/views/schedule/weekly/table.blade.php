@@ -1,17 +1,23 @@
 <table class="table table-striped text-center" id="tag_container">
     <thead class="text-white thead-yasc">
         <tr>
-            <th width="100px">ID</th>
-            <th>Name</th>
+            <th>Operator</th>
+            <th>Client</th>
+            <th>Log in</th>
+            <th>Log out</th>
+            <th>Note</th>
             <th class="hidden-xs" >Status</th>
             <th>Options</th>
         </tr>
     </thead>
-    <tbody id="usertype-list">
+    <tbody id="usertype-list" class="table-data" >
         @foreach ($data as $type)
         <tr id="usertype_id{{$type->id}}">
-            <td>{{ $type->id }}</td>
-            <td>{{ $type->name }}</td>
+            <td>{{ $type->name }} {{ $type->lastname }}</td>
+            <td>{{ $type->client }}</td>
+            <td>{{ $type->time_s }}</td>
+            <td>{{ $type->time_e }}</td>
+            <td>adc</td>
             @switch($type->status)
                 @case(1)
                     <td class="hidden-xs">
@@ -37,4 +43,5 @@
         @endforeach
     </tbody>
 </table>
+
 {!! $data->render() !!}

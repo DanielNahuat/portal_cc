@@ -20,7 +20,7 @@ class CreateDatailScheduleUser extends Migration
             $table->integer('id_day')->nullable();
             $table->string('mat', 3)->default('SCD');
             $table->time('time_start');
-            $table->date('time_end');
+            $table->time('time_end');
             $table->integer('type_daily');
             $table->integer('option');
             $table->integer('status')->nullable();

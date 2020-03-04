@@ -18,6 +18,9 @@ $(document).ready(function(){
         $('#myModal').modal('show');
     });
 
+    $('.scheduleWeeklySearch').change(function(){
+        schedule.get_data(1);
+    });
 
 
 
@@ -167,7 +170,7 @@ $(document).ready(function(){
     });
     
 });
-const types ={
+const schedule ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
@@ -190,6 +193,29 @@ const types ={
         }
        return status;
     },
+    get_data: function(page){
+            var formData={
+                day: $('#daySearch').val(),
+                client:$('#clientSearch').val(),
+                date:$('#dateSearch').val(),
+                operator:$('#operatorSearch').val(),
+            }
+            console.log(formData);
+            $.ajax(
+            {
+                url: '?page=' + page,
+                data:formData,
+                type: "get",
+                datatype: "html"
+            }).done(function(data){
+                $('.pagination').remove();
+                $("#tag_container").empty().html(data);
+                location.hash = page;
+            }).fail(function(jqXHR, ajaxOptions, thrownError){
+                  alert('No response from server');
+            });
+        }
+    
 }
 const success = {
 
