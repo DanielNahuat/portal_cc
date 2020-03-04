@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\User_info;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 
 class OperatorsController extends Controller
@@ -39,54 +40,97 @@ class OperatorsController extends Controller
         }
     }
 
-    public function validateForm($request){
+    public function validateForm($request,$user=''){
         $this->validate(request(), [
             'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
-            'birthdate' => 'required',
+            'birthdate' => 'required|date|before:18 years ago',
             'emergency_contact_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'emergency_contact_phone' => 'max:20|regex:/^[0-9]{1,20}(\.?)[0-9]{1,2}$/',
-            'profile_picture' => 'image',
-            'email' => 'email',
-            'password' => 'required',
+            'image' => 'image',
+            'gender' => 'required',
+            'email' => 'email|required',
+            // 'email' => 'email|required|unique:users,email,'.$user,
+            'password' => 'sometimes|required|confirmed|min:8',
         ]);
+    }
+
+    public function ValidateExtraForm($request,$usertype_id){
+        $ExtraTypeValidation=[]; 
+        $message ="";
+        $data = [];
+
+        $email = User::where('email', $request->email)
+        ->whereIn('id_status', [1,2]);
+
+        if($usertype_id > 0){
+            $email->where('id','!=',$usertype_id);
+        }
+            
+        $emailV = $email->count();
+
+        if($emailV > 0){      
+            $message = 'Another user already has that email';
+            
+        }
+        if($message==''){
+            $data=[];
+
+          }else{
+              $data=[
+                  'No' =>2,
+                  'name'=>$message,
+                ];
+
+              array_push($ExtraTypeValidation,$data);
+          }
+        return $ExtraTypeValidation;
     }
 
     public function store(Request $request){
 
         OperatorsController::validateForm($request);
 
-        $imageName = OperatorsController::documents($request, "operators");
-        
-        $user =  User::Create([
-            'id_type_user'=>9,
-            'id_status'=>1,
-            'nickname'=>"",
-            'email'=>$request->email,
-            'password'=>$request->password,
-        ]);
+        $answer= OperatorsController::ValidateExtraForm($request,0);
 
-        $User_info =  User_info::Create([
-            'id_user'=>$user->id,
-            'name'=>$request->name,
-            'last_name'=>$request->last_name,
-            'address'=>$request->address,
-            'phone'=>$request->phone,
-            'emergency_contact_name'=>$request->emergency_contact_name,
-            'emergency_contact_phone'=>$request->emergency_contact_phone,
-            'notes'=>$request->notes,
-            'description'=>$request->description,
-            'gender'=>$request->gender,
-            'birthdate'=>$request->birthdate,
-            'profile_picture'=>$imageName,
-            'biotime_status'=>"",
-            'access_code'=>"",
-            'entrance_date'=>$request->entrance_date,
-        ]);
-        $result = OperatorsController::getResult($user->id);
+        if($answer){
+            return response()->json($answer);
+        }else{
 
-        return response()->json($result);
+            $imageName = OperatorsController::documents($request, "operators");
+            
+            $user =  User::Create([
+                'id_type_user'=>9,
+                'id_status'=>1,
+                'nickname'=>"",
+                'email'=>$request->email,
+                'password'=>Hash::make($request->password),
+            ]);
+    
+            $User_info =  User_info::Create([
+                'id_user'=>$user->id,
+                'name'=>$request->name,
+                'last_name'=>$request->last_name,
+                'address'=>$request->address,
+                'phone'=>$request->phone,
+                'emergency_contact_name'=>$request->emergency_contact_name,
+                'emergency_contact_phone'=>$request->emergency_contact_phone,
+                'notes'=>$request->notes,
+                'description'=>$request->description,
+                'gender'=>$request->gender,
+                'birthdate'=>$request->birthdate,
+                'profile_picture'=>$imageName,
+                'biotime_status'=>"",
+                'access_code'=>"",
+                'entrance_date'=>$request->entrance_date,
+            ]);
+            $result = OperatorsController::getResult($user->id);
+    
+            return response()->json($result);
+        }
+
+
     }
 
     public function getResult($id){

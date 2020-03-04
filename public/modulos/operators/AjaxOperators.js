@@ -36,7 +36,7 @@ $(document).ready(function(){
     $("#formOperators").on('submit',function (e) {
 
         e.preventDefault(); 
-        // $('#btn-save').attr('disabled', true);
+        $('#btn-save').attr('disabled', true);
         
         var formData = new FormData(this);
         // var formData = $("#formOperators").serialize();
@@ -183,15 +183,27 @@ const types ={
 const success = { 
     new_update: function (data,state){
         console.log(data);
-        
+        $('#btn-save').attr('disabled', false);
         var dato = data;
-        switch (dato.No) {
-            case 1:
-                
+        if(data[0]){
+            datos = data[0].No;
+        }else{
+            datos = data;
+        }
+        switch(datos) {
+            case 2:
+                $.notify({
+                    // options
+                    title: "Error!",
+                    message:data[0].name,
+                },{
+                    // settings
+                    type: 'danger'
+                });
             break;
         
             default:
-                $('#btn-save').attr('disabled', false);
+            
 
                 var operator = `<tr id="operator_id${dato.id}">
                     <td>${dato.id}</td>
@@ -215,6 +227,7 @@ const success = {
                 $('#formOperators').trigger("reset");
                 $(".formulario").hide();
                 $(".tablaOperator").show();
+                $("#btn_add").show();
             break;
         }
                 
@@ -272,6 +285,7 @@ const success = {
             
         },
         msj: function(data){
+            $('#btn-save').attr('disabled', false);
             $.notifyClose();
             $.each(data.responseJSON.errors,function (k,message) {
                 $.notify({

@@ -8,7 +8,6 @@
     <div class="row">
         <div class="col-sm-7">
             <div class="row">
-            <input type="hidden" id="id_type_user" name="id_type_user" value="9">
                 <div class="col-sm-12 form-group">
                     <h6>Email:</h6>
                     <input type="text" name="email" id="email" class="form-control" title="Email" maxlength="120">
@@ -39,11 +38,11 @@
     <div class="row">
         <div class="col-sm-3 form-group">
             <h6>First Name:</h6>
-            <input type="text" name="name" id="name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" maxlength="150">
+            <input type="text" name="name" id="name" class="form-control" maxlength="150">
         </div>
         <div class="col-sm-3 form-group">
             <h6>Last  Name:</h6>
-            <input type="text" name="last_name" id="last_name" class="form-control" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" maxlength="150">
+            <input type="text" name="last_name" id="last_name" class="form-control" maxlength="150">
         </div>
         <div class="col-sm-3 form-group nickname" style="display:none">
             <h6>Nickname:</h6>
@@ -64,7 +63,7 @@
         <div class="col-sm-1 form-group">
             <h6>Gender:</h6>
             <select name="gender" id="gender" class="form-control">
-                <option value="0">Select</option>
+                <option value="">Select</option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
             </select>

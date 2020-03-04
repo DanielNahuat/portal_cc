@@ -197,8 +197,12 @@ const success = {
         console.log(data);
         var dato = data;
         var typename =$('#name').val();
-        
-        switch(data[0].No) {
+        if(data[0]){
+            datos = data[0].No;
+        }else{
+            datos = data;
+        }
+        switch(datos) {
             case 2:
                 $.notify({
                     // options
