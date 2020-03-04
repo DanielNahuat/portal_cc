@@ -15,6 +15,7 @@ $(document).ready(function(){
     $('.cafeteria').hide();
     $('#id_cafeteria').attr('disabled','disabled');
 
+
     function disablePassInput()
     {
         $('#password').attr('disabled','disabled');
@@ -77,6 +78,13 @@ $(document).ready(function(){
     //display modal form for product EDIT ***************************
     $(document).on('click','#btn-edit',function(){
         $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
+        var drEvent = $('#dropify-event').dropify();
+        drEvent = drEvent.data('dropify');
+        drEvent.resetPreview();
+        drEvent.clearElement();
+        drEvent.settings.defaultFile = "";
+        drEvent.destroy();
+        drEvent.init();
         $('#userForm').trigger("reset");
         $('#btn_add').hide();
         $('.formulario').show();
@@ -376,6 +384,7 @@ const success = {
                 $('.formulario').hide();
                 $('.tableUser').show(); 
                 $("#user-list").append(user);
+                $('#btn_add').show();
                 $("#user_id"+dato.id).css("background-color", "#c3e6cb");    
 
             
@@ -404,6 +413,7 @@ const success = {
                 $('.formulario').hide();
                 $('.tableUser').show(); 
                 $("#user_id"+dato.id).replaceWith(user);
+                $('#btn_add').show();
                 $("#user_id"+dato.id).css("background-color", "#ffdf7e"); 
             }
             $('#userForm').trigger("reset");
@@ -414,13 +424,16 @@ const success = {
         console.log(data);
         // $('#school_id').val(data.id);
         $('#name').val(data.user_info.name);
-        $('#lastname').val(data.user_info.last_name);
+        $('#last_name').val(data.user_info.last_name);
         $('#address').val(data.user_info.address);
         $('#phone').val(data.user_info.phone);
         $('#emergency_contact_name').val(data.user_info.emergency_contact_name);
         $('#emergency_contact_phone').val(data.user_info.emergency_contact_phone);
         $('#id_type_user').val(data.id_type_user);
         $('#notes').val(data.user_info.notes);
+        $('#entrance_date').val(data.user_info.entrance_date);
+        $('#birthdate').val(data.user_info.birthdate);
+        $('#gender').val(data.user_info.gender);
         $('#description').val(data.user_info.description);
         $('#email').val(data.email);
         $('#btn-save').val("update");

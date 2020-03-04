@@ -86,12 +86,12 @@ class UserController extends Controller
 
                 $input['id_user'] = $user->id;
                 // $input['last_name'] = $input['lastname'];
-                $input['gender'] = 'M';
+                // $input['gender'] = 'M';
                 // $input['birthdate'] =Carbon::now();
-                $input['profile_picture'] = 'adadasasdas';
+                // $input['profile_picture'] = 'adadasasdas';
                 // $input['entrance_date'] = Carbon::now();
-                $input['biotime_status'] = 1;
-                $input['access_code'] = 34341;
+                // $input['biotime_status'] = 1;
+                // $input['access_code'] = 34341;
                 $user_info = User_info::create($input);
 
 
@@ -148,8 +148,9 @@ class UserController extends Controller
         $user_info = User_info::where('id_user',$user->id)->first();
         $user_info->id_user = $user->id;
         $user_info->name = $request->name;
-        $user_info->last_name = $request->lastname;
+        $user_info->last_name = $request->last_name;
         $user_info->address = $request->address;
+        $user_info->gender = $request->gender;
         $user_info->phone = $request->phone;
         $user_info->emergency_contact_phone = $request->emergency_contact_phone;
         $user_info->emergency_contact_name = $request->emergency_contact_name;
