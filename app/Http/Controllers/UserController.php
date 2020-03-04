@@ -46,12 +46,18 @@ class UserController extends Controller
     }
 
     public function validateUser($request,$user=''){
+        // dd($request);
         $this->validate(request(), [
             'name' => 'required|max:40',
             'last_name' => 'required|max:40',
-            'email' => 'required|unique:users,email,'.$user,
+            'phone' => 'max:16',
+            'emergency_contact_phone' => 'max:16',
+            'emergency_contact_name' => 'max:40',
+            'email' => 'required|unique:users,email,'.$user.',id,id_status,1,id_status,2',
             'birthdate' => 'date|before:18 years ago',
             'phone' => 'max:20',
+            'gender' => 'not_in:0',
+            'id_type_user' => 'gt:0',
             'password' => 'sometimes|required|confirmed|min:8',
         ]);
     }
@@ -76,32 +82,23 @@ class UserController extends Controller
     {
         // dd($request);
         $this->validateUser($request);
-        try {
-            DB::beginTransaction();
-                $input = $request->input();
-                $input['id_status'] = 1;
-                $input['nickname'] = 'nick'.$input['name'];
-                $input['password'] = Hash::make($input['password']);
-                $user = User::create($input);
+        // try {
+        //     DB::beginTransaction();
+        //         $input = $request->input();
+        //         $input['id_status'] = 1;
+        //         $input['nickname'] = 'nick'.$input['name'];
+        //         $input['password'] = Hash::make($input['password']);
+        //         $user = User::create($input);
 
-                $input['id_user'] = $user->id;
-                // $input['last_name'] = $input['lastname'];
-                // $input['gender'] = 'M';
-                // $input['birthdate'] =Carbon::now();
-                // $input['profile_picture'] = 'adadasasdas';
-                // $input['entrance_date'] = Carbon::now();
-                // $input['biotime_status'] = 1;
-                // $input['access_code'] = 34341;
-                $user_info = User_info::create($input);
+        //         $input['id_user'] = $user->id;
+        //         $user_info = User_info::create($input);
 
-
-                // dd($user->with('User_info')->get());
-            DB::commit();
-            return response()->json(User::where('id',$user->id)->with('User_info')->first());
-        } catch (\Exception $e) {
-            return response()->json($e);    
-            DB::rollBack();
-        }
+        //     DB::commit();
+        //     return response()->json(User::where('id',$user->id)->with('User_info')->first());
+        // } catch (\Exception $e) {
+        //     return response()->json($e);    
+        //     DB::rollBack();
+        // }
     }
 
     /**
