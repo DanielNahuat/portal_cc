@@ -1,8 +1,8 @@
     <!-- MODAL SECTION -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header modaldelichef" >
+    <div class="col-sm-12" id="formCU" style="display:none">
+      <div class="">
+        <div class="">
+          <div class="modal-header" >
             <h4 class="modal-title" id="myModalLabel">Settings Register <i class="fa fa-user-plus"></i></h4>
           </div>
           <form enctype="multipart/form-data" method="POST" id="settingsForm" class="form-horizontal">
@@ -25,8 +25,10 @@
 							</div>
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn modaldelichef" id="btn-save" value="add">Guardar</button>
+              <div class="text-center col-sm-12">
+                <button type="button"  class="btn btn-danger cancel-cu">Cancelar</button>
+                <button type="submit" class="btn btn-success" id="btn-save" value="add">Guardar</button>
+              </div>
             </div>
 			    </form> 
           <input type="hidden" id="settings_id" name="settings_id" value="0"> 

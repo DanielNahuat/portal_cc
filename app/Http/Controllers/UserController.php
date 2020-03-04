@@ -45,12 +45,12 @@ class UserController extends Controller
         }
     }
 
-    public function validateUser($request){
+    public function validateUser($request,$user=''){
 
         $this->validate(request(), [
             'name' => 'required|max:40',
             'last_name' => 'required|max:40',
-            'email' => 'required|unique:users,email,',
+            'email' => 'required|unique:users,email,'.$user,
             'phone' => 'max:20',
             'password' => 'sometimes|required|confirmed|min:8',
         ]);
@@ -87,9 +87,9 @@ class UserController extends Controller
                 $input['id_user'] = $user->id;
                 // $input['last_name'] = $input['lastname'];
                 $input['gender'] = 'M';
-                $input['birthdate'] =Carbon::now();
+                // $input['birthdate'] =Carbon::now();
                 $input['profile_picture'] = 'adadasasdas';
-                $input['entrance_date'] = Carbon::now();
+                // $input['entrance_date'] = Carbon::now();
                 $input['biotime_status'] = 1;
                 $input['access_code'] = 34341;
                 $user_info = User_info::create($input);
@@ -133,9 +133,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, user $user)
     {
-        //
+        // dd($request);
+        $this->validateUser($request,$user->id);
+        $user->email == $request->email ? $user->email = $request->email : '';
+        $user->id_type_user = $request->id_type_user;
+        if($request->password != null)
+        {
+            $user->password = Hash::make($request->password);
+        }
+        $user->update();
+
+        $user_info = User_info::where('id_user',$user->id)->first();
+        $user_info->id_user = $user->id;
+        $user_info->name = $request->name;
+        $user_info->last_name = $request->lastname;
+        $user_info->address = $request->address;
+        $user_info->phone = $request->phone;
+        $user_info->emergency_contact_phone = $request->emergency_contact_phone;
+        $user_info->emergency_contact_name = $request->emergency_contact_name;
+        $user_info->notes = $request->notes;
+        $user_info->description = $request->description;
+        $user_info->update();
+
+        return response()->json(User::where('id',$user->id)->with('User_info')->first());
     }
 
     /**

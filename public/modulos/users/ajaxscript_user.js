@@ -4,156 +4,114 @@ var baseUrl = $('#baseUrl').val();
 $(document).ready(function(){
     //get base URL *********************
         
-        var nameDeli='<a href="/school">Escuelas</i></a>';
-        var radioState;
-        $('.nameDeli').html(nameDeli);  
-        $('#sidebar11').addClass('active'); 
-        $('#myTable').DataTable();
-        $(".pass").hide();
-        $('.stage').hide();
-        $('#id_stage').attr('disabled','disabled');
-        $('.cafeteria').hide();
-        $('#id_cafeteria').attr('disabled','disabled');
+    var nameDeli='<a href="/school">Escuelas</i></a>';
+    var radioState;
+    $('.nameDeli').html(nameDeli);  
+    $('#sidebar11').addClass('active'); 
+    $('#myTable').DataTable();
+    $(".pass").hide();
+    $('.stage').hide();
+    $('#id_stage').attr('disabled','disabled');
+    $('.cafeteria').hide();
+    $('#id_cafeteria').attr('disabled','disabled');
+
+    function disablePassInput()
+    {
+        $('#password').attr('disabled','disabled');
+        $('#confirm_password').attr('disabled','disabled');
+    }
+
+    function enablePassInput()
+    {
+        $('#password').removeAttr('disabled');
+        $('#confirm_password').removeAttr('disabled');
+    }
 
 
-        function disablePassInput()
-        {
-            $('#password').attr('disabled','disabled');
-            $('#confirm_password').attr('disabled','disabled');
-        }
-
-        function enablePassInput()
-        {
-            $('#password').removeAttr('disabled');
-            $('#confirm_password').removeAttr('disabled');
-        }
-
-
-        $("#show_pass").on("click", function(e) {
-            if (radioState === this) {
-                $(".pass").hide();
-                disablePassInput()
-                this.checked = false;
-                radioState = null;
-            } else {
-                $(".pass").show();
-                enablePassInput()
-                console.log("false");
-                radioState = this;
-            }
-        });
-    
-    
-        //display modal form for creating new product *********************
-        $('#btn_add').click(function(){
-            $('#myModalLabel').html("Agregar Usuario  <i class='fa fa-tasks'></i>");
-            enablePassInput()
-            $('#tag_put').remove();
-            $('.stage').hide();
-            $('.cafeteria').hide();
-            $('#btn-save').val("add");
-            $('#userForm').trigger("reset");
-            $(".pass").show();
-            $(".show_pass_div").hide();
-            $('#myModal').modal('show');
-        
-        });
-
-        $('#id_profile').change(function(){
-
-            $('#id_cafeteria').attr('disabled','disabled');
-            $('#id_stage').attr('disabled','disabled');
-
-            if($(this).val() == 4)
-            {
-                $('.stage').show();
-                $('.cafeteria').hide();
-                $('#id_stage').removeAttr('disabled');
-                
-            }
-            else if(($(this).val() == 5 | $(this).val() == 6))
-            {
-                $('.cafeteria').show();
-                $('.stage').hide();
-                $('#id_cafeteria').removeAttr('disabled');
-            }
-            else
-            {
-                $('.stage').hide();
-                $('.cafeteria').hide();
-            }
-           
-
-        });
-
-        $(document).on('click','#abonar-qr',function(){
-            var id_user = $(this).val();
-            $("#id_qr_modal").val(id_user);
-            var my_url= baseUrl + '/getUserCoins/' + id_user;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            })
-            // Populate Data in Edit Modal Form
-            $.ajax({
-                type: "GET",
-                url:my_url,
-                success: function (data) {
-                    // success.show(data,action);
-                    $('.total_coins_modal').text(data);
-
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-            $("#user").val(id_user);
-            $("#mm").modal('show');
-            $("#form_abono").trigger('reset');
-            $("#inputGroup-sizing-sm").html("+");
-            $('#btn-save-abono').val('add');
-            $(".seccion-devolver").hide();
-            $(".seccion-abonar").show();
-        });
-        
-    
-    
-        //display modal form for product EDIT ***************************
-        $(document).on('click','#btn-edit',function(){
-            $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
-            $('#userForm').trigger("reset");
-            disablePassInput()
-            $('#tag_put').remove();
-            $form = $('#userForm');
-            $form.append('<input type="hidden" id="tag_put" name="_method" value="PUT">');
-            $('#myModal').modal('show');
-            $(".show_pass_div").show();
+    $("#show_pass").on("click", function(e) {
+        if (radioState === this) {
             $(".pass").hide();
-            var id_user = $(this).val();
-            $('#id_user').val(id_user);
-            var my_url= baseUrl + '/users/' + id_user;
-            actions.show(my_url);
-        });
+            disablePassInput()
+            this.checked = false;
+            radioState = null;
+        } else {
+            $(".pass").show();
+            enablePassInput()
+            console.log("false");
+            radioState = this;
+        }
+    });
 
-            //create new product / update existing product ***************************
-        $("#userForm").on('submit',function (e) {
-            
-            e.preventDefault(); 
-            var stageArray=[];
-            var formData = new FormData(this);
-            var id_user = $('#id_user').val();
-            var state = $('#btn-save').val();
-            var type = "POST"; //for creating new resource
-            var my_url = baseUrl+'/users';
-            if (state == "update")
-            {
-                my_url=baseUrl + '/users/' + id_user;
-            }
 
-            actions.edit_create(type,my_url,state,formData,'file');
-                        
-        });
+    //display modal form for creating new product *********************
+    $('#btn_add').click(function(){
+        $('#myModalLabel').html("Agregar Usuario  <i class='fa fa-tasks'></i>");
+        var drEvent = $('#dropify-event').dropify();
+        drEvent = drEvent.data('dropify');
+        drEvent.resetPreview();
+        drEvent.clearElement();
+        drEvent.settings.defaultFile = "";
+        drEvent.destroy();
+        drEvent.init();
+        enablePassInput();
+        $('#btn_add').hide();
+        $('.formulario').show();
+        $('.tableUser').hide();
+        $('#tag_put').remove();
+        $('.stage').hide();
+        $('.cafeteria').hide();
+        $('#btn-save').val("add");
+        $('#userForm').trigger("reset");
+        $(".pass").show();
+        $(".show_pass_div").hide();
+        $('#myModal').modal('show');
+    
+    });
+
+    $('.btn-cancel').click(function(){
+        $('.formulario').hide();
+        $('#btn_add').show();
+        $('.tableUser').show();     
+    });
+
+    //display modal form for product EDIT ***************************
+    $(document).on('click','#btn-edit',function(){
+        $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
+        $('#userForm').trigger("reset");
+        $('#btn_add').hide();
+        $('.formulario').show();
+        $('.tableUser').hide();
+        disablePassInput()
+        $('#tag_put').remove();
+        $form = $('#userForm');
+        $form.append('<input type="hidden" id="tag_put" name="_method" value="PUT">');
+        $('#myModal').modal('show');
+        $(".show_pass_div").show();
+        $(".pass").hide();
+        var id_user = $(this).val();
+        $('#id_user').val(id_user);
+        var my_url= baseUrl + '/users/' + id_user;
+        actions.show(my_url);
+    });
+
+        //create new product / update existing product ***************************
+    $("#userForm").on('submit',function (e) {
+        
+        e.preventDefault(); 
+        var stageArray=[];
+        var formData = new FormData(this);
+        var id_user = $('#id_user').val();
+        var state = $('#btn-save').val();
+        var type = "POST"; //for creating new resource
+        var my_url = baseUrl+'/users';
+        if (state == "update")
+        {
+            my_url=baseUrl + '/users/' + id_user;
+        }
+
+        actions.edit_create(type,my_url,state,formData,'file');
+                    
+    });
 
     $(".allownumericwithdecimal").on("keypress keyup blur",function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g,''));
@@ -415,7 +373,8 @@ const success = {
                             </tr>`;
         
     
-                        
+                $('.formulario').hide();
+                $('.tableUser').show(); 
                 $("#user-list").append(user);
                 $("#user_id"+dato.id).css("background-color", "#c3e6cb");    
 
@@ -424,7 +383,7 @@ const success = {
             else
             { //if user updated an existing record
                 swal({
-                    title: dato.name,
+                    title: dato.user_info.name,
                     text: "Usuario modificado",
                     type: "success",
                     button: "OK",
@@ -442,7 +401,9 @@ const success = {
                                 <td>${types.button(dato)}</td>
                             </tr>`;
                 
-                $("#settings_id"+dato.id).replaceWith(user);
+                $('.formulario').hide();
+                $('.tableUser').show(); 
+                $("#user_id"+dato.id).replaceWith(user);
                 $("#user_id"+dato.id).css("background-color", "#ffdf7e"); 
             }
             $('#userForm').trigger("reset");
