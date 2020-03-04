@@ -8,6 +8,16 @@
 				
 				<form enctype="multipart/form-data" method="POST" id="candidateForm" class="form-horizontal">
 					<div class="modal-body">
+
+						<div class="col-md-6 mb-3">
+						<div class="col-md-6 mb-3">
+                            <div class="input-group">
+                                        @foreach ($vacancies as $vac)
+                                            <input type="hidden" id="id_vacancy" name="id_vacancy" value="{{$vac['id']}}">
+                                        @endforeach
+                            </div> 
+                        </div>
+                        </div>
 					
 						<div class="form-row">
 							<div class="col-md-6 mb-3">
@@ -71,7 +81,7 @@
 							<div class="col-md-6 mb-3">
 								<label>Grammar Test</label>
 								<div class="input-group">
-									<select class="custom-select" name="grammar_test" id = "grammar_tes" >
+									<select class="custom-select" name="grammar_test" id = "grammar_test" >
 											<option value = "">Select</option> 
 											<option value = "A1">A1</option>
 											<option value = "A2">A2</option> 
@@ -127,7 +137,7 @@
 						<div class="form-row">
 							<div class="col-md-6 mb-3">
 								<label>Personality Test</label>
-								<input type="file" id="personality_test" name="personality_test"><br><br>
+								<input type="number" id="personality_test" name="personality_test"><br><br>
 							</div>
                    		</div>
 						  

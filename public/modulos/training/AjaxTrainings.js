@@ -1,8 +1,20 @@
 getData(1);
+
 $(document).ready(function(){
-     
+    $('[data-toggle="tabajax"]').click(function(e) {
+        var $this = $(this),
+            loadurl = $this.attr('href'),
+            targ = $this.attr('data-target');
     
-    var nameDeli='<a href="/settings">Settings</i></a>';
+        $.get(loadurl, function(data) {
+            $(targ).html(data);
+        });
+    
+        $this.tab('show');
+        return false;
+    });
+    
+    var nameDeli='<a href="/training">Training</i></a>';
     $('.nameDeli').html(nameDeli);
     $('#sidebar10').addClass('active');  
 

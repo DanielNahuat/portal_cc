@@ -85,7 +85,7 @@ class UserController extends Controller
                 $user = User::create($input);
 
                 $input['id_user'] = $user->id;
-                $input['last_name'] = $input['lastname'];
+                // $input['last_name'] = $input['lastname'];
                 $input['gender'] = 'M';
                 $input['birthdate'] =Carbon::now();
                 $input['profile_picture'] = 'adadasasdas';

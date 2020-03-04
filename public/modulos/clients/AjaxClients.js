@@ -20,8 +20,6 @@ $(document).ready(function(){
     });
 
 
-
-
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(){
         $('#clientsForm').trigger("reset");
@@ -40,11 +38,19 @@ $(document).ready(function(){
       
         e.preventDefault(); 
         var formData =  $("#clientsForm").serialize();
+        // var formData = {
+        //        name: $('#name').val(),
+        //        description: $('#description').val(),
+        //        id_color: $('#id_color').val(),
+        //        interval: $('#interval').val(),
+        //        duration: $('#duration').val(),
+               
+        //    }
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
-        var client_id = $('#client_id').val();;
+        var client_id = $('#client_id').val();
         var my_url = url;
         if (state == "update"){
             type = "PUT"; //for updating existing resource
@@ -68,8 +74,8 @@ $(document).ready(function(){
             })
                 if($(this).attr('class') == 'btn btn-sm btn-outline-success off-type')
                 {
-                    title= "Do you want to activate this option?";
-                    text="The Option will be activated";
+                    title= "Do you want to activate this client?";
+                    text="The client will be activated";
                     confirmButtonText="Activate";
 
                     datatitle="Activated";
@@ -78,9 +84,9 @@ $(document).ready(function(){
                 }
                 else 
                 {
-                    title= "Do you want to disable this option?";
-                    text= "The Option will be deactivated";
-                    confirmButtonText="Desactivar";
+                    title= "Do you want to disable this client?";
+                    text= "The client will be deactivated";
+                    confirmButtonText="Deactivate";
 
                     datatitle="Deactivated";
                     datatext="deactivated";
@@ -163,16 +169,22 @@ $(document).ready(function(){
     });
     
 });
-const types ={
+const clients ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
           
            }else if(dato.status == 2){
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" > <i class="fa fa-check-square-o"></i></button>'
                buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="'+dato.id+'"> <i class="fa fa-trash-o"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
            }
            return buttons;
     },
@@ -191,14 +203,14 @@ const success = {
     new_update: function (data,state){
         console.log(data);
         var dato = data;
-        var typename =$('#name').val();
+        var clientname =$('#name').val();
         var type =$('#type').val();
 
         
         if(dato =='error en agregar datos.'){
             swal({
                 title: "Datos Existentes",
-                text: "El perfil: "+typename+" ya existe",
+                text: "El perfil: "+clientname+" ya existe",
                 type: "warning",
 
               });
@@ -206,8 +218,10 @@ const success = {
         else{
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
+                                <td>${dato.description}</td>
+                                <td style ="background:"${dato.color}""></td>
+                                <td class="hidden-xs">${clients.status(dato)}</td>
+                                <td>${clients.button(dato)}</td>
                             </tr>`;
         
             if (state == "add"){ 
@@ -229,8 +243,8 @@ const success = {
         if(dato.status != 0){
             var client = `<tr id="client_id${dato.id}">
                                 <td>${dato.name}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
+                                <td class="hidden-xs">${clients.status(dato)}</td>
+                                <td>${clients.button(dato)}</td>
                             </tr>`;
           
             $("#client_id"+dato.id).replaceWith(client);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DaysTable extends Migration
+class DeleteColumDocumentsFromClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class DaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('days', function (Blueprint $table) {
-            $table->integer('id');
-            $table->string('mat', 3)->default('DAY');
-            $table->string('name');
-            $table->string('Eng-name');
-            $table->timestamps();
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropColumn('documents');
         });
-    
     }
 
     /**
@@ -30,6 +25,8 @@ class DaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('days');
+        Schema::table('clients', function (Blueprint $table) {
+            $table->string('documents');
+        });
     }
 }
