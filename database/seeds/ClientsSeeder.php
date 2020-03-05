@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\ClientModel;
+use App\BreakRules;
 class ClientsSeeder extends Seeder
 {
     
@@ -39,6 +40,16 @@ class ClientsSeeder extends Seeder
       foreach($clients as $client)
       {
         DB::table('clients')->insert($client);
+        
       }
+
+       $cbkr = ClientModel::all();
+       foreach($cbkr as $bk){
+         DB::table('break_rules')->insert([
+           "interval" => '0',
+           "duration" => '0',
+           "id_client" => $bk->id
+         ]);
+       }
     }
 }
