@@ -3,13 +3,16 @@ var url = $('#url').val();
 var baseUrl = $('#baseUrl').val();
 $(document).ready(function(){
     //get base URL *********************
-        
+    $('select').selectpicker();
+
+
     var nameDeli='<a href="/school">Escuelas</i></a>';
     var radioState;
     $('.nameDeli').html(nameDeli);  
     $('#sidebar11').addClass('active'); 
     $('#myTable').DataTable();
     $(".pass").hide();
+    // $(".clients").hide();
     $('.stage').hide();
     $('#id_stage').attr('disabled','disabled');
     $('.cafeteria').hide();
