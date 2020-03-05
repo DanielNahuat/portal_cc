@@ -3,13 +3,16 @@ var url = $('#url').val();
 var baseUrl = $('#baseUrl').val();
 $(document).ready(function(){
     //get base URL *********************
-    $('.selectpick').selectpicker();
+    $('.selectpick').selectpicker({
+        liveSearchPlaceholder: 'Search Client'
+    });
 
 
     var nameDeli='<a href="/school">Escuelas</i></a>';
     var radioState;
     $('.nameDeli').html(nameDeli);  
     $('#sidebar11').addClass('active'); 
+    $('.selectpick').selectpicker('refresh');
     $('#myTable').DataTable();
     $(".pass").hide();
     $(".clients").hide();
@@ -66,6 +69,7 @@ $(document).ready(function(){
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
+        $('.selectpick').val('default').selectpicker("refresh");
         $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
@@ -88,12 +92,14 @@ $(document).ready(function(){
     $('.btn-cancel').click(function(){
         $('.formulario').hide();
         $('#btn_add').show();
+        $('.selectpick').val('default').selectpicker("refresh");
         $(".clients").hide();
         $('.tableUser').show();     
     });
 
     //display modal form for product EDIT ***************************
     $(document).on('click','#btn-edit',function(){
+        $('.selectpick').val('default').selectpicker("refresh");
         $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');

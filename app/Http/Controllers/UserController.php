@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\User;
 use App\User_info;
 use App\TypeUserModel;
+use App\ClientModel;
 use DB;
 
 
@@ -27,6 +28,7 @@ class UserController extends Controller
         $id_menu=5;
         $menu = menu($user,$id_menu);
         $types = TypeUserModel::whereNotIn('id',[9])->get(); 
+        $clients = ClientModel::all();
         if($menu['validate']){ 
 
             $search = trim($request->dato);
@@ -41,7 +43,7 @@ class UserController extends Controller
                 return view('users.table', compact('data'));
             }
             // return view('users.index',compact('data'));
-            return view('users.index',["data"=>$data,"menu"=>$menu,'types'=>$types]);
+            return view('users.index',["data"=>$data,"menu"=>$menu,'types'=>$types, 'clients'=>$clients]);
         }
     }
 
@@ -81,7 +83,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         $this->validateUser($request);
         try {
             DB::beginTransaction();
