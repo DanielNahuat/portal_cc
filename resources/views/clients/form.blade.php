@@ -30,7 +30,7 @@
         </div>
         <div class="col-sm-4 form-group">
             <h6>Color:</h6>
-            <select name="color" id = "color" class="custom-select">
+            <select name="color" id = "color" class="custom-select" onchange="colorSelect()">
                     @foreach($color as $color)
                       <option style = "background:{{$color->hex}}" value = "{{$color->id}}">{{$color->mat}}  {{$color->hex}}</option>
                       @endforeach
@@ -47,3 +47,9 @@
 <input type="hidden" id="client_id" name="client_id">
 
 </div>
+<script>
+function colorSelect() {
+  var x = document.getElementById("color").value;
+  console.log(x);
+}
+</script>

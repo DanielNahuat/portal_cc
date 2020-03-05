@@ -79,6 +79,8 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::delete('/clients/{client_id}', 'ClientsController@destroy');
     Route::delete('/clients/delete/{id}', 'ClientsController@delete');
 
+    Route::post('/clients/contacts', 'ClientsController@storeContacts');
+
     //User
     Route::get('/users','UserController@index');
     Route::put('/users/{user}', 'UserController@update');
@@ -97,7 +99,11 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
 
     //Operators
     Route::get('/operators', 'OperatorsController@index');
+    Route::get('/operators/{id}', 'OperatorsController@show');
     Route::post('/operators', 'OperatorsController@store');
+    Route::put('/operators/{id}', 'OperatorsController@update');
+    Route::delete('/operators/{id}', 'OperatorsController@destroy');
+    Route::delete('/operators/delete/{id}', 'OperatorsController@delete');
 
 });
 
