@@ -105,7 +105,7 @@
 
   <div class="col-sm-3 form-group clients">
     <h6>Clients:</h6>
-    <select class="selectpicker" multiple data-live-search="true">
+    <select class="selectpicker selectpick" multiple data-live-search="true">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>

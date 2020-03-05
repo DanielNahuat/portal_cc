@@ -3,7 +3,7 @@ var url = $('#url').val();
 var baseUrl = $('#baseUrl').val();
 $(document).ready(function(){
     //get base URL *********************
-    $('select').selectpicker();
+    $('.selectpick').selectpicker();
 
 
     var nameDeli='<a href="/school">Escuelas</i></a>';
@@ -12,7 +12,7 @@ $(document).ready(function(){
     $('#sidebar11').addClass('active'); 
     $('#myTable').DataTable();
     $(".pass").hide();
-    // $(".clients").hide();
+    $(".clients").hide();
     $('.stage').hide();
     $('#id_stage').attr('disabled','disabled');
     $('.cafeteria').hide();
@@ -31,6 +31,18 @@ $(document).ready(function(){
         $('#confirm_password').removeAttr('disabled');
     }
 
+    $('#id_type_user').change(function(){
+        var teamLeader = $(this).val();
+
+        if(teamLeader == 2)
+        {
+            $(".clients").show();
+        }
+        else
+        {
+            $(".clients").hide();
+        }
+    });
 
     $("#show_pass").on("click", function(e) {
         if (radioState === this) {
@@ -54,6 +66,7 @@ $(document).ready(function(){
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
+        $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
         drEvent.init();
@@ -75,6 +88,7 @@ $(document).ready(function(){
     $('.btn-cancel').click(function(){
         $('.formulario').hide();
         $('#btn_add').show();
+        $(".clients").hide();
         $('.tableUser').show();     
     });
 
@@ -85,6 +99,7 @@ $(document).ready(function(){
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
+        $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
         drEvent.init();
