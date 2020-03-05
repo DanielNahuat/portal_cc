@@ -42,6 +42,7 @@
       </div>          
   </div>
 </div>
+<h4>Personal Information</h4>
 <hr>
 <div class="row">
   <div class="col-sm-3 form-group">
@@ -102,12 +103,21 @@
     </select>
   </div>
 
+  <div class="col-sm-3 form-group clients">
+    <h6>Clients:</h6>
+    <select class="selectpicker" multiple data-live-search="true">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+
   <div class="col-sm-12 form-group">
       <h6>Notes:</h6>
       <input type="text" name="notes" id="notes" class="form-control" title="Este campo solo admite letras" maxlength="60">
   </div>
   <div class="col-sm-12 form-group">
-      <h6>Information:</h6>
+      <h6>Additional information:</h6>
       <textarea name="description" id="description" class="form-control"></textarea>
   </div>
 </div>
