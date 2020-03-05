@@ -11,7 +11,8 @@
                         </div>
                         @include('clients.form')
                         @include('clients.contacts')
-                        <div class="body tableClient"> <!--tablaOperador-->
+                        <!--Container de tabla clientes-->    
+                        <div class="body tableClient"> 
                                 <div class="table-responsive">
                                     <div class="input-group mb-3 input-group-sm">
                                     <div class="input-group-prepend">
