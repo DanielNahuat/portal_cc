@@ -93,7 +93,7 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/weekly', 'ScheduleWeeklyController@index');
     Route::get('/weekly/{UserType_id?}', 'ScheduleWeeklyController@show');
     Route::post('/weekly', 'ScheduleWeeklyController@store');
-    Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
+    Route::put('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
     Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
     Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
 
