@@ -2,13 +2,14 @@ getData(1);
 $(document).ready(function(){
      
     
-    var nameDeli='<a href="/types">Users Types</i></a>';
+    var nameDeli='<a href="/weekly">Schedule Weekly</i></a>';
     $('.nameDeli').html(nameDeli);
-    $('#sidebar1').addClass('active') 
+    $('#sidebar5').addClass('active') 
 
     //get base URL *********************
     var url = $('#url').val();
     $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2();
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
