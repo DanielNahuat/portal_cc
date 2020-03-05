@@ -14,6 +14,15 @@ $(document).ready(function(){
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
+        $('#typeUserForm').trigger("reset");
+        $("#image").attr('src','');
+        $('#myModal').modal('show');
+    });
+
+    $('.cancel_data').click(function(){
+        $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
         $('#typeUserForm').trigger("reset");
         $("#image").attr('src','');
         $('#myModal').modal('show');
@@ -282,7 +291,16 @@ const success = {
     show: function(data){
         console.log(data);
         $('#usertype_id').val(data.id);
-        $('#name').val(data.name);
+        $('#time_start').val(data.time_s);
+        $('#time_end').val(data.time_e);
+
+        if(data.days == 0){
+            $('#days').val("");
+        }else{
+            $('#days').val(data.name);
+        }
+
+        $('#dyas').val(data.name);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },
