@@ -45,7 +45,6 @@ class ClientsController extends Controller
             } 
            
             $data=$data2;
-            dd($data);
             if ($request->ajax()) {
                 return view('clients.table', ["data"=>$data]);
             }

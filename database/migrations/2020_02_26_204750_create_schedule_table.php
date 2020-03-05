@@ -19,6 +19,7 @@ class CreateScheduleTable extends Migration
             $table->integer('id_operator')->nullable();
             $table->integer('id_client')->nullable();
             $table->string('mat', 3)->default('SCH');
+            $table->string('dayoff')->nullable();
             $table->date('date_start');
             $table->date('date_end');
             $table->integer('type_schedule');

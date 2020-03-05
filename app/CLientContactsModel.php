@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CLientContactsModel extends Model
+class ClientContactsModel extends Model
 {
     protected $table = 'client_contacts';
     protected $primaryKey = 'id';

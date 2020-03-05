@@ -27,17 +27,34 @@
                   <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-12">
+                            <h3>Day Off</h3>
+                        </div>
+                        <br/>
+                        <div class="col-sm-12">
+                        <label for="sel1">Select Day Off:</label>
+                                <select class="form-control js-example-basic-single"  id="days" style="heigth:100px" name="days[]" multiple="multiple">
+                                    @foreach($days as $days)
+                                        <option value="{{$days->id}}" >{{$days['Eng-name']}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
+                  </div>
+                  </br>
+                  <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
                             <h3>Options</h3>
                         </div>
                         <br/>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">Update the schedule for subsequent dates
+                              <input type="checkbox" class="form-check-input" value="now">Update the schedule for subsequent dates
                             </label>
                           </div>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">Update the schedule for subsequent Sundays.
+                              <input type="checkbox" class="form-check-input" value="sunday">Update the schedule for subsequent Sundays.
                             </label>
                           </div>
                     </div>
@@ -63,7 +80,7 @@
                 </div>
                 <div class="modal-footer">
                   <div class="col-sm-12 text-center">
-                      <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                      <button type="button"  class="btn btn-danger cancel_data" data-dismiss="modal">Cancelar</button>
 					            <button type="submit" class="btn btn-success" id="btn-save" value="add">Guardar</button>
                   </div>
                 </div>

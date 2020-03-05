@@ -79,6 +79,16 @@ class ScheduleWeeklyController extends Controller
         }
     }
 
+    public function data_weekly($id){
+        $data2 = ScheduleDetailModel::select( "detail_schedule_user.id as id","sch.dayoff as days", "inf.name as name", "inf.last_name as lastname","cli.name as client",'detail_schedule_user.time_start as time_s','detail_schedule_user.time_end as time_e',"detail_schedule_user.status as status")
+                    ->join('schedule as sch','sch.id', "=", 'detail_schedule_user.id_schedule')
+                    ->join('clients as cli', 'cli.id',"=","sch.id_client")
+                    ->join('users_info as inf','inf.id_user', "=", 'detail_schedule_user.id_operator')
+                    ->where('detail_schedule_user.id',$id)
+                    ->first();
+        return $data2;
+    }
+
     public function validateType($request,$usertype_id =""){
         
             $this->validate(request(), [
@@ -117,7 +127,7 @@ class ScheduleWeeklyController extends Controller
    
     public function store(Request $request)
     {   
-            TypeUserController::validateType($request,$usertype_id ="");
+            ScheduleWeeklyController::validateType($request,$usertype_id ="");
             $user = ScheduleModel::Create($request->input());
             $menu = BasicMenuModel::where('status','1')->get();
 
@@ -138,11 +148,10 @@ class ScheduleWeeklyController extends Controller
            
     }
   
-    public function show($usertype_id)
+    public function show($scheduledetail_id)
     {
 
-        $usertype = ScheduleModel::find($usertype_id);
-        $usertype->status=1;
+        $usertype = ScheduleWeeklyController::data_weekly($scheduledetail_id);
         return response()->json($usertype);
     }
 
@@ -152,7 +161,7 @@ class ScheduleWeeklyController extends Controller
        
     
    
-            TypeUserController::validateType($request,$usertype_id);
+            ScheduleWeeklyController::validateType($request,$usertype_id);
             $usertype = ScheduleModel::find($usertype_id);
             $usertype->name = $request->name;
             $usertype->status=1;
