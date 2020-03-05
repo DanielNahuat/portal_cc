@@ -19,7 +19,7 @@
                             <option value="email">Email</option>
                         </select>
                     </div>
-                    <input type="text" class="form-control" id="search">
+                    <input type="text" class="form-control" id="search" autocomplete="off">
                     <button type="button" class="btn btn-primary search-query">Search</button>
                 </div>
                 <div class="table-responsive">

@@ -79,7 +79,9 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::delete('/clients/{client_id}', 'ClientsController@destroy');
     Route::delete('/clients/delete/{id}', 'ClientsController@delete');
 
+    //Contacts for Clients
     Route::post('/clients/contacts', 'ClientsController@storeContacts');
+    Route::get('/clients/contacts/show/{id}', 'ClientsController@showContacts');
 
     //User
     Route::get('/users','UserController@index');

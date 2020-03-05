@@ -47,19 +47,19 @@ class OperatorsController extends Controller
     }
 
     public function validateForm($request,$user=''){
-        $user=='' ? $email = 'required|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
+        $user=='' ? $email = 'required|email|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
         $this->validate(request(), [
-            'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'phone' => 'max:20|regex:/^[0-9]{0,20}(\.?)[0-9]{0,2}$/',
-            'birthdate' => 'required|date|before:18 years ago',
-            'emergency_contact_name' => 'max:150|alpha|nullable',
-            'emergency_contact_phone' => 'numeric|nullable',
-            'nickname' => 'sometimes|required',
-            'image' => 'image',
-            'gender' => 'required',
             'email' => $email,
             'password' => 'sometimes|required|confirmed|min:8',
+            'image' => 'image',
+            'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+            'phone' => 'required|max:20|regex:/^[0-9]{0,20}(\.?)[0-9]{0,2}$/',
+            'gender' => 'required',
+            'emergency_contact_name' => 'max:150|alpha|nullable',
+            'emergency_contact_phone' => 'numeric|nullable',
+            'birthdate' => 'required|date|before:18 years ago',
+            'nickname' => 'sometimes|required',
         ]);
     }
 
@@ -129,16 +129,15 @@ class OperatorsController extends Controller
 
         
         if($request->file('image')) {
-            
-            $file_path = public_path().'/images/operators/'.$user->profile_picture;
+            $file_path = public_path().'/images/operators/'.$user_info->profile_picture;
             File::delete($file_path);
             $image = $request->file('image');
             $name = time().$image->getClientOriginalName();
             $image->move(public_path().'/images/operators/',$name);
-            $user->profile_picture = $name;
+            $user_info->profile_picture = $name;
         }else
         {
-            $user->profile_picture = $user->profile_picture;
+            $user_info->profile_picture = $user_info->profile_picture;
         }
 
         $user_info->name = $request->name;
@@ -151,7 +150,6 @@ class OperatorsController extends Controller
         $user_info->description = $request->description;
         $user_info->gender = $request->gender;
         $user_info->birthdate = $request->birthdate;
-        $user_info->profile_picture = $request->profile_picture;
         $user_info->entrance_date = $request->entrance_date;
 
         $user_info->update();
@@ -165,7 +163,6 @@ class OperatorsController extends Controller
         $data = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status')
             ->join('users as usr', 'users_info.id_user', '=', 'usr.id')
             ->where('usr.id_type_user', 9)
-            ->whereIn('usr.id_status', [1,2])
             ->where('usr.id', $id)
             ->first();
         return $data;
