@@ -24,7 +24,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="{{$client->id}}"><i class="fa fa-info-circle"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" title="Edit"  value="{{$client->id}}"  ><i class="fa fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="{{$client->id}}"><i class="fa fa-window-close"></i></button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="{{$client->id}}"><i class="fa fa-book"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="{{$client->id}}"><i class="fa fa-users"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="{{$client->id}}"><i class="fa  fa-folder-open"></i></button>
                             </td>
                     @break
@@ -36,7 +36,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="{{$client->id}}"><i class="fa fa-info-circle"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="{{$client->id}}" ><i class="fa fa-check-square-o"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="{{$client->id}}"><i class="fa fa-trash-o"></i></button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="{{$client->id}}"><i class="fa fa-book"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="{{$client->id}}"><i class="fa fa-users"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="{{$client->id}}"><i class="fa  fa-folder-open"></i></button>
                             </td>
                     @break
