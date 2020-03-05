@@ -27,17 +27,34 @@
                   <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-12">
+                            <h3>Day Off</h3>
+                        </div>
+                        <br/>
+                        <div class="col-sm-12">
+                        <label for="sel1">Select Day Off:</label>
+                                <select class="form-control js-example-basic-single" name="days[]" multiple="multiple">
+                                    @foreach($days as $days)
+                                        <option value="{{$days->id}}" >{{$days['Eng-name']}}</option>
+                                    @endforeach
+                                </select>
+                        </div>
+                    </div>
+                  </div>
+                  </br>
+                  <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
                             <h3>Options</h3>
                         </div>
                         <br/>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">Update the schedule for subsequent dates
+                              <input type="checkbox" class="form-check-input" value="now">Update the schedule for subsequent dates
                             </label>
                           </div>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">Update the schedule for subsequent Sundays.
+                              <input type="checkbox" class="form-check-input" value="sunday">Update the schedule for subsequent Sundays.
                             </label>
                           </div>
                     </div>
