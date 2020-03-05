@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function User_info(){
         return $this->hasOne('App\User_info', 'id_user');
     }
+
+    public function Clients(){
+        return $this->hasMany('App\User_client', 'id_user');
+    }
 }

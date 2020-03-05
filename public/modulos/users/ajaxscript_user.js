@@ -64,12 +64,17 @@ $(document).ready(function(){
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
+        $('.selectpick').val('').trigger("change");
+        $('ul .dropdown-menu').children('li .selected').removeClass();
+        // $('.selectpick').trigger("change");
+        $('.selectpick').selectpicker("refresh");
         $('#myModalLabel').html("Agregar Usuario  <i class='fa fa-tasks'></i>");
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
-        $('.selectpick').val('default').selectpicker("refresh");
+        $('.selectpick').val('default').selectpicker("deselectAll");
+        // $('.selectpick').selectpicker("refresh");
         $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
@@ -92,14 +97,18 @@ $(document).ready(function(){
     $('.btn-cancel').click(function(){
         $('.formulario').hide();
         $('#btn_add').show();
-        $('.selectpick').val('default').selectpicker("refresh");
+        // $('.selectpick').val('default').trigger("change");
+        // $('.selectpick').selectpicker("deselectAll");
+        $('.selectpick').val('').trigger("change");
+        $('.selected').removeClass();
+        // $('.selectpick').trigger("change");
+        $('.selectpick').selectpicker("refresh");
         $(".clients").hide();
         $('.tableUser').show();     
     });
 
     //display modal form for product EDIT ***************************
     $(document).on('click','#btn-edit',function(){
-        $('.selectpick').val('default').selectpicker("refresh");
         $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
@@ -209,6 +218,7 @@ $(document).ready(function(){
                 $("#form_abono").trigger('reset');
                 $(".seccion-devolver").hide();
                 $(".seccion-abonar").show();
+                $('.selectpick').selectpicker('refresh'); 
                 $("#mm").modal('hide');
             
             },
@@ -447,6 +457,12 @@ const success = {
     show: function(data){
         console.log(data);
         // $('#school_id').val(data.id);
+        if(data.id_type_user == 2) $(".clients").show();
+        // $(".selectpick").empty();
+        $.each(data.clients, function (key, val) {
+            $('.selectpick option[value=' + val.id_client + ']').attr('selected', true);
+        });
+        $('.selectpick').selectpicker('refresh'); 
         $('#name').val(data.user_info.name);
         $('#last_name').val(data.user_info.last_name);
         $('#address').val(data.user_info.address);

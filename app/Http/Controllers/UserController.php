@@ -11,6 +11,7 @@ use App\User;
 use App\User_info;
 use App\TypeUserModel;
 use App\ClientModel;
+use App\User_client;
 use DB;
 
 
@@ -83,7 +84,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $this->validateUser($request);
         try {
             DB::beginTransaction();
@@ -95,7 +95,14 @@ class UserController extends Controller
 
                 $input['id_user'] = $user->id;
                 $user_info = User_info::create($input);
-
+                
+                if($request->clients != null)
+                {
+                    foreach($request->clients as $id_client)
+                    {
+                        User_client::create(['id_user'=>$user->id,'id_client'=>$id_client]);
+                    }
+                }
             DB::commit();
             return response()->json(User::where('id',$user->id)->with('User_info')->first());
         } catch (\Exception $e) {
@@ -123,7 +130,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return response()->json(User::where('id',$user->id)->with('User_info')->first());
+        return response()->json(User::where('id',$user->id)->with('User_info')->with('clients')->first());
     }
 
     /**
@@ -157,6 +164,15 @@ class UserController extends Controller
         $user_info->notes = $request->notes;
         $user_info->description = $request->description;
         $user_info->update();
+
+        if($request->clients != null)
+        {
+            User_client::where('id_user',$user->id)->delete();
+            foreach($request->clients as $id_client)
+            {
+                User_client::create(['id_user'=>$user->id,'id_client'=>$id_client]);
+            }
+        }
 
         return response()->json(User::where('id',$user->id)->with('User_info')->first());
     }
