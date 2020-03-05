@@ -9,6 +9,7 @@ use App\BasicMenuModel;
 use App\AssignamentTypeModel;
 use App\ClientModel;
 use App\ClientColorModel;
+use App\ClientContactsModel;
 use App\BreakRulesModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -195,26 +196,20 @@ class ClientsController extends Controller
     //CONTACTS
     public function storeContacts(Request $request)
     {
-        dd($request);
-        // ClientsController::validateClient($request);
-        // $data = $request->input();
-        // $clients = ClientModel::firstOrCreate([
-        // 'name'=>$data['name'],
-        // 'description'=>$data['description'],
-        // 'color'=>$data['color'],
-        // ]);
-
-        // $id_client = $clients->id;
-
-        // $breaks = BreakRulesModel::firstOrCreate([
-        // 'interval'=>$data['interval'],
-        // 'duration'=>$data['duration'],
-        // 'id_client'=>$id_client
-
-        // ]);
-        //  $result = $this->getResult($id_client);
-        // return response()->json($result);
+        $data = $request->input();
+        $clients = ClientContactsModel::create([
+        'id_client'=>$data['client_id_contacts'],
+        'name'=>$data['name_contact'],
+        'description'=>$data['description_contact'],
+        'phone'=>$data['phone_contact'],
+        'email'=>$data['email_contact'],
+        ]);
 
     }
+
+    public function showContacts(Request $request){
+        dd($request);
+    }
+
 
 }

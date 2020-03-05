@@ -40,8 +40,11 @@ $(document).ready(function(){
         $(".formulario_contacts").show();
         $(".tableClient").hide();
         $('#btn_add').hide();
-        $('#formClients').trigger("reset");
+        $('#formContacts').trigger("reset");
+
+        var id = $(this).val();
         $('#tag_put').remove();
+        $('#client_id_contacts').val(id);
     });
 
     $('.btn-cancel-contacts').click(function(){
@@ -50,7 +53,7 @@ $(document).ready(function(){
         $(".tableClient").show();
         $('#btn_add').show();
         $(".formulario_contacts").hide();
-        $('#formClients').trigger("reset");
+        $('#formContacts').trigger("reset");
         $('#tag_put').remove();
     });
 
@@ -64,7 +67,7 @@ $(document).ready(function(){
      
 
         //used to determine the http verb to use [add=POST], [update=PUT]
-        var state = $('#btn-save-contacts').val();
+        var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
         var client_id = $('#client_id').val();
         var my_url = url;
@@ -96,15 +99,22 @@ $(document).ready(function(){
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save-contacts').val();
         var type = "POST"; //for creating new resource
-        var client_id = $('#client_id').val();
+        var client_id_contacts = $('#client_id_contacts').val();
         var my_url = url + '/contacts';
         if (state == "update"){
             type = "PUT"; //for updating existing resource
-            my_url += '/' + client_id;
+            my_url += '/';
             $('#myModal').modal('hide');
         }
             console.log(formData);
             actions.edit_create(type,my_url,state,formData);   
+            $('#labelTitle').html("Clients  <i class='fa fa-briefcase'></i>");
+            $(".formulario").hide();
+            $(".tableClient").show();
+            $('#btn_add').show();
+            $(".formulario_contacts").hide();
+            $('#formContacts').trigger("reset");
+            $('#tag_put').remove();
         
     
     });
