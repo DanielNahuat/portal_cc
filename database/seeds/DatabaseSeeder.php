@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsTableSeeder::class);
         $this->call(OptionsSettingsTable::class);
         $this->call(ClientColorSeeder::class);
-
+        $this->call(ClientsSeeder::class);
 
 
         

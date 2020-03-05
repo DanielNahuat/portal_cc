@@ -12,16 +12,20 @@
                 <div class="row">
                   <div class="col-xl-4 col-xs-12 col-md-4 col-sm-12 form-group">
                     <label>Trainer</label>
-                    <select name="id_option" id="id_option" class='form-control'>
+                    <select name="id_trainer" id="id_trainer" class='form-control'>
                       <option value="all">Select Trainer</option>
-                        
+                      @foreach($trainers as $trainer)
+                      <option value="{{$trainer->id}}">{{$trainer->User_info->name}} {{$trainer->User_info->last_name}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="col-xl-4 col-xs-12 col-md-4 col-sm-12 form-group">
                     <label>Client</label>
                     <select name="id_option" id="id_option" class='form-control'>
                       <option value="all">Select Client</option>
-                        
+                      @foreach($clients as $client)
+                      <option value="{{$client->id}}">{{$client->name}}</option>
+                      @endforeach
                     </select>
                   </div>
                 </div>
@@ -81,9 +85,11 @@
                   </div>
                   <div class="col-xl-2 col-xs-12 col-md-2 col-sm-12 form-group">
                       <h6>Day Off:</h6>
-                      <select name="id_option" id="id_option" class='form-control'>
+                      <select multiple name="id_day[]" id="id_day" class='form-control'>
                         <option value="all">Select Day Off</option>
-                          
+                        @foreach($days as $day)
+                      <option value="{{$day->id}}">{{$day->name}}</option>
+                      @endforeach
                       </select>
                  </div>
                  <div class="col-xl-2 col-xs-12 col-md-2 col-sm-12 form-group">

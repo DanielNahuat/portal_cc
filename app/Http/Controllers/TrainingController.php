@@ -7,6 +7,11 @@ use App\SettingsModel;
 use Illuminate\Support\Facades\Auth;
 use App\OptionsSettingModel;
 use App\DaysModel;
+use App\User;
+use App\User_info;
+use App\TypeUserModel;
+use App\ClientModel;
+
 
 use Carbon\Carbon;
 
@@ -77,7 +82,11 @@ class TrainingController extends Controller
                         return view('training.table', ["data"=>$data]);
                     }
                     $options= OptionsSettingModel::all();
-                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha]);
+                    $trainers = User::where('id_type_user', 3)->with('User_info')->get();
+                    $clients = ClientModel::all();
+
+
+                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha,'trainers'=>$trainers, 'clients'=>$clients]);
         
                 }else{
                     $now =Carbon::now();
@@ -88,7 +97,10 @@ class TrainingController extends Controller
                         return view('training.table', ["data"=>$data]);
                     }
                     $options= OptionsSettingModel::all();
-                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha,]);
+                    $trainers = User::where('id_type_user', 3)->with('User_info')->get();
+                    $clients = ClientModel::all();
+
+                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha,'trainers'=>$trainers, 'clients'=>$clients]);
         
                 }
 
