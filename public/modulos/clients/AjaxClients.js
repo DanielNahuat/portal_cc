@@ -251,14 +251,14 @@ const clients ={
                buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" title="Edit" value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-users"></i> </button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
           
            }else if(dato.status == 2){
                buttons += ' <button type="button" class="btn btn-sm btn-outline-primary" title="Information" value="'+dato.id+'"> <i class="fa fa-info-circle"></i></li></button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="'+dato.id+'" > <i class="fa fa-check-square-o"></i></button>'
                buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deleteSettings" title="Delete" data-type="confirm" value="'+dato.id+'"> <i class="fa fa-trash-o"></i> </button>';
-               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-book"></i> </button>';
+               buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary btn_add_contacts" title="Contacts" value="'+dato.id+'"> <i class="fa fa-users"></i> </button>';
                buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary" title="Documents" value="'+dato.id+'"> <i class="fa fa-folder-open"></i> </button>';
            }
            return buttons;

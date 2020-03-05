@@ -14,6 +14,15 @@ $(document).ready(function(){
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
+        $('#typeUserForm').trigger("reset");
+        $("#image").attr('src','');
+        $('#myModal').modal('show');
+    });
+
+    $('.cancel_data').click(function(){
+        $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
         $('#typeUserForm').trigger("reset");
         $("#image").attr('src','');
         $('#myModal').modal('show');
@@ -44,19 +53,13 @@ $(document).ready(function(){
         e.preventDefault(); 
         var formData =  $("#typeUserForm").serialize();
         
-        if($("#name").val().length > 30)
-        {
-            alert("Ingrese un nombre menor a 30 caracteres");
-            return false;
-        }
-
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
         var usertype_id = $('#usertype_id').val();;
         var my_url = url;
         if (state == "update"){
-            type = "POST"; //for updating existing resource
+            type = "PUT"; //for updating existing resource
             my_url += '/' + usertype_id;
         }
         
@@ -282,7 +285,16 @@ const success = {
     show: function(data){
         console.log(data);
         $('#usertype_id').val(data.id);
-        $('#name').val(data.name);
+        $('#time_start').val(data.time_s);
+        $('#time_end').val(data.time_e);
+
+        if(data.days == 0){
+            $('#days').val("");
+        }else{
+            $('#days').val(data.name);
+        }
+
+        $('#dyas').val(data.name);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },
