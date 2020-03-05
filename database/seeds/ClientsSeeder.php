@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\ClientModel;
-class ClientColorSeeder extends Seeder
+class ClientsSeeder extends Seeder
 {
     
     public function run()
