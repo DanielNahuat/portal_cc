@@ -53,19 +53,13 @@ $(document).ready(function(){
         e.preventDefault(); 
         var formData =  $("#typeUserForm").serialize();
         
-        if($("#name").val().length > 30)
-        {
-            alert("Ingrese un nombre menor a 30 caracteres");
-            return false;
-        }
-
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
         var usertype_id = $('#usertype_id').val();;
         var my_url = url;
         if (state == "update"){
-            type = "POST"; //for updating existing resource
+            type = "PUT"; //for updating existing resource
             my_url += '/' + usertype_id;
         }
         
