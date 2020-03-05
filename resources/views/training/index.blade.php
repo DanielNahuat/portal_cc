@@ -10,7 +10,7 @@
                                 </div>
                                 <div class="col-lg-6 col-xl-6 col-xs-12 col-md-6 col-sm-12">
                                     <ul class="header-dropdown">
-                                        <li><a href="javascript:void(0);" class="btn btn-success" disabled id="btn_add" >New Trainee <i class="fa fa-plus"></i></a></li>
+                                        <li><a href="javascript:void(0);" class="btn btn-success-create" disabled id="btn_add" >New Trainee &nbsp;<i class="fa fa-plus" style="color:white"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -18,23 +18,32 @@
                         <div class="col-sm-12 bodyIndex">
                             <div class='row'>
                                 <div class="form-group col-lg-2 col-xl-2 col-xs-4 col-md-2 col-sm-4">
-                                    <label for="sel1 ">Select Day:</label>
-                                    <select class="form-control" id="sel1">
+                                    <label for="sel1">Select Day:</label>
+                                    <select class="form-control trainingSearch" id="daySearch">
                                         <option value="all">All days</option>
-                                    
+                                            @foreach ($days as $item)
+                                                <option value="{{ $item['id'] }}" {{ ( $item['id']== $NoD) ? 'selected' : '' }}> {{$item['Eng-name']}} </option>
+                                            @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-4 col-xl-4 col-xs-12 col-md-4 col-sm-12">
+                                <div class="form-group col-lg-2 col-xl-2 col-xs-4 col-md-2 col-sm-4">
                                     <label for="sel1">Select Date:</label>
-                                    <input type="date" id="datesearch" name="datesearch" class="form-control">
+                                    <input type="date" value="{{$today}}" id="dateSearch" name="dateSearch" class="form-control trainingSearch">
+
                                 </div>
                             </div>
                         </div>
                         <div class="body">
-                            <!-- <div class="table-responsive">
-                                @include('training.search')
-                                @include('training.table')
-                            </div> -->
+                            @include('training.search')
+                                <div class="table-responsive">
+                                    @include('training.table')
+                                </div>
+                                <div class="loading-table col-sm-12 text-center">
+                                        <div class="spinner-grow text-success"></div>
+                                        <div class="spinner-grow text-info"></div>
+                                        <div class="spinner-grow text-warning"></div>
+                                        <div class="spinner-grow text-danger"></div>
+                                </div>
                         </div>
                     </div>
                 </div>

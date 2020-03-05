@@ -26,7 +26,7 @@ class UserController extends Controller
         
         $id_menu=5;
         $menu = menu($user,$id_menu);
-        $types = TypeUserModel::all(); 
+        $types = TypeUserModel::whereNotIn('id',[9])->get(); 
         if($menu['validate']){ 
 
             $search = trim($request->dato);

@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use App\SettingsModel;
 use Illuminate\Support\Facades\Auth;
 use App\OptionsSettingModel;
+use App\DaysModel;
+use App\User;
+use App\User_info;
+use App\TypeUserModel;
+use App\ClientModel;
+
+
 use Carbon\Carbon;
 
 
@@ -17,14 +24,15 @@ class TrainingController extends Controller
         $user = Auth::user();
         $id_menu=5;
         $menu = menu($user,$id_menu);
+        
         if($menu['validate']){  
-            $now = Carbon::now();
-            $week = $now->weekOfYear;
-            $dayOfWeek = $now->dayOfWeek;
+            $days= DaysModel::all();
 
-            $search = trim($request->dato);
-
+            if($request->date !=""){
                 if(strlen($request->type) > 0 &&  strlen($search) > 0){
+                    $now =Carbon::parse($request->date);
+                   
+
                      $type= SettingsController::search_settings($request->type);
 
                     $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
@@ -32,17 +40,101 @@ class TrainingController extends Controller
                             ->whereNotIn('settings.status',[0])->where($type,'LIKE','%'.$search.'%')->paginate(5);
                     // $data2 = SettingsModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
                 } else{
+                    $now = Carbon::now();
                     $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
                     ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
                     ->whereNotIn('settings.status',[0])->paginate(5);
                 } 
-                $data=$data2;
-                if ($request->ajax()) {
-                    return view('training.table', ["data"=>$data]);
+
+                // return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$now->dayOfWeek,]);
+
+
+            }else{
+                if(strlen($request->type) > 0 &&  strlen($search) > 0){
+                    $now = Carbon::now();
+                     $type= SettingsController::search_settings($request->type);
+
+                    $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+                            ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+                            ->whereNotIn('settings.status',[0])->where($type,'LIKE','%'.$search.'%')->paginate(5);
+                    // $data2 = SettingsModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
+                } else{
+                    $now = Carbon::now();
+                    $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+                    ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+                    ->whereNotIn('settings.status',[0])->paginate(5);
+                } 
+
+            }
+            // $data=$data2;
+            // if ($request->ajax()) {
+            //     return view('training.table', ["data"=>$data]);
+            // }
+            // $options= OptionsSettingModel::all();
+            //     // return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$now->dayOfWeek,]);
+
+                if($request->date !=""){
+                    $now =Carbon::parse($request->date);
+                    $fecha= $now->dayOfWeek;
+                    print_r($fecha);
+                    $data=$data2;
+                    if ($request->ajax()) {
+                        return view('training.table', ["data"=>$data]);
+                    }
+                    $options= OptionsSettingModel::all();
+                    $trainers = User::where('id_type_user', 3)->with('User_info')->get();
+                    $clients = ClientModel::all();
+
+
+                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha,'trainers'=>$trainers, 'clients'=>$clients]);
+        
+                }else{
+                    $now =Carbon::now();
+                    $fecha= $now->dayOfWeek;
+                    print_r($fecha);
+                    $data=$data2;
+                    if ($request->ajax()) {
+                        return view('training.table', ["data"=>$data]);
+                    }
+                    $options= OptionsSettingModel::all();
+                    $trainers = User::where('id_type_user', 3)->with('User_info')->get();
+                    $clients = ClientModel::all();
+
+                        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$fecha,'trainers'=>$trainers, 'clients'=>$clients]);
+        
                 }
-                $options= OptionsSettingModel::all();
-  
-        return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,]);
+
+
+
+
+
+
+
+
+
+        //     $search = trim($request->dato);
+
+        //         if(strlen($request->type) > 0 &&  strlen($search) > 0){
+        //             $now = Carbon::now();
+        //              $type= SettingsController::search_settings($request->type);
+
+        //             $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+        //                     ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+        //                     ->whereNotIn('settings.status',[0])->where($type,'LIKE','%'.$search.'%')->paginate(5);
+        //             // $data2 = SettingsModel::whereNotIn('status',[0])->where($request->type,'LIKE','%'.$search.'%')->paginate(5);
+        //         } else{
+        //             $now = Carbon::now();
+        //             $data2 =  SettingsModel::select('settings.id as id','op.option as option','settings.name as name', 'settings.status as status')
+        //             ->join('options_settings as op', 'op.id', '=', 'settings.id_option')
+        //             ->whereNotIn('settings.status',[0])->paginate(5);
+        //         } 
+        //         $data=$data2;
+        //         if ($request->ajax()) {
+        //             return view('training.table', ["data"=>$data]);
+        //         }
+        //         $options= OptionsSettingModel::all();
+        //         print_r($request->date);
+        // return view('training.index',["data"=>$data,"menu"=>$menu,"options_settings"=>$options,"days"=>$days,"today"=>$now->toDateString(),"NoD"=>$now->dayOfWeek,]);
          }else{
             return redirect('/');
          }

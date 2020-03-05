@@ -24,6 +24,7 @@ class TypeUserTableSeed extends Seeder
             ['mat'=> 'TYU','name'=> 'Marketing','status'=> 1,], 
             ['mat'=> 'TYU','name'=> 'Operator','status'=> 1,],
             ['mat'=> 'TYU','name'=> 'Default','status'=> 1,],   
+            ['mat'=> 'TYU','name'=> 'Trainee','status'=> 1,],   
           ]; 
 
         foreach($types as $type){

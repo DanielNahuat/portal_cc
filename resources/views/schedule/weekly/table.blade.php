@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody id="usertype-list" class="table-data" >
-        @foreach ($data as $type)
+        @forelse($data as $type)
         <tr id="usertype_id{{$type->id}}">
             <td>{{ $type->name }} {{ $type->lastname }}</td>
             <td>{{ $type->client }}</td>
@@ -40,7 +40,13 @@
                 @break
             @endswitch
         </tr>
-        @endforeach
+        @empty
+            <tr id="table-row" class="text-center">
+                <th colspan="7" class="text-center">
+                    <h2><span class="badge  badge-pill badge-info">Data Not Found</span></h2>
+                </th>
+            </tr>
+        @endforelse
     </tbody>
 </table>
 
