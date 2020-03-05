@@ -3,7 +3,7 @@
         $user = Auth::user();
     ?>
 <div class="col-sm-12 formulario" style="display:none">
-        <form id="formOperators" class="form-horizontal" enctype="multipart/form-data">
+        <form id="formOperators" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
         {{ csrf_field() }}
     <div class="row">
         <div class="col-sm-7">

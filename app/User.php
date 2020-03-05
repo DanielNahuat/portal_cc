@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use Notifiable;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,5 +41,9 @@ class User extends Authenticatable
 
     public function User_info(){
         return $this->hasOne('App\User_info', 'id_user');
+    }
+
+    public function Clients(){
+        return $this->hasMany('App\User_client', 'id_user');
     }
 }

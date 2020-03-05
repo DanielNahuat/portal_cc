@@ -105,10 +105,10 @@
 
   <div class="col-sm-3 form-group clients">
     <h6>Clients:</h6>
-    <select class="selectpicker" multiple data-live-search="true">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
+    <select class="selectpicker selectpick form-control" multiple data-live-search="true" name='clients[]'>
+      @foreach ($clients as $client)
+        <option value='{{$client->id}}'>{{$client->name}}</option>
+      @endforeach
     </select>
   </div>
 

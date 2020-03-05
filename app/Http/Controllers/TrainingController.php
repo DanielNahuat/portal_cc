@@ -11,6 +11,7 @@ use App\User;
 use App\User_info;
 use App\TypeUserModel;
 use App\ClientModel;
+use Illuminate\Support\Facades\Hash;
 
 
 use Carbon\Carbon;
@@ -167,20 +168,38 @@ class TrainingController extends Controller
     public function store(Request $request)
     {     
         $setting_id="";
+        // dd($request);
         
-        SettingsController::validateSettings($request,$setting_id);
-        $validation= SettingsController::validateSettingsExists($request->name,$request->id_option);
-        if (!$validation) {
-            $setting = SettingsModel::Create($request->input());
-             $dataSettings= SettingsController::data_settings($setting->id);
-    
-             return response()->json($dataSettings);
-            
-        }else{
-            $msg='Another option already has that name and that type';
-            $data=['No'=>1,'msg'=>$msg];
-            return response()->json($data);
-        }
+        $correo=$request->email.'@yasemail.com';
+        $user =  User::Create([
+            'id_type_user'=>11,
+            'id_status'=>1,
+            'nickname'=>"",
+            'email'=>$correo,
+            'password'=>Hash::make('123'),
+        ]);
+
+        $User_info =  User_info::Create([
+            'id_user'=>$user->id,
+            'name'=>$request->name,
+            'last_name'=>$request->last_name,
+            'address'=>$request->address,
+            'phone'=>$request->phone,
+            'emergency_contact_name'=>$request->emergency_contact_name,
+            'emergency_contact_phone'=>$request->emergency_contact_phone,
+            'notes'=>$request->notes,
+            'description'=>$request->description,
+            'gender'=>'X',
+            'birthdate'=>$request->birthdate,
+            'profile_picture'=>"",
+            'biotime_status'=>"",
+            'access_code'=>"",
+            'entrance_date'=>"",
+        ]);
+
+        $result = OperatorsController::getResult($user->id);
+
+        return response()->json($result);
 
       
            

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    getData(1);
     var url = $('#url').val();
     var baseUrl = $('#baseUrl').val();
     var radioState;
@@ -198,7 +199,7 @@ const types ={
           
            }else if(dato.id_status == 2){
                buttons  += `<button type="button" class="btn btn-sm btn-outline-success delete-op" title="Activated" data-toggle="tooltip" data-type="confirm" value="${dato.id}" ><i class="fa fa-check-square-o"></i></button>
-                            <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert destroy-op" data-toggle="tooltip" title="Delete" data-type="confirm" value="{{$op->id}}"><i class="fa fa-trash-o"></i></button>`
+                            <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert destroy-op" data-toggle="tooltip" title="Delete" data-type="confirm" value="${dato.id}"><i class="fa fa-trash-o"></i></button>`
            }
            buttons+='</div>';
            return buttons;
@@ -236,12 +237,18 @@ const success = {
         
             default:
 
-                var operator = `<tr id="operator_id${dato.id}">
+                if(dato.emergency_contact_phone != null){
+                    emergency_contact_phone = dato.emergency_contact_phone;
+                }else{
+                    emergency_contact_phone = "";
+                }
+
+                var operator = `<tr id="operator_id${dato.id}" class="rowType">
                     <td>${dato.id}</td>
                     <td>${dato.email}</td>
                     <td>${dato.name}</td>
                     <td>${dato.phone}</td>
-                    <td>${dato.emergency_contact_phone}</td>
+                    <td>${emergency_contact_phone}</td>
                     <td>${dato.birthdate}</td>
                     <td class="hidden-xs">${types.status(dato)}</td>
                     <td>${types.button(dato)}</td>
@@ -259,6 +266,10 @@ const success = {
                 $(".formulario").hide();
                 $(".tablaOperator").show();
                 $("#btn_add").show();
+
+                if ($('.rowType').length == 0) {
+                    $('#table-row').show();
+                }
             break;
         }
                 
@@ -304,12 +315,18 @@ const success = {
         console.log(data);
         var dato = data;
         if(dato.id_status != 0){
+
+            if(dato.emergency_contact_phone != null){
+                emergency_contact_phone = dato.emergency_contact_phone;
+            }else{
+                emergency_contact_phone = "";
+            }
             var operator = `<tr id="operator_id${dato.id}">
                 <td>${dato.id}</td>
                 <td>${dato.email}</td>
                 <td>${dato.name}</td>
                 <td>${dato.phone}</td>
-                <td>${dato.emergency_contact_phone}</td>
+                <td>${emergency_contact_phone}</td>
                 <td>${dato.birthdate}</td>
                 <td class="hidden-xs">${types.status(dato)}</td>
                 <td>${types.button(dato)}</td>
@@ -323,7 +340,8 @@ const success = {
             }
             $("#operator_id"+dato.id).css("background-color", color);  
             
-        }else if(dato.status == 0){
+        }else if(dato.id_status == 0){
+            
             $("#operator_id"+dato.id).remove();
             if ($('.rowType').length == 0) {
                 $('#table-row').show();
