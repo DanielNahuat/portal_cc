@@ -8,12 +8,14 @@ $(document).ready(function(){
 
     //get base URL *********************
     var url = $('#url').val();
+     $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2();
 
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
-        $('#settingsForm').trigger("reset");
+        $('#traineeNewForm').trigger("reset");
         $('#myModalLabel').html(`Create New Trainee `);
         // $("#image").attr('src','');
         $(".bodyIndex").hide();
@@ -23,7 +25,7 @@ $(document).ready(function(){
        //display modal form for creating new product *********************
     $('.cancel-cu').click(function(){
         $('#btn-save').val("add");
-        $('#settingsForm').trigger("reset");
+        $('#traineeNewForm').trigger("reset");
         $('#myModalLabel').html(`Create New Trainee`);
         // $("#image").attr('src','');
         $('#formCU').hide();
@@ -47,11 +49,45 @@ $(document).ready(function(){
         training.get_data(1);
     });
 
+    //function to change the schedule every day by selecting start_Sunday
+    $('#start_sunday').change(function(){
+        var start_sunday = $('#start_sunday').val();
+        $('#start_monday').val(start_sunday);
+        $('#start_monday').trigger('change');
+        $('#start_tuesday').val(start_sunday);
+        $('#start_tuesday').trigger('change');
+        $('#start_wednesday').val(start_sunday);
+        $('#start_wednesday').trigger('change');
+        $('#start_thursday').val(start_sunday);
+        $('#start_thursday').trigger('change');
+        $('#start_friday').val(start_sunday);
+        $('#start_friday').trigger('change');
+        $('#start_saturday').val(start_sunday);
+        $('#start_saturday').trigger('change');
+    });
+
+     //function to change the schedule every day by selecting end_Sunday
+     $('#end_sunday').change(function(){
+        var end_sunday = $('#end_sunday').val();
+        $('#end_monday').val(end_sunday);
+        $('#end_monday').trigger('change');
+        $('#end_tuesday').val(end_sunday);
+        $('#end_tuesday').trigger('change');
+        $('#end_wednesday').val(end_sunday);
+        $('#end_wednesday').trigger('change');
+        $('#end_thursday').val(end_sunday);
+        $('#end_thursday').trigger('change');
+        $('#end_friday').val(end_sunday);
+        $('#end_friday').trigger('change');
+        $('#end_saturday').val(end_sunday);
+        $('#end_saturday').trigger('change');
+    });
+
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(){
-        $('#settingsForm').trigger("reset");
-        var settings_id = $(this).val();
-        var my_url = url + '/' + settings_id;
+        $('#traineeNewForm').trigger("reset");
+        var training_id = $(this).val();
+        var my_url = url + '/' + training_id;
 
             actions.show(my_url);
        
@@ -60,20 +96,20 @@ $(document).ready(function(){
 
 
     //create new product / update existing product ***************************
-    $("#settingsForm").on('submit',function (e) {
+    $("#traineeNewForm").on('submit',function (e) {
         console.log('button');
       
         e.preventDefault(); 
-        var formData =  $("#settingsForm").serialize();
+        var formData =  $("#traineeNewForm").serialize();
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
-        var settings_id = $('#settings_id').val();;
+        var training_id = $('#training_id').val();;
         var my_url = url;
         if (state == "update"){
             type = "POST"; //for updating existing resource
-            my_url += '/' + settings_id;
+            my_url += '/' + training_id;
         }
         
             console.log(formData);
@@ -169,12 +205,12 @@ $(document).ready(function(){
 
     //display modal form for product DETAIL ***************************
     $(document).on('click','.open_detail',function(){
-        var settings_id = $(this).val();
+        var training_id = $(this).val();
        
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/' + settings_id,
+            url: url + '/' + training_id,
             success: function (data) {
                 console.log(data);
                 $(".modal-body-detail").html(data);
@@ -254,7 +290,7 @@ const success = {
             break;
         
             default:
-                var setting = `<tr id="settings_id${dato.id}">
+                var setting = `<tr id="training_id${dato.id}">
                     <td>${dato.id}</td>
                     <td>${dato.name}</td>
                     <td>${dato.option}</td>
@@ -264,10 +300,10 @@ const success = {
 
                 if (state == "add"){ 
                     $("#settings-list").append(setting);
-                    $("#settings_id"+dato.id).css("background-color", "#c3e6cb");    
+                    $("#training_id"+dato.id).css("background-color", "#c3e6cb");    
                 }else{
-                    $("#settings_id"+dato.id).replaceWith(setting);
-                    $("#settings_id"+dato.id).css("background-color", "#ffdf7e");  
+                    $("#training_id"+dato.id).replaceWith(setting);
+                    $("#training_id"+dato.id).css("background-color", "#ffdf7e");  
                 }
                 $('#formCU').hide();
                 $(".bodyIndex").show();
@@ -280,7 +316,7 @@ const success = {
         console.log(data);
         var dato = data;
         if(dato.status != 0){
-            var setting = `<tr id="settings_id${dato.id}">
+            var setting = `<tr id="training_id${dato.id}">
                 <td>${dato.id}</td>
                 <td>${dato.name}</td>
                 <td>${dato.option}</td>
@@ -288,23 +324,23 @@ const success = {
                 <td>${settings2.button(dato)}</td>
             </tr>`;
           
-            $("#settings_id"+dato.id).replaceWith(setting);
+            $("#training_id"+dato.id).replaceWith(setting);
             if(dato.status == 1){
                 color ="#c3e6cb";
             }else if(dato.status == 2){
                 color ="#ed969e";
             }
-            $("#settings_id"+dato.id).css("background-color", color); 
+            $("#training_id"+dato.id).css("background-color", color); 
 
         }else if(dato.status == 0){
-            $("#settings_id"+dato.id).remove();
+            $("#training_id"+dato.id).remove();
         }
        
     },
 
     show: function(data){
         console.log(data);
-        $('#settings_id').val(data.id);
+        $('#training_id').val(data.id);
         $('#name').val(data.name);
         $('#id_option').val(data.id_option);
         $('#btn-save').val("update");

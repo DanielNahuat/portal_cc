@@ -45,6 +45,7 @@ class ClientsController extends Controller
             } 
            
             $data=$data2;
+           
             if ($request->ajax()) {
                 return view('clients.table', ["data"=>$data]);
             }
@@ -57,6 +58,14 @@ class ClientsController extends Controller
         }
        
     }
+    public function validateClient($request){
+
+        $this->validate(request(), [
+            'name' => 'unique:clients|required|max:30',
+            'color' => 'unique:clients'
+        ]); 
+    }
+
     public function getResult($client_id){
         $data = ClientModel::select('clients.id as id', 
                                     'clients.name as name',
@@ -74,15 +83,6 @@ class ClientsController extends Controller
         // ClientModel::whereNotIn('status',[0])->where('id', $client_id)->first();
         return $data;
     }
-
-    public function validateClient($request){
-
-        $this->validate(request(), [
-            'name' => 'unique:clients|required|max:30',
-            'color' => 'unique:clients'
-        ]); 
-    }
-
 
  
     public function store(Request $request)
@@ -127,7 +127,7 @@ class ClientsController extends Controller
 
 
        
-        return response()->json($client);
+        return response()->json(["client" => $client, "flag" => 1]);
         
     }
 
@@ -206,8 +206,31 @@ class ClientsController extends Controller
 
     }
 
-    public function showContacts(Request $request){
-        dd($request);
+    public function showContacts($id)
+    {  
+        $contact = ClientContactsModel::where('id_client', $id)->get();
+        return response()->json(["contact" => $contact, "flag" => 2]);
+        
+
+        // return view('clients.index',["contact" => $contact]);
+        // $client = BreakRulesModel::select('break_rules.id as id', 
+        //                                   'break_rules.id_client as id_client', 
+        //                                   'break_rules.interval as interval', 
+        //                                   'break_rules.duration as duration', 
+        //                                   'clt.name as name', 
+        //                                   'clt.description as description', 
+        //                                   'clt.color as color',
+        //                                   'clc.hex as hex')
+        //                       ->join('clients as clt', 'clt.id', '=', 'break_rules.id_client')
+        //                       ->join('client_color as clc', 'clc.id', '=', 'clt.color')
+        //                       ->where('clt.status', 1)
+        //                       ->where('break_rules.id_client', $client_id)
+        //                       ->first();
+
+
+       
+        // return response()->json($client);
+        
     }
 
 

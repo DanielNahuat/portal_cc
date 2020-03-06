@@ -25,7 +25,7 @@
             <input type="number" name="interval" id="interval" class="form-control" maxlength="60">
         </div>
         <div class="col-sm-4 form-group">
-            <h6>Duration:</h6>
+            <h6>Duration (Minutes):</h6>
             <input type="number" name="duration" id="duration" class="form-control"  maxlength="60">
         </div>
         <div class="col-sm-4 form-group">
