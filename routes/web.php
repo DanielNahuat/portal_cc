@@ -85,6 +85,7 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/users','UserController@index');
     Route::put('/users/{user}', 'UserController@update');
     Route::get('/users/{user}', 'UserController@edit');
+    Route::get('/getClients', 'UserController@clients');
     Route::post('/users', 'UserController@store');
     Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
     Route::delete('/users/delete/{id}', 'TypeUserController@delete');
