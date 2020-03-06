@@ -202,14 +202,24 @@ $(document).ready(function(){
             data:{name:name, last_name:last_name},
             dataType:"json",
             success: function(data){
-                console.log(data);
                 var html = "";
-                html += `<option value="">Seleccionar</option> `;
-                data.forEach(function(data){
-                    html += `<option value="${data}">${data}</option> `;
-                });
-                $("#sugerencias").html(html);
-                $(".seccion-sugerencia").show();
+                if(data.No){
+                    $.notify({
+                        // options
+                        title: "Error!",
+                        message:data.msg,
+                    },{
+                        // settings
+                        type: 'danger'
+                    });
+                }else{
+                    html += `<option value="">Seleccionar</option> `;
+                    data.forEach(function(data){
+                        html += `<option value="${data}">${data}</option> `;
+                    });
+                    $("#sugerencias").html(html);
+                    $(".seccion-sugerencia").show();
+                }
             },
             error: function(err){
                 $(".seccion-sugerencia").hide();
@@ -222,7 +232,6 @@ $(document).ready(function(){
         valor = $(this).val();
         if(valor != ""){
             $("#nickname").val(valor);
-            $("#nicknameHidden").val(valor);
             $("#email").val(valor);
             $("#password").val(valor + "*2020");
             $("#password_confirmation").val(valor + "*2020");
