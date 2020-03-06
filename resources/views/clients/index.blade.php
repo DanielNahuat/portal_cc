@@ -10,7 +10,7 @@
                             </ul>
                         </div>
                         @include('clients.form')
-                        @include('clients.contacts')
+                        @include('clients.form_contacts')
                         <!--Container de tabla clientes-->    
                         <div class="body tableClient"> 
                                 <div class="table-responsive">
@@ -30,7 +30,6 @@
                 </div>
 </div>
 
-          
              <!-- Passing BASE URL to AJAX -->
         <input id="url" type="hidden" value="{{ \Request::url() }}">
 @endsection

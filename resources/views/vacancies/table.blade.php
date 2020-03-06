@@ -1,5 +1,5 @@
-<table class="table table-bordered" id="tag_container">
-    <thead>
+<table class="table table-striped text-center" id="tag_container">
+    <thead class="text-white thead-yasc">
         <tr>
             <th width="100px">ID</th>
             <th>Name</th>
@@ -8,7 +8,7 @@
             <th>Options</th>
         </tr>
     </thead>
-    <tbody id="vacancy-list">
+  <tbody id="vacancy-list">
         @foreach ($data as $vacancy)
         <tr id="vacancy_id{{$vacancy->id}}">
             <td>{{ $vacancy->id }}</td>

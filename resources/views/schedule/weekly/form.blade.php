@@ -49,12 +49,12 @@
                         <br/>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="now">Update the schedule for subsequent dates
+                              <input type="checkbox" class="form-check-input" id="now" value="now">Update the schedule for subsequent dates
                             </label>
                           </div>
                           <div class="form-check col-sm-12">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="sunday">Update the schedule for subsequent Sundays.
+                              <input type="checkbox" class="form-check-input" id="today" value="sunday">Update the schedule for subsequent Sundays.
                             </label>
                           </div>
                     </div>
@@ -68,11 +68,11 @@
                         <br/>
                         <div class="col-sm-6">
                           <label for="sel1">Time Start:</label>
-                          <input type="time" class="form-control has-error" id="time_start" name="time_start" value="" maxlength ="15">
+                          <input type="time" class="form-control has-error" id="time_extra" name="time_extra" value="" maxlength ="15">
                         </div>
                         <div class="col-sm-6">
                           <label for="sel1">Duration:</label>
-                          <input type="time" class="form-control has-error" id="time_start" name="time_start" value="" maxlength ="15">
+                          <input type="time" class="form-control has-error" id="duration" name="duration" value="" maxlength ="15">
                       </div>
                     </div>
                   </div>

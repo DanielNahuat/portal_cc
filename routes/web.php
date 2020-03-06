@@ -79,12 +79,15 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::delete('/clients/{client_id}', 'ClientsController@destroy');
     Route::delete('/clients/delete/{id}', 'ClientsController@delete');
 
+    //Contacts for Clients
     Route::post('/clients/contacts', 'ClientsController@storeContacts');
+    Route::get('/clients/contacts/show/{id}', 'ClientsController@showContacts');
 
     //User
     Route::get('/users','UserController@index');
     Route::put('/users/{user}', 'UserController@update');
     Route::get('/users/{user}', 'UserController@edit');
+    Route::get('/getClients', 'UserController@clients');
     Route::post('/users', 'UserController@store');
     Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
     Route::delete('/users/delete/{id}', 'TypeUserController@delete');
@@ -93,7 +96,7 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/weekly', 'ScheduleWeeklyController@index');
     Route::get('/weekly/{UserType_id?}', 'ScheduleWeeklyController@show');
     Route::post('/weekly', 'ScheduleWeeklyController@store');
-    Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
+    Route::put('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
     Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
     Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
 

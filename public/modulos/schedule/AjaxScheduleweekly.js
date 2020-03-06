@@ -48,10 +48,8 @@ $(document).ready(function(){
 
     //create new product / update existing product ***************************
     $("#typeUserForm").on('submit',function (e) {
-        console.log('button');
-      
         e.preventDefault(); 
-        var formData =  $("#typeUserForm").serialize();
+        var formData =  schedule.dataSend();
         
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
@@ -218,7 +216,28 @@ const schedule ={
             }).fail(function(jqXHR, ajaxOptions, thrownError){
                   alert('No response from server');
             });
+        },
+    dataSend: function(){
+        n="";
+        t=""
+        if($("#now").prop("checked") == true){
+            n+=$("#now").val();
         }
+        if($("#today").prop("checked") == true){
+            t+=$("#today").val();
+        }
+        var data =  {
+                time_start:$('#time_start').val(),
+                time_end:$('#time_end').val(),
+                days:$("#days").val(),
+                time_extra:$('#time_extra').val(),
+                duration:$("#duration").val(),
+                now:n,
+                today:t,
+        }
+     
+        return data;
+    },
     
 }
 const success = {
@@ -289,12 +308,17 @@ const success = {
         $('#time_end').val(data.time_e);
 
         if(data.days == 0){
-            $('#days').val("");
+            $('#days').val(null);
+            $('#days').trigger('change');
         }else{
-            $('#days').val(data.name);
+            $('#days').val(data.days)
+            $('#days').trigger({
+                type: 'select2:select',
+                params: {
+                    data: data.days
+                }
+            });
         }
-
-        $('#dyas').val(data.name);
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },

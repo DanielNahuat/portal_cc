@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
-use App\ScheduleModel;
+use App\ScheduleDetailModel;
 use App\DaysModel;
 use App\ClientModel;
-use App\ScheduleDetailModel;
+use App\ScheduleModel;
 use App\AssignamentTypeModel;
 use Carbon\Carbon; 
 use Illuminate\Support\Facades\Auth;
@@ -80,7 +80,7 @@ class ScheduleWeeklyController extends Controller
     }
 
     public function data_weekly($id){
-        $data2 = ScheduleDetailModel::select( "detail_schedule_user.id as id","sch.dayoff as days", "inf.name as name", "inf.last_name as lastname","cli.name as client",'detail_schedule_user.time_start as time_s','detail_schedule_user.time_end as time_e',"detail_schedule_user.status as status")
+        $data2 = ScheduleDetailModel::select( "detail_schedule_user.id as id","detail_schedule_user.id_day as id_day","sch.dayoff as days","inf.name as name", "inf.last_name as lastname","cli.name as client",'detail_schedule_user.time_start as time_s','detail_schedule_user.time_end as time_e',"detail_schedule_user.status as status")
                     ->join('schedule as sch','sch.id', "=", 'detail_schedule_user.id_schedule')
                     ->join('clients as cli', 'cli.id',"=","sch.id_client")
                     ->join('users_info as inf','inf.id_user', "=", 'detail_schedule_user.id_operator')
@@ -89,7 +89,7 @@ class ScheduleWeeklyController extends Controller
         return $data2;
     }
 
-    public function validateType($request,$usertype_id =""){
+    public function validateType($request,$weekly_id =""){
         
             $this->validate(request(), [
                 'name' => 'required|max:30',
@@ -97,12 +97,12 @@ class ScheduleWeeklyController extends Controller
         }
     
 
-    public function ValidateExtraType($request,$usertype_id =""){
+    public function ValidateExtraType($request,$weekly_id =""){
         $ExtraTypeValidation=[]; 
         $n ="";
         $data = [];
 
-        $userValidation = ScheduleModel::where('id','!=',$usertype_id)->where('name', $request->name)
+        $userValidation = ScheduleDetailModel::where('id','!=',$weekly_id)->where('name', $request->name)
         ->whereIn('status', [1,2])
         ->count();
 
@@ -126,54 +126,42 @@ class ScheduleWeeklyController extends Controller
  
    
     public function store(Request $request)
-    {   
-            ScheduleWeeklyController::validateType($request,$usertype_id ="");
-            $user = ScheduleModel::Create($request->input());
-            $menu = BasicMenuModel::where('status','1')->get();
+    {      
 
-            foreach($menu as $option){
-                $data = [
-                    'id_type_user' => $user->id,
-                    'id_menu' => $option->id,
-                    'status' => 0,
-                ];
-         
-            
-               $new = AssignamentTypeModel::insert($data);
-              
-             }
-             $usertype2 = ScheduleModel::find($user->id);
-             return response()->json($usertype2);
+            ScheduleWeeklyController::validateType($request,$weekly_id ="");
+            $user = ScheduleDetailModel::Create($request->input());
+          
+             $weekly2 = ScheduleDetailModel::find($user->id);
+             return response()->json($weekly2);
       
            
     }
   
-    public function show($scheduledetail_id)
+    public function show($weekly_id)
     {
 
-        $usertype = ScheduleWeeklyController::data_weekly($scheduledetail_id);
-        return response()->json($usertype);
+        $weekly = ScheduleWeeklyController::data_weekly($weekly_id);
+        return response()->json($weekly);
     }
 
-    public function update(Request $request, $usertype_id)
+    public function update(Request $request, $weekly_id)
     {
-
-       
-    
-   
-            ScheduleWeeklyController::validateType($request,$usertype_id);
-            $usertype = ScheduleModel::find($usertype_id);
-            $usertype->name = $request->name;
-            $usertype->status=1;
-            $usertype->save();
+            $weekly = ScheduleDetailModel::find($weekly_id);
+            $weekly->time_start = $request->time_start;
+            $weekly->time_end = $request->time_end;
+            $weekly->status=1;
+            $weekly->save();
      
-        
-        return response()->json($user);
+            $weeklySch = ScheduleModel::where('id',$weekly->id_schedule)->first();
+            $weeklySch->dayoff = $request->days;
+            $weeklySch->save();
+
+            return response()->json();
     }
 
-    public function destroy($usertype_id)
+    public function destroy($weekly_id)
     {
-        $type = ScheduleModel::find($usertype_id);
+        $type = ScheduleDetailModel::find($weekly_id);
         if($type->status == 2)
         {
             $type->status = 1;
@@ -187,9 +175,9 @@ class ScheduleWeeklyController extends Controller
         return response()->json($type);
     } 
 
-    public function delete($usertype_id)
+    public function delete($weekly_id)
     {
-        $type = ScheduleModel::find($usertype_id);
+        $type = ScheduleDetailModel::find($weekly_id);
             $type->status = 0;
             $type->save();
       
