@@ -68,23 +68,25 @@ class OperatorsController extends Controller
         ]);
     }
 
+    public function validateNickname($nickname){
+        $validaNick = User::where('nickname',$nickname)
+        ->whereIn('id_status', [1,2])
+        ->exists();
+        return $validaNick;
+    }
+
     public function store(Request $request){
 
-        // OperatorsController::validateForm($request);
-        // $imageName = OperatorsController::documents($request, "operators");
+        $request->email = $request->email."@yascemail.com";
+        OperatorsController::validateForm($request);
 
-        // $name = explode(" ", $request->name);
-        // $name = $name[0];
+        $validaNick = OperatorsController::validateNickname($request->name);
         
-        // $lastname = explode(" ", $request->last_name);
-        // $lastname = $lastname[0];
-        
-        // $birthday = explode("-", $request->birthdate);
-        // $birthday = $birthday[2];
-
-        // $nickname = $name.$lastname.$birthday;
-        // // dd($nickname);
-        
+        if($validaNick){
+            $msg= 'Another user already has that Nickname';
+            $data=['No'=>1,'msg'=>$msg];
+            return response()->json($data);
+        }
         $user =  User::Create([
             'id_type_user'=>9,
             'id_status'=>1,

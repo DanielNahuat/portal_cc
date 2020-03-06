@@ -54,10 +54,10 @@
             <h6>Information:</h6>
             <textarea name="description" id="description" class="form-control"></textarea>
         </div>
+        <hr>
         <div class="col-sm-3 form-group">
             <h6>Nickname:</h6>
-            <input type="text" name="nickname" id="nickname" class="form-control" maxlength="150" disabled>
-            <input type="hidden" name="nicknameHidden" id="nicknameHidden">
+            <input type="text" name="nickname" id="nickname" class="form-control" maxlength="150" =>
             <div class="my-2 seccion-sugerencia" style="display:none">
                 <span class="badge badge-success my-2">available</span>
                 <select name="sugerencias" id="sugerencias" class="form-control"></select>
