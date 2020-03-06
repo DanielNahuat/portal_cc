@@ -168,7 +168,7 @@ class TrainingController extends Controller
     public function store(Request $request)
     {     
         $setting_id="";
-        // dd($request);
+        dd($request);
         
         $correo=$request->email.'@yasemail.com';
         $user =  User::Create([
@@ -183,21 +183,63 @@ class TrainingController extends Controller
             'id_user'=>$user->id,
             'name'=>$request->name,
             'last_name'=>$request->last_name,
-            'address'=>$request->address,
+            'address'=>'',
             'phone'=>$request->phone,
             'emergency_contact_name'=>$request->emergency_contact_name,
             'emergency_contact_phone'=>$request->emergency_contact_phone,
             'notes'=>$request->notes,
             'description'=>$request->description,
-            'gender'=>'X',
+            'gender'=>$request->gender,
             'birthdate'=>$request->birthdate,
             'profile_picture'=>"",
             'biotime_status'=>"",
             'access_code'=>"",
-            'entrance_date'=>"",
+            'entrance_date'=>"2020-01-01",
         ]);
 
-        $result = OperatorsController::getResult($user->id);
+        $schedule =  ScheduleModel::Create([
+            'id_operator'=>$user->id,
+            // 'id_client'=> ,
+            // 'mat'=> ,
+            // 'date_start'=> ,
+            // 'date_end'=> ,
+            // 'type_daily'=> ,
+            // 'week'=> ,
+            // 'mount'=> ,
+            // 'year'
+            // 'status'=> ,
+    
+        ]);
+
+        $training_detail =  TrainingDetailModel::Create([
+            // 'mat'=> ,
+            'id_operator'=> $user->id,
+            'id_schedule'=>$schedule->id,
+            // 'id_day'=> ,
+            // 'start_time'=> ,
+            // 'end_time'=> ,
+            // 'options'=> ,
+            // 'status'=> ,
+        ]);
+
+        $daysOFF =  DayOffModel::Create([
+            'id_schedule'=>$schedule->id,
+            // 'id_day'=>,
+        ]);
+
+        $mirror_userScheduleDetail =  MirrorUserScheduleDetailModel::Create([
+            'id_schedule'=>$schedule->id,
+            'id_operator'=> $user->id,
+            // 'id_day'=> ,
+            // 'mat'=> ,
+            // 'time_start'=> ,
+            // 'time_end'=> ,
+            // 'type_daily'=> ,
+            // 'option'=> ,
+            // 'status'=> ,
+        ]);
+
+        $result = TrainingController::getResult($user->id);
 
         return response()->json($result);
 
