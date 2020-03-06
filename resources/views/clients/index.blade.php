@@ -4,33 +4,32 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="header">
-                            <h1>Clients <i class="fa fa-suitcase"></i></h1>
+                            <h1 id="labelTitle">Clients <i class="fa fa-suitcase"></i></h1>
                             <ul class="header-dropdown">
-                                <li><a href="javascript:void(0);" class="btn btn-success" id = "btn_add" disabled  >New Client <i class="fa fa-plus"></i></a></li>
+                                <li><a href="javascript:void(0);" class="btn btn-success" disabled id="btn_add" >New Client <i class="fa fa-plus"></i></a></li>
                             </ul>
                         </div>
-                        <div class="body">
-                           
-                                <div class="table-clients">
+                        @include('clients.form')
+                        @include('clients.form_contacts')
+                        <!--Container de tabla clientes-->    
+                        <div class="body tableClient"> 
+                                <div class="table-responsive">
                                     <div class="input-group mb-3 input-group-sm">
-                                        <div class="input-group-prepend">
-                                            <select class="form-control" id="typesearch">
-                                                <option value="name">Name</option>
-                                                <!-- <option value="id">id</option> -->
-                                            </select>
-                                        </div>
-                                        <input type="text" class="form-control" id="search">
-                                        <button type="button" class="btn btn-success search-query"><i class="fa fa-search"></i></button>
+                                    <div class="input-group-prepend">
+                                        <select class="form-control" id="typesearch">
+                                            <option value="name">Name</option>
+                                        </select>
                                     </div>
-                                @include('clients.table')
+                                    <input type="text" class="form-control" id="search">
+                                    <button type="button" class="btn btn-primary search-query"><i class="fa fa-search"></i></button>
                                 </div>
+                                @include('clients.table')
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
-            </div>
-            @include('clients.form')
-          
+</div>
+
              <!-- Passing BASE URL to AJAX -->
         <input id="url" type="hidden" value="{{ \Request::url() }}">
 @endsection

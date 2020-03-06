@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\User;
 use App\User_info;
 use App\TypeUserModel;
+use App\ClientModel;
+use App\User_client;
 use DB;
 
 
@@ -26,7 +28,8 @@ class UserController extends Controller
         
         $id_menu=5;
         $menu = menu($user,$id_menu);
-        $types = TypeUserModel::all(); 
+        $types = TypeUserModel::whereNotIn('id',[9])->get(); 
+        $clients = ClientModel::all();
         if($menu['validate']){ 
 
             $search = trim($request->dato);
@@ -41,17 +44,24 @@ class UserController extends Controller
                 return view('users.table', compact('data'));
             }
             // return view('users.index',compact('data'));
-            return view('users.index',["data"=>$data,"menu"=>$menu,'types'=>$types]);
+            return view('users.index',["data"=>$data,"menu"=>$menu,'types'=>$types, 'clients'=>$clients]);
         }
     }
 
-    public function validateUser($request){
-
+    public function validateUser($request,$user=''){
+        $user=='' ? $email = 'required|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
+        // dd($email);
         $this->validate(request(), [
             'name' => 'required|max:40',
-            'lastname' => 'required|max:40',
-            'email' => 'required|unique:users,email,',
+            'last_name' => 'required|max:40',
+            'phone' => 'max:16',
+            'emergency_contact_phone' => 'max:16',
+            'emergency_contact_name' => 'max:40',
+            'email' => $email,
+            'birthdate' => 'date|before:18 years ago',
             'phone' => 'max:20',
+            'gender' => 'not_in:0',
+            'id_type_user' => 'gt:0',
             'password' => 'sometimes|required|confirmed|min:8',
         ]);
     }
@@ -74,7 +84,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $this->validateUser($request);
         try {
             DB::beginTransaction();
@@ -85,17 +94,15 @@ class UserController extends Controller
                 $user = User::create($input);
 
                 $input['id_user'] = $user->id;
-                $input['last_name'] = $input['lastname'];
-                $input['gender'] = 'M';
-                $input['birthdate'] =Carbon::now();
-                $input['profile_picture'] = 'adadasasdas';
-                $input['entrance_date'] = Carbon::now();
-                $input['biotime_status'] = 1;
-                $input['access_code'] = 34341;
                 $user_info = User_info::create($input);
-
-
-                // dd($user->with('User_info')->get());
+                
+                if($request->clients != null)
+                {
+                    foreach($request->clients as $id_client)
+                    {
+                        User_client::create(['id_user'=>$user->id,'id_client'=>$id_client]);
+                    }
+                }
             DB::commit();
             return response()->json(User::where('id',$user->id)->with('User_info')->first());
         } catch (\Exception $e) {
@@ -123,7 +130,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return response()->json(User::where('id',$user->id)->with('User_info')->first());
+        return response()->json(User::where('id',$user->id)->with('User_info')->with('clients')->first());
     }
 
     /**
@@ -133,9 +140,41 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, user $user)
     {
-        //
+        // dd($request);
+        $this->validateUser($request,$user->id);
+        $user->email == $request->email ? $user->email = $request->email : '';
+        $user->id_type_user = $request->id_type_user;
+        if($request->password != null)
+        {
+            $user->password = Hash::make($request->password);
+        }
+        $user->update();
+
+        $user_info = User_info::where('id_user',$user->id)->first();
+        $user_info->id_user = $user->id;
+        $user_info->name = $request->name;
+        $user_info->last_name = $request->last_name;
+        $user_info->address = $request->address;
+        $user_info->gender = $request->gender;
+        $user_info->phone = $request->phone;
+        $user_info->emergency_contact_phone = $request->emergency_contact_phone;
+        $user_info->emergency_contact_name = $request->emergency_contact_name;
+        $user_info->notes = $request->notes;
+        $user_info->description = $request->description;
+        $user_info->update();
+
+        if($request->clients != null)
+        {
+            User_client::where('id_user',$user->id)->delete();
+            foreach($request->clients as $id_client)
+            {
+                User_client::create(['id_user'=>$user->id,'id_client'=>$id_client]);
+            }
+        }
+
+        return response()->json(User::where('id',$user->id)->with('User_info')->first());
     }
 
     /**

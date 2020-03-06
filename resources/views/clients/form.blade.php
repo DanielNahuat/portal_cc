@@ -1,41 +1,55 @@
-    <!-- MODAL SECTION -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header modaldelichef" >
-            <h4 class="modal-title" id="myModalLabel">Clients Register <i class="fa fa-suitcase"></i></h4>
-          </div>
-          <form enctype="multipart/form-data" method="POST" id="clientsForm" class="form-horizontal">
-            <div class="modal-body">
-              <div class="form-group error">
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-					          <input type="text" class="form-control has-error" id="name" name="name" placeholder="Name" value="" maxlength ="15">
+	<!-- MODAL SECTION -->
+  <?php 
+        $user = Auth::user();
+    ?>
+<div class="col-sm-12 formulario" style="display:none">
+        <form id="formClients" class="form-horizontal" enctype="multipart/form-data">
+        {{ csrf_field() }}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <h6>Client:</h6>
+                    <input type="text" name="name" id="name" class="form-control" title="Email" maxlength="120">
                 </div>
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-					<input type="text" class="form-control has-error" id="description" name="description" placeholder="Description" value="" maxlength ="15">
+                <div class="col-sm-6 form-group">
+                    <h6>Description:</h6>
+                    <textarea name="description" id="description" class="form-control" title="Este campo solo admite letras" maxlength="60"></textarea>
                 </div>
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-					<input type="text" class="form-control has-error" id="color" name="color" placeholder="Color" value="" maxlength ="15">
-                </div>
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-					<input type="text" class="form-control has-error" id="interval" name="interval" placeholder="Interval" value="" maxlength ="15">
-                </div>
-                <div class="form-group col-sm-12">
-									<!-- <button class="btn modaldelichef" disabled><i class="fa fa-user-plus"></i></button> -->
-					<input type="text" class="form-control has-error" id="duration" name="duration" placeholder="Duration" value="" maxlength ="15">
-                </div>
-				</div>
             </div>
-            <div class="modal-footer">
-                <button type="button"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success" id="btn-save" value="add">Guardar</button>
-            </div>
-			    </form> 
-          <input type="hidden" id="client_id" name="client_id" value="0"> 
         </div>
-      </div>
     </div>
+    <div class="row">
+        <div class="col-sm-4 form-group">
+            <h6>Interval:</h6>
+            <input type="number" name="interval" id="interval" class="form-control" maxlength="60">
+        </div>
+        <div class="col-sm-4 form-group">
+            <h6>Duration (Minutes):</h6>
+            <input type="number" name="duration" id="duration" class="form-control"  maxlength="60">
+        </div>
+        <div class="col-sm-4 form-group">
+            <h6>Color:</h6>
+            <select name="color" id = "color" class="custom-select" onchange="colorSelect()">
+                    @foreach($color as $color)
+                      <option style = "background:{{$color->hex}}" value = "{{$color->id}}">{{$color->mat}}  {{$color->hex}}</option>
+                      @endforeach
+              </select>
+        </div>
+       
+    </div>
+
+    <div class="col-sm-12 text-center">					 
+        <button type="button" class="btn btn-danger btn-cancel">Cancel</button>
+        <button type="submit" class="btn btn-success" id="btn-save" value="add">Save</button>
+    </div>	
+</form>
+<input type="hidden" id="client_id" name="client_id">
+
+</div>
+<script>
+function colorSelect() {
+  var x = document.getElementById("color").value;
+  console.log(x);
+}
+</script>

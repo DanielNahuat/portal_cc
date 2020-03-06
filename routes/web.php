@@ -59,8 +59,8 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     //Training
     Route::get('/training', 'TrainingController@index');
     Route::post('/training', 'TrainingController@store');
-    Route::post('/training/{user_id}', 'TrainingController@update');
-    Route::delete('/training/{user_id}', 'TrainingController@destroy');
+    Route::post('/training/{trainee_id}', 'TrainingController@update');
+    Route::delete('/training/{trainee_id}', 'TrainingController@destroy');
     Route::delete('/training/delete/{id}', 'TrainingController@delete');
 
     //Settings
@@ -79,9 +79,13 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::delete('/clients/{client_id}', 'ClientsController@destroy');
     Route::delete('/clients/delete/{id}', 'ClientsController@delete');
 
+    //Contacts for Clients
+    Route::post('/clients/contacts', 'ClientsController@storeContacts');
+    Route::get('/clients/contacts/show/{id}', 'ClientsController@showContacts');
+
     //User
     Route::get('/users','UserController@index');
-    Route::get('/types/{UserType_id?}', 'TypeUserController@show');
+    Route::put('/users/{user}', 'UserController@update');
     Route::get('/users/{user}', 'UserController@edit');
     Route::post('/users', 'UserController@store');
     Route::delete('/users/{UserType_id}', 'TypeUserController@destroy');
@@ -91,9 +95,18 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::get('/weekly', 'ScheduleWeeklyController@index');
     Route::get('/weekly/{UserType_id?}', 'ScheduleWeeklyController@show');
     Route::post('/weekly', 'ScheduleWeeklyController@store');
-    Route::post('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
+    Route::put('/weekly/{UserType_id}', 'ScheduleWeeklyController@update');
     Route::delete('/weekly/{UserType_id}', 'ScheduleWeeklyController@destroy');
     Route::delete('/weekly/delete/{id}', 'ScheduleWeeklyController@delete');
+
+    //Operators
+    Route::get('/operators', 'OperatorsController@index');
+    Route::get('/operators/{id}', 'OperatorsController@show');
+    Route::post('/operators', 'OperatorsController@store');
+    Route::put('/operators/{id}', 'OperatorsController@update');
+    Route::delete('/operators/{id}', 'OperatorsController@destroy');
+    Route::delete('/operators/delete/{id}', 'OperatorsController@delete');
+
 });
 
 

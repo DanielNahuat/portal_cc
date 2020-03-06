@@ -172,7 +172,7 @@ const types ={
            var buttons='';
             if(dato.status== 1){
                buttons +='<a class="btn btn-sm btn-outline-primary" title="Assignament Type" id="btn-edit" href="/assignmenttype/'+dato.id+'"  ><i class="fa fa-info-circle"></i></a>'
-               buttons += ' <button class="btn btn-sm btn-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
+               buttons += ' <button class="btn btn-sm btn-outline-secondary btn-detail open_modal"  data-toggle="tooltip" title="Editar nombre del Perfil"  value="'+dato.id+'"> <i class="fa fa-edit"></i></li></button>';
                buttons += '	<button type="button" class="btn btn-sm btn-outline-danger off-type" title="Desactivar Usuario" data-type="confirm" value="'+dato.id+'" ><i class="fa fa-window-close"></i></button>';
           
            }else if(dato.status == 2){
@@ -197,32 +197,40 @@ const success = {
         console.log(data);
         var dato = data;
         var typename =$('#name').val();
-        
-        if(dato =='error en agregar datos.'){
-            swal({
-                title: "Datos Existentes",
-                text: "El perfil: "+typename+" ya existe",
-                type: "warning",
-
-              });
+        if(data[0]){
+            datos = data[0].No;
+        }else{
+            datos = data;
         }
-        else{
-            var profile = `<tr id="usertype_id${dato.id}">
-                                <td>${dato.id}</td>
-                                <td>${dato.name}</td>
-                                <td class="hidden-xs">${types.status(dato)}</td>
-                                <td>${types.button(dato)}</td>
-                            </tr>`;
-        
-            if (state == "add"){ 
-              $("#usertype-list").append(profile);
-              $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");    
-            }else{
-              $("#usertype_id"+dato.id).replaceWith(profile);
-              $("#usertype_id"+dato.id).css("background-color", "#ffdf7e");  
-            }
+        switch(datos) {
+            case 2:
+                $.notify({
+                    // options
+                    title: "Error!",
+                    message:data[0].name,
+                },{
+                    // settings
+                    type: 'danger'
+                });
+            break;
+            default:
+                var profile = `<tr id="usertype_id${dato.id}">
+                                    <td>${dato.id}</td>
+                                    <td>${dato.name}</td>
+                                    <td class="hidden-xs">${types.status(dato)}</td>
+                                    <td>${types.button(dato)}</td>
+                                </tr>`;
+            
+                if (state == "add"){ 
+                $("#usertype-list").append(profile);
+                $("#usertype_id"+dato.id).css("background-color", "#c3e6cb");
+                $('#table-row').hide(); 
+                }else{
+                $("#usertype_id"+dato.id).replaceWith(profile);
+                $("#usertype_id"+dato.id).css("background-color", "#ffdf7e");  
+                }
 
-            $('#myModal').modal('hide')
+                $('#myModal').modal('hide')
         }
         
     },
@@ -248,6 +256,9 @@ const success = {
             
         }else if(dato.status == 0){
             $("#usertype_id"+dato.id).remove();
+            if ($('.rowType').length == 0) {
+                $('#table-row').show();
+              }
         }
        
     },

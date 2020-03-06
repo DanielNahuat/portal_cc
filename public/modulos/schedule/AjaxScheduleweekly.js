@@ -2,22 +2,35 @@ getData(1);
 $(document).ready(function(){
      
     
-    var nameDeli='<a href="/types">Users Types</i></a>';
+    var nameDeli='<a href="/weekly">Schedule Weekly</i></a>';
     $('.nameDeli').html(nameDeli);
-    $('#sidebar1').addClass('active') 
+    $('#sidebar5').addClass('active') 
 
     //get base URL *********************
     var url = $('#url').val();
     $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2();
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
         $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
         $('#typeUserForm').trigger("reset");
         $("#image").attr('src','');
         $('#myModal').modal('show');
     });
 
+    $('.cancel_data').click(function(){
+        $('#btn-save').val("add");
+        $('#days').val(null).trigger('change');
+        $('#typeUserForm').trigger("reset");
+        $("#image").attr('src','');
+        $('#myModal').modal('show');
+    });
+
+    $('.scheduleWeeklySearch').change(function(){
+        schedule.get_data(1);
+    });
 
 
 
@@ -35,24 +48,16 @@ $(document).ready(function(){
 
     //create new product / update existing product ***************************
     $("#typeUserForm").on('submit',function (e) {
-        console.log('button');
-      
         e.preventDefault(); 
-        var formData =  $("#typeUserForm").serialize();
+        var formData =  schedule.dataSend();
         
-        if($("#name").val().length > 30)
-        {
-            alert("Ingrese un nombre menor a 30 caracteres");
-            return false;
-        }
-
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save').val();
         var type = "POST"; //for creating new resource
         var usertype_id = $('#usertype_id').val();;
         var my_url = url;
         if (state == "update"){
-            type = "POST"; //for updating existing resource
+            type = "PUT"; //for updating existing resource
             my_url += '/' + usertype_id;
         }
         
@@ -167,7 +172,7 @@ $(document).ready(function(){
     });
     
 });
-const types ={
+const schedule ={
     button: function(dato){
            var buttons='';
             if(dato.status== 1){
@@ -190,6 +195,50 @@ const types ={
         }
        return status;
     },
+    get_data: function(page){
+            var formData={
+                day: $('#daySearch').val(),
+                client:$('#clientSearch').val(),
+                date:$('#dateSearch').val(),
+                operator:$('#operatorSearch').val(),
+            }
+            console.log(formData);
+            $.ajax(
+            {
+                url: '?page=' + page,
+                data:formData,
+                type: "get",
+                datatype: "html"
+            }).done(function(data){
+                $('.pagination').remove();
+                $("#tag_container").empty().html(data);
+                location.hash = page;
+            }).fail(function(jqXHR, ajaxOptions, thrownError){
+                  alert('No response from server');
+            });
+        },
+    dataSend: function(){
+        n="";
+        t=""
+        if($("#now").prop("checked") == true){
+            n+=$("#now").val();
+        }
+        if($("#today").prop("checked") == true){
+            t+=$("#today").val();
+        }
+        var data =  {
+                time_start:$('#time_start').val(),
+                time_end:$('#time_end').val(),
+                days:$("#days").val(),
+                time_extra:$('#time_extra').val(),
+                duration:$("#duration").val(),
+                now:n,
+                today:t,
+        }
+     
+        return data;
+    },
+    
 }
 const success = {
 
@@ -255,7 +304,21 @@ const success = {
     show: function(data){
         console.log(data);
         $('#usertype_id').val(data.id);
-        $('#name').val(data.name);
+        $('#time_start').val(data.time_s);
+        $('#time_end').val(data.time_e);
+
+        if(data.days == 0){
+            $('#days').val(null);
+            $('#days').trigger('change');
+        }else{
+            $('#days').val(data.days)
+            $('#days').trigger({
+                type: 'select2:select',
+                params: {
+                    data: data.days
+                }
+            });
+        }
         $('#btn-save').val("update");
         $('#myModal').modal('show');
     },
