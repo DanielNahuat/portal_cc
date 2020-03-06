@@ -10,6 +10,7 @@ use App\AssignamentTypeModel;
 use App\ClientModel;
 use App\ClientColorModel;
 use App\ClientContactsModel;
+use App\ClientDocumentModel;
 use App\BreakRulesModel;
 use Illuminate\Support\Facades\Auth;
 
@@ -185,14 +186,48 @@ class ClientsController extends Controller
 
     public function delete($client_id)
     {
-        $client = ClientModel::find($client_id);
+            $client = ClientModel::find($client_id);
             $client->status = 0;
             $client->save();
       
         return response()->json($client);
     } 
 
-    //CONTACTS
+     //Functions for Documents
+     public function documents($request, $folder){
+        dd($request->file('document'));
+       $count = count($request->file('document'));
+        $documentName = '';
+        if ($request->file('document')) {
+            $count = count($request);
+            dd($count);
+            // $document = $request->file('document');
+            // $documentName = $document->getClientOriginalName();
+            // $document->move(public_path().'/documents/'.$folder.'/',$documentName);
+
+         }
+         return $documentName;
+    }
+
+    public function storeDocuments(Request $request, $id){
+       $name = ClientsController::documents($request, "clients");
+       $document = ClientDocumentModel::create([
+       'id_client'=> $id,
+       'name'=> $name,
+       ]);
+
+       return response()->json([$document, $name]);
+
+    }
+
+    public function showDocuments($id)
+    {  
+        $document = ClientDocumentModel::where('id_client', $id)->get();
+        return response()->json(["document" => $document, "flag" => 3]);
+        
+    }
+
+    //Functions for contacts
     public function storeContacts(Request $request)
     {
         $data = $request->input();
@@ -210,26 +245,6 @@ class ClientsController extends Controller
     {  
         $contact = ClientContactsModel::where('id_client', $id)->get();
         return response()->json(["contact" => $contact, "flag" => 2]);
-        
-
-        // return view('clients.index',["contact" => $contact]);
-        // $client = BreakRulesModel::select('break_rules.id as id', 
-        //                                   'break_rules.id_client as id_client', 
-        //                                   'break_rules.interval as interval', 
-        //                                   'break_rules.duration as duration', 
-        //                                   'clt.name as name', 
-        //                                   'clt.description as description', 
-        //                                   'clt.color as color',
-        //                                   'clc.hex as hex')
-        //                       ->join('clients as clt', 'clt.id', '=', 'break_rules.id_client')
-        //                       ->join('client_color as clc', 'clc.id', '=', 'clt.color')
-        //                       ->where('clt.status', 1)
-        //                       ->where('break_rules.id_client', $client_id)
-        //                       ->first();
-
-
-       
-        // return response()->json($client);
         
     }
 
