@@ -36,7 +36,7 @@
     <input type="hidden" id="client_id_contacts" name="client_id_contacts">
 </form>
     <div>
-
+    <hr>
     @include('clients.table_contacts')
     </div>
 </div>
