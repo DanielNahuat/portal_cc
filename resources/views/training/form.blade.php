@@ -69,9 +69,22 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-xl-4 col-xs-6 col-md-4 col-sm-6 form-group">
+                    <h6>Gender:</h6>
+                    <div class='row'>
+                      <div class="col-xl-6 col-xs-6 col-md-6 col-sm-6">
+                        <select name="gender" id="gender" class="form-control">
+                            <option value="">Select</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
+
                 </div>
-                <hr/>
+              </div>
+              <hr/>
                 <div class="col-xl-12 col-xs-12 col-md-12 col-sm-12">
                   <h5>Training Schedule</h5><br>
                   <div class="row">

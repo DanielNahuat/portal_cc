@@ -8,6 +8,7 @@ class ClientsSeeder extends Seeder
     
     public function run()
     {
+      DB::table('clients')->truncate();
     	$clients = [
             ['name'=> 'Telerep','status'=> 1, 'color' => '1'],
             ['name'=> 'Call Experts','status'=> 1, 'color' => '2'],
@@ -44,6 +45,7 @@ class ClientsSeeder extends Seeder
       }
 
        $cbkr = ClientModel::all();
+       DB::table('break_rules')->truncate();
        foreach($cbkr as $bk){
          DB::table('break_rules')->insert([
            "interval" => '0',
