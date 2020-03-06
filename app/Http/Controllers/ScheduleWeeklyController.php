@@ -156,6 +156,17 @@ class ScheduleWeeklyController extends Controller
             $weeklySch->dayoff = $request->days;
             $weeklySch->save();
 
+            $weeklyEx = ScheduleDetailModel::find($weekly_id);
+
+            ScheduleDetailModel::Create([
+                "time_start"=>$weeklyEx->time_start
+            ]);
+            $weeklyE->time_start = $request->time_start;
+            $weeklyE->time_end = $request->time_end;
+            $weeklyE->status=1;
+            $weeklyE->save();
+
+
             return response()->json();
     }
 
