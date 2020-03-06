@@ -3,9 +3,9 @@ var url = $('#url').val();
 var baseUrl = $('#baseUrl').val();
 $(document).ready(function(){
     //get base URL *********************
-    $('.selectpick').selectpicker({
-        liveSearchPlaceholder: 'Search Client'
-    });
+    // $('.selectpick').selectpicker({
+    //     liveSearchPlaceholder: 'Search Client'
+    // });
 
 
     var nameDeli='<a href="/school">Escuelas</i></a>';
@@ -21,6 +21,35 @@ $(document).ready(function(){
     $('.cafeteria').hide();
     $('#id_cafeteria').attr('disabled','disabled');
 
+    function getClients()
+    {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })       
+        $.ajax({
+            type: 'GET',
+            url: baseUrl+'/getClients',
+            dataType: 'json',
+            success: function (data) {
+              console.log(data);
+              var html = '';
+              $.each(data, function (key, val) {
+                  html+= "<option value='"+val.id+"'>"+ val.name+"</option>"
+                
+                // $('.selectpick option[value=' + val.id + ']');
+            });
+            $('#clients').html(html); 
+            
+            },
+            error: function (data) {
+                console.log(data);
+                
+
+            }
+            }); 
+    }
 
     function disablePassInput()
     {
@@ -64,17 +93,12 @@ $(document).ready(function(){
 
     //display modal form for creating new product *********************
     $('#btn_add').click(function(){
-        $('.selectpick').val('').trigger("change");
-        $('ul .dropdown-menu').children('li .selected').removeClass();
-        // $('.selectpick').trigger("change");
-        $('.selectpick').selectpicker("refresh");
+        $('.selectpick').selectpicker("deselectAll");
         $('#myModalLabel').html("Agregar Usuario  <i class='fa fa-tasks'></i>");
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
-        $('.selectpick').val('default').selectpicker("deselectAll");
-        // $('.selectpick').selectpicker("refresh");
         $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
@@ -90,31 +114,27 @@ $(document).ready(function(){
         $('#userForm').trigger("reset");
         $(".pass").show();
         $(".show_pass_div").hide();
-        $('#myModal').modal('show');
+        $('.selectpick').selectpicker("deselectAll");
+        // $('#myModal').modal('show');
     
     });
 
     $('.btn-cancel').click(function(){
         $('.formulario').hide();
         $('#btn_add').show();
-        // $('.selectpick').val('default').trigger("change");
-        // $('.selectpick').selectpicker("deselectAll");
-        $('.selectpick').val('').trigger("change");
-        $('.selected').removeClass();
-        // $('.selectpick').trigger("change");
-        $('.selectpick').selectpicker("refresh");
         $(".clients").hide();
-        $('.tableUser').show();     
+        $('.tableUser').show();        
     });
 
     //display modal form for product EDIT ***************************
     $(document).on('click','#btn-edit',function(){
+        getClients();
         $('#myModalLabel').html("Editar Usuario <i class='fa fa-tasks'></i>");
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();
         drEvent.clearElement();
-        $(".clients").hide();
+        // $(".clients").hide();
         drEvent.settings.defaultFile = "";
         drEvent.destroy();
         drEvent.init();
@@ -126,7 +146,7 @@ $(document).ready(function(){
         $('#tag_put').remove();
         $form = $('#userForm');
         $form.append('<input type="hidden" id="tag_put" name="_method" value="PUT">');
-        $('#myModal').modal('show');
+        // $('#myModal').modal('show');
         $(".show_pass_div").show();
         $(".pass").hide();
         var id_user = $(this).val();
@@ -161,80 +181,6 @@ $(document).ready(function(){
         }
     });
 
-    $("input:radio").change(function(){
-        valor = $(this).val();
-        if(valor == 2){
-            $("#lblFlag").html("Cantidad a Abonar");
-            $("#inputGroup-sizing-sm").html("+");
-            $('#btn-save-abono').val('add');
-        }else if(valor == 3){
-            $("#lblFlag").html("Cantidad a Devolver");
-            $("#inputGroup-sizing-sm").html("-");
-            $('#btn-save-abono').val('refund');
-        }
-    });
-
-    $("#form_abono").on('submit',function (e) {
-        
-        var action = $('#btn-save-abono').val();
-        e.preventDefault();
-        var user_id = $('#user').val();
-        var formData = new FormData(this);
-        if(action === 'add')
-        {
-            var type = "POST"; //for updating existing resource
-            var my_url = baseUrl + '/users/addCoins/' + user_id;
-        }
-        else if(action === 'refund')
-        {
-            var type = "POST"; //for updating existing resource
-            var my_url = baseUrl + '/users/refundCoins/' + user_id;
-        }
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })       
-        $.ajax({
-            type: type,
-            url: my_url,
-            data: formData,
-            dataType: 'json',
-            contentType: false,       
-            cache: false,             
-            processData:false, 
-            success: function (data) {
-                $.notifyClose();
-                $.notify({
-                    // options
-                    title: "Correcto!",
-                    message:'Abono agregado correctamente',
-                },{
-                    // settings
-                    type: 'success'
-                });
-                $('.total_coins_modal').text(data);
-                $("#form_abono").trigger('reset');
-                $(".seccion-devolver").hide();
-                $(".seccion-abonar").show();
-                $('.selectpick').selectpicker('refresh'); 
-                $("#mm").modal('hide');
-            
-            },
-            error: function (data) {
-                success.msj(data);
-                
-                $("#form_abono").trigger('reset');
-                $(".seccion-devolver").hide();
-                $(".seccion-abonar").show();
-                $("#mm").modal('hide');
-                
-
-            }
-            }); 
-
-    });
     
     //delete category and remove it from TABLE list ***************************
     $(document).on('click','.deleteCategory',function(){
@@ -455,10 +401,8 @@ const success = {
                 
         },
     show: function(data){
-        console.log(data);
-        // $('#school_id').val(data.id);
+
         if(data.id_type_user == 2) $(".clients").show();
-        // $(".selectpick").empty();
         $.each(data.clients, function (key, val) {
             $('.selectpick option[value=' + val.id_client + ']').attr('selected', true);
         });
