@@ -146,6 +146,7 @@ class ScheduleWeeklyController extends Controller
 
     public function update(Request $request, $weekly_id)
     {
+           
             $weekly = ScheduleDetailModel::find($weekly_id);
             $weekly->time_start = $request->time_start;
             $weekly->time_end = $request->time_end;
@@ -155,6 +156,17 @@ class ScheduleWeeklyController extends Controller
             $weeklySch = ScheduleModel::where('id',$weekly->id_schedule)->first();
             $weeklySch->dayoff = $request->days;
             $weeklySch->save();
+
+
+            ScheduleDetailModel::Create([
+                "id_schedule"=>$weekly->id_schedule,
+                "id_operator"=>$weekly->id_operator,
+                "id_day"=>$weekly->id_day,
+                "time_start"=>$request->time_extra,
+                "time_end"=>$request->time_extra,
+            ]);
+
+
 
             return response()->json();
     }

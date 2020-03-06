@@ -49,7 +49,7 @@ $(document).ready(function(){
         var id = $(this).val();
         $('#tag_put').remove();
         $('#client_id_contacts').val(id);
-
+        //Show the contacts table
         var my_url = url + '/contacts/show/' + id;
         actions.show(my_url)
 
@@ -103,7 +103,6 @@ $(document).ready(function(){
       
         e.preventDefault(); 
         var formData =  $("#formContacts").serialize();
-     
 
         //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $('#btn-save-contacts').val();
@@ -125,23 +124,50 @@ $(document).ready(function(){
             $(".formulario_contacts").hide();
             $('#formContacts').trigger("reset");
             $('#tag_put').remove();
-        
-    
     });
 
-    //Modal of Break Rules
-    $('.open-modal-breaks').click(function(){
+    //Modal of Documents
+    $('.open-documents').click(function(){
         $('#formContacts').trigger("reset");
         $('#formClients').trigger("reset");
 
         // $("#image").attr('src','');
-        $('#modalBreaks').modal('show');
+        $('#modalDocuments').modal('show');
+        var id = $(this).val();
+        $('#client_id_document').val(id);
+        var my_url = url + '/document/show/' + id;
+        actions.show(my_url)
 
-        var settings_id = $(this).val();
-        var my_url = url + '/' + settings_id;
-
-            actions.show(my_url);
     });
+
+    $('.close-documents').click(function(){
+        $('#doc').trigger("reset");
+
+        $('#modalDocuments').modal('hide');
+
+    });
+
+    //Create documents
+    $("#formDocuments").on('submit',function (e) {
+        console.log('button');
+      
+        e.preventDefault(); 
+        // $('#btn-save-documents').attr('disabled', true);
+        
+        var formData = new FormData(this);
+        // var formData = $("#formOperators").serialize();
+        var state = $('#btn-save-documents').val();
+        var id = $('#client_id_document').val();
+        var type = "POST"; //for creating new resource
+        var my_url = url + '/document/' + id;
+        var file = "file";
+        if (state == "update"){
+            type = "POST"; //for updating existing resource
+            my_url += '/' + id;
+        }
+        actions.edit_create(type,my_url,state,formData, file);
+    });
+    
 
 
     //Edit Client
@@ -316,16 +342,6 @@ const success = {
         var clientname =$('#name').val();
         var type =$('#type').val();
 
-        
-        if(dato =='error en agregar datos.'){
-            swal({
-                title: "Datos Existentes",
-                text: "El perfil: "+clientname+" ya existe",
-                type: "warning",
-
-              });
-        }
-        else{
             var client = `<tr id="client_id${dato.id}">
                                 <td><span class="badge badge-secondary" style = "background:${dato.color}">&nbsp;&nbsp;&nbsp;</span></td>
                                 <td>${dato.name}</td>
@@ -343,8 +359,6 @@ const success = {
               $("#client_id"+dato.id).replaceWith(client);
               $("#client_id"+dato.id).css("background-color", "#ffdf7e");  
             }
-
-        }
         
     },
 
@@ -406,9 +420,21 @@ const success = {
                         `;
                 })
                 $('#contact-list').html(contact);
+        
+            case 3:
+            
+            var document = "";
+            dato.document.forEach(function(data){
+                document += `
+               
+                    <tr id="client_id${data.id}">
+                        <td>${data.name}</td>
 
+                    </tr>
+                    `;
+            })
+            $('#document-list').html(document);
               
-              break
           }
     
     },
