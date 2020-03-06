@@ -183,13 +183,40 @@ class UserController extends Controller
         return response()->json(User::where('id',$user->id)->with('User_info')->first());
     }
 
+    public function getResult($id){
+        $data = User_info::select('users_info.name', 'users_info.phone', 'users_info.emergency_contact_phone', 'users_info.birthdate', 'usr.email', 'usr.id', 'usr.id_status')
+            ->join('users as usr', 'users_info.id_user', '=', 'usr.id')
+            ->where('usr.id_type_user', 9)
+            ->where('usr.id', $id)
+            ->first();
+        return $data;
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if($user->id_status == 2)
+        {
+            $user->id_status = 1;
+        }
+        else
+        {
+            $user->id_status = 2;  
+        }
+        $user->save();
+
+        $result = OperatorsController::getResult($id);
+
+        return response()->json($result);
+    } 
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
         //
     }

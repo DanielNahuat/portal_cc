@@ -211,37 +211,33 @@ $(document).ready(function(){
             });
     });
        
-    //delete product and remove it from TABLE list ***************************
-    $(document).on('click','.delete-category',function(){
+    //DELETE
+    $(document).on('click','.delete-op',function(){
         var id = $(this).val();
-        var my_url =baseUrl + '/users/' + id;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        })
-        if($(this).attr('class') == 'btn btn-sm btn-outline-success delete-category')
-        {
-            title= "¿Deseas activar este usuario?";
-            text="El usuario se activara";
-            confirmButtonText="Activar";
+        var my_url = baseUrl + '/users/' + id;
+        console.log(my_url)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+        if($(this).attr('class') == 'btn btn-sm btn-outline-success delete-op'){
+            title= "Do you want to activate this operator?";
+            text="Operator will be activated";
+            confirmButtonText="Activate";
 
-            datatitle="Activado";
-            datatext="activada";
-            datatext2="Activacion";
-        }
-        else 
-        {
-            title= "¿Desea desactivar este usuario?";
-            text= "La usuario se desactivara";
+            datatitle="Activated";
+            datatext="activated";
+            datatext2="Activation";
+        }else {
+            title= "Do you want to disable this Operator?";
+            text= "Operator will be deactivated";
             confirmButtonText="Desactivar";
 
-            datatitle="Desactivado";
-            datatext="desactivada";
-            datatext2="Desactivacion";
-
+            datatitle="Deactivated";
+            datatext="deactivated";
+            datatext2="Deactivation";
         }
-
 
         swal({
             title: title,
@@ -250,23 +246,47 @@ $(document).ready(function(){
             showCancelButton: true,
             confirmButtonClass: "btn btn-danger",
             confirmButtonText: confirmButtonText,
-            cancelButtonText: "Cancelar",
+            cancelButtonText: "Cancel",
             closeOnConfirm: false,
             closeOnCancel: false
         },
         function(isConfirm) {
             if (isConfirm) {
-            swal(datatitle, "Categoria "+datatext, "success");
-            actions.deactivated(my_url);
+                swal(datatitle, "Option "+datatext, "success");
+                actions.deactivated(my_url);
             } 
             else {
-            
-            swal("Cancelado", datatext2+" cancelada", "error");
-        
+            swal("Cancelled", datatext2+" cancelled", "error");
             }
         });
+    });
 
-        
+    $(document).on('click','.destroy-op',function(){
+        var id = $(this).val();
+        var my_url = url + '/delete/' + id;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+        swal({
+            title: "Are you sure you wish to delete this option?",
+            text: "All records with this option will be modified",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn btn-danger",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: true,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                actions.deactivated(my_url);
+            }else {
+            swal("Cancelled", "Deletion Canceled", "error");
+            }
+        });
     });
 
 
@@ -287,21 +307,19 @@ $(document).ready(function(){
         return statu;
         },
     buttons:function(dato){
-        var buttons='';
+   
 // console.log(dato)
-        if(dato.user.id_status== 1){
-            statu="<span class='badge badge-success'>Activo</span>";
-            if(dato.user.id_profile == 3 || dato.user.id_profile == 4 || dato.user.id_profile == 4  && dato.authUser.id_profile == 2)  buttons += ' <button class="btn btn-sm btn-outline-success open_modal" id="abonar-qr" title="Abonar" value="'+dato.user.id+'"><i class="fa fa-money"></i></button>'
-            // buttons += '<a class="btn btn-sm btn-outline-info" title="Usuarios" id="" href="'+baseUrl+'/users/'+dato.id+'"  ><i class="icon-users"></i></a>';
-            buttons += ' <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Editar Categoria" id="btn-edit" value="' +dato.user.id+'"  ><i class="fa fa-edit"></i></button>';
-            buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert   delete-category" title="Desactivar Categoria" data-type="confirm" value="'+dato.user.id+'"><i class="fa fa-window-close"></i></button>';
-        
-        }else {
-            statu="<span class='badge badge-secondary'>Inactivo</span>";
-            buttons += ' <button type="button" class="btn btn-sm btn-outline-success delete-category" title="Activar Categoria" data-type="confirm" value="'+dato.user.id+'" ><i class="fa fa-check-square-o"></i></button>';
-            buttons += ' <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert   deleteCategory" title="Eliminar Categoria" data-type="confirm" value="'+dato.user.id+'"><i class="fa fa-trash-o"></i></button>'
-        }
+        var buttons='<div>';
+        if(dato.id_status== 1){
+        buttons += ` <button type="button" class="btn btn-sm btn-outline-secondary btn-edit" data-toggle="tooltip" title="Edit" value="${dato.id}"  ><i class="fa fa-edit"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert delete-op" data-toggle="tooltip" title="Desactivated" data-type="confirm" value="${dato.id}"><i class="fa fa-window-close"></i></button>
+        ` ;
 
+        }else if(dato.id_status == 2){
+        buttons  += `<button type="button" class="btn btn-sm btn-outline-success delete-op" title="Activated" data-toggle="tooltip" data-type="confirm" value="${dato.id}" ><i class="fa fa-check-square-o"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert destroy-op" data-toggle="tooltip" title="Delete" data-type="confirm" value="${dato.id}"><i class="fa fa-trash-o"></i></button>`
+        }
+        buttons+='</div>';
         return buttons;
     }
 

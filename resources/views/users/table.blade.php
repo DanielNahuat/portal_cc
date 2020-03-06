@@ -29,16 +29,16 @@
                     </td>
                     <td class="text-center">
                         <button type="button" class="btn btn-sm btn-outline-secondary open_modal" title="Edit" id="btn-edit" value="{{$user->id}}"  ><i class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert off-type" title="Deactivated" data-type="confirm" value="{{$user->id}}"><i class="fa fa-window-close"></i></button>
+                        <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert delete-op" data-toggle="tooltip" title="Desactivated" data-type="confirm" value="{{$user->id}}"><i class="fa fa-window-close"></i></button>
                     </td>
                 @break
                 @case(2)
                 <td class="hidden-xs">
-                    <span class='badge badge-secondary'>Deactivated</span>
+                    <span class='badge badge-secondary'>Desactivated</span>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-outline-success off-type" title="Activated" data-type="confirm" value="{{$user->id}}" ><i class="fa fa-check-square-o"></i></button>
-                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert deletetype" title="Delete" data-type="confirm" value="{{$user->id}}"><i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-success delete-op" title="Activated" data-toggle="tooltip" data-type="confirm" value="{{$user->id}}" ><i class="fa fa-check-square-o"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert destroy-op" data-toggle="tooltip" title="Delete" data-type="confirm" value="{{$user->id}}"><i class="fa fa-trash-o"></i></button>
                 </td>
                 @break
             @endswitch
