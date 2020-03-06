@@ -48,6 +48,12 @@ class UserController extends Controller
         }
     }
 
+    public function clients()
+    {
+        $clients = ClientModel::all();
+        return response()->json($clients);
+    }
+
     public function validateUser($request,$user=''){
         $user=='' ? $email = 'required|unique:users,email,NULL,id,id_status,1 | unique:users,email,'.$user.',id,id_status,2' :  $email = 'required|unique:users,email,'.$user.',id,id_status,1 | unique:users,email,'.$user.',id,id_status,2';
         // dd($email);

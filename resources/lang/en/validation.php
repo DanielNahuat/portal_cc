@@ -141,6 +141,9 @@ return [
         'id_type_user' => [
             'gt' => 'Choose the type user',
         ],
+        'id_client' => [
+            'required' => 'Choose Client',
+        ],
     ],
 
     /*

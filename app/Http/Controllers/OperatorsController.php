@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\User_info;
+use App\User_client;
+use App\ClientModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 
@@ -38,9 +40,11 @@ class OperatorsController extends Controller
             if ($request->ajax()) {
                 return view('operators.table', ["data"=>$data]);
             }
+
+            $clients = ClientModel::whereIn('status', [1,2])->get();
          
             
-        return view('operators.index',["menu"=>$menu, "data"=>$data]);
+        return view('operators.index',["menu"=>$menu, "data"=>$data, "clients"=>$clients]);
         }else{
             return redirect('/');
         }
@@ -52,6 +56,7 @@ class OperatorsController extends Controller
             'email' => $email,
             'password' => 'sometimes|required|confirmed|min:8',
             'image' => 'image',
+            'id_client' => 'required',
             'name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'last_name' => 'required|max:150|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
             'phone' => 'required|max:20|regex:/^[0-9]{0,20}(\.?)[0-9]{0,2}$/',
@@ -65,13 +70,25 @@ class OperatorsController extends Controller
 
     public function store(Request $request){
 
-        OperatorsController::validateForm($request);
-        $imageName = OperatorsController::documents($request, "operators");
+        // OperatorsController::validateForm($request);
+        // $imageName = OperatorsController::documents($request, "operators");
+
+        // $name = explode(" ", $request->name);
+        // $name = $name[0];
+        
+        // $lastname = explode(" ", $request->last_name);
+        // $lastname = $lastname[0];
+        
+        // $birthday = explode("-", $request->birthdate);
+        // $birthday = $birthday[2];
+
+        // $nickname = $name.$lastname.$birthday;
+        // // dd($nickname);
         
         $user =  User::Create([
             'id_type_user'=>9,
             'id_status'=>1,
-            'nickname'=>"",
+            'nickname'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
         ]);
@@ -93,19 +110,21 @@ class OperatorsController extends Controller
             'access_code'=>"",
             'entrance_date'=>$request->entrance_date,
         ]);
+
+        $user_client = User_client::Create([
+            'id_user'=>$user->id,
+            'id_client'=>$request->id_client
+        ]);
         $result = OperatorsController::getResult($user->id);
 
         return response()->json($result);
-      
-
-
     }
 
     public function show($id){
-        $data = User_info::select('users_info.name', 'users_info.last_name', 'users_info.address', 'users_info.phone', 'users_info.emergency_contact_name', 'users_info.emergency_contact_phone', 'users_info.notes', 'users_info.description', 'users_info.gender', 'users_info.birthdate',  'users_info.profile_picture as image', 'users_info.entrance_date', 'usr.email', 'usr.nickname', 'usr.id', 'usr.id_status')
-            ->join('users as usr', 'users_info.id_user', '=', 'usr.id')
-            ->where('usr.id_type_user', 9)
-            ->whereIn('usr.id_status', [1,2])
+        $data = User_client::select('cl.id as id_client', 'users_info.name', 'users_info.last_name', 'users_info.address', 'users_info.phone', 'users_info.emergency_contact_name', 'users_info.emergency_contact_phone', 'users_info.notes', 'users_info.description', 'users_info.gender', 'users_info.birthdate',  'users_info.profile_picture as image', 'users_info.entrance_date', 'usr.email', 'usr.nickname', 'usr.id', 'usr.id_status')
+            ->join('clients as cl', 'users_client.id_client', '=', 'cl.id')
+            ->join('users as usr', 'users_client.id_user', '=', 'usr.id')
+            ->join('users_info as users_info', 'users_client.id_user', '=', 'users_info.id_user')
             ->where('usr.id', $id)
             ->first();
         return response()->json($data);
@@ -113,6 +132,7 @@ class OperatorsController extends Controller
 
     public function update(Request $request, $id){
 
+        //BUSCA Y ACTUALIZA USER
         $user = User::find($id);
         OperatorsController::validateForm($request, $id);
         $user->nickname = $request->nickname;
@@ -122,12 +142,11 @@ class OperatorsController extends Controller
         {
             $user->password = Hash::make($request->password);
         }    
-
         $user->update();
 
+        //BUSCA Y ACTUALIZA INFO USER
         $user_info = User_info::where('id_user', $user->id)->first();
 
-        
         if($request->file('image')) {
             $file_path = public_path().'/images/operators/'.$user_info->profile_picture;
             File::delete($file_path);
@@ -153,6 +172,14 @@ class OperatorsController extends Controller
         $user_info->entrance_date = $request->entrance_date;
 
         $user_info->update();
+
+        //BUSCA Y ACTUALIZA DETALLE USER_CLIENT
+        User_client::where('id_user', $id)->delete();
+        $user_client = User_client::Create([
+            'id_user'=>$id,
+            'id_client'=>$request->id_client
+        ]);
+
 
         $result = OperatorsController::getResult($user->id);
 
