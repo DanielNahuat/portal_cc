@@ -6,6 +6,7 @@ $(document).ready(function(){
 
     $('#sidebar3').addClass('active'); 
     $('#myTable').DataTable();
+    $('.js-example-basic-single').select2();
     $(".pass").hide();
     function disablePassInput()
     {
@@ -46,8 +47,8 @@ $(document).ready(function(){
         enablePassInput();
         $(".pass").show();
         $(".show_pass_div").hide();
-        $(".nickname").hide();
-        $("#nickname").attr('disabled', true);
+        $('#id_client').val("");
+        $('#id_client').trigger('change');
 
         var drEvent = $('#dropify-event').dropify();
         drEvent = drEvent.data('dropify');
@@ -97,8 +98,6 @@ $(document).ready(function(){
         $(".formulario").show();
         $(".tablaOperator").hide();
         $("#btn_add").hide();
-        $(".nickname").show();
-        $("#nickname").attr('disabled', false);
         $('#btn-save').val("update");
         $("#formOperators").trigger('reset');
         $('#tag_put').remove();
@@ -184,6 +183,50 @@ $(document).ready(function(){
             swal("Cancelled", "Deletion Canceled", "error");
             }
         });
+    });
+
+    $("#btn-nick-generate").click(function(e){
+        e.preventDefault();
+
+        var name = $("#name").val();
+        var last_name = $("#last_name").val();
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+        $.ajax({
+            type:"POST",
+            url:baseUrl+'/generate',
+            data:{name:name, last_name:last_name},
+            dataType:"json",
+            success: function(data){
+                console.log(data);
+                var html = "";
+                html += `<option value="">Seleccionar</option> `;
+                data.forEach(function(data){
+                    html += `<option value="${data}">${data}</option> `;
+                });
+                $("#sugerencias").html(html);
+                $(".seccion-sugerencia").show();
+            },
+            error: function(err){
+                $(".seccion-sugerencia").hide();
+                console.log(err);
+            }
+        });
+    });
+
+    $("#sugerencias").change(function(){
+        valor = $(this).val();
+        if(valor != ""){
+            $("#nickname").val(valor);
+            $("#nicknameHidden").val(valor);
+            $("#email").val(valor);
+            $("#password").val(valor + "*2020");
+            $("#password_confirmation").val(valor + "*2020");
+        }
     });
 
  });      
@@ -294,6 +337,8 @@ const success = {
             drEvent.init();
 
         $('#email').val(data.email);
+        $('#id_client').val(data.id_client);
+        $('#id_client').trigger('change');
         $('#nickname').val(data.nickname);
         $('#id_hidden').val(data.id);
         $('#name').val(data.name);

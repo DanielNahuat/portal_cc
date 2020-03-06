@@ -104,6 +104,10 @@ Route::delete('/assignmenttype/{id}/{detailfood_id}', 'AssignamentTypeController
     Route::put('/operators/{id}', 'OperatorsController@update');
     Route::delete('/operators/{id}', 'OperatorsController@destroy');
     Route::delete('/operators/delete/{id}', 'OperatorsController@delete');
+    
+    //SERVICE GENERAL
+    Route::post('/generate', 'ServiceGeneralController@generateNick');
+
 
 });
 
